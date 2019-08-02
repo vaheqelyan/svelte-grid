@@ -5,3 +5,8 @@ export const debounce = (fn, ms = 0) => {
     timeoutId = setTimeout(() => fn.apply(this, args), ms);
   };
 };
+
+
+export function getLastItemStats(items) {
+  return Math.max(...items.map(val => val.y + val.h), 1);
+}
