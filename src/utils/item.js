@@ -1,8 +1,5 @@
 import { makeMatrix, makeMatrixFromItemsIgnore, findCloseBlocks,findItemsById } from "./matrix.js";
 
-export function getClosestToRow(items) {
-  return Math.max(...items.map(val => val.y + val.h), 1);
-}
 export function filterStatics(items) {
   return items.filter(value => !value.static);
 }
