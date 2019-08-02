@@ -76,8 +76,7 @@
   {/each}
 
   {#if shadow.active}
-    <div on:mouseup={shadowUp}
-     class=backShadow style="
+    <div class=backShadow style="
     width:{((shadow.w * xPerPx) - gap * 2) - (shadow.responsive.valueW*xPerPx)}px;
     height:{(shadow.h * yPerPx) - gap * 2}px;
     top: {(shadow.y * yPerPx) + gap}px;
@@ -92,10 +91,6 @@ import { resizeItems,getClosestToRow, getItemById, findFreeSpaceForItem, filterS
 import { getContainerHeight } from "./utils/container.js";
 import { debounce } from "./utils/other.js";
 import { makeMatrixFromItems, findCloseBlocks, makeMatrixFromItemsIgnore, clearItemFromMatrix, findItemsById,reOrderItemsFromMatrix } from "./utils/matrix.js";
-
-function shadowUp(e) {
-  e.preventDefault();
-}
 
 export let colWidth;
 export let items = [];
