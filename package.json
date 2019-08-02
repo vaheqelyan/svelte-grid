@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "description": "A responsive, draggable and resizable grid layout, for Svelte.",
   "svelte": "src/index.svelte",
-  "module": "index.mjs",
-  "main": "index.js",
+  "module": "build/index.mjs",
+  "main": "build/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
@@ -40,5 +40,5 @@
     "sirv-cli": "^0.4.4",
     "svelte": "^3.6.10"
   },
-  "files": ["src", "index.mjs", "index.js"]
+  "files": ["src", "build/index.mjs", "build/index.js"]
 }
