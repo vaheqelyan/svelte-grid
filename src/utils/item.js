@@ -35,14 +35,14 @@ export function adjustItem(matrix, item, items = [], cols) {
 
   valueW = Math.max(width - cols, 0);
   return {
-    y: getClosestToRow(items),
+    y: getLastItemStats(items),
     x: 0,
     responsive: { valueW },
   };
 }
 
 
-export function resizeItems(items, col, rows = getClosestToRow(items)) {
+export function resizeItems(items, col, rows = getLastItemStats(items)) {
   let matrix = makeMatrix(rows, col);
   items.forEach((item, index) => {
     let ignore = items.slice(index + 1).map(val => val.id);
@@ -50,7 +50,7 @@ export function resizeItems(items, col, rows = getClosestToRow(items)) {
 
     items = items.map(value => (value.id === item.id ? { ...item, ...position } : value));
 
-    matrix = makeMatrixFromItemsIgnore(items, ignore, getClosestToRow(items), col);
+    matrix = makeMatrixFromItemsIgnore(items, ignore, getLastItemStats(items), col);
   });
 
   return items;
@@ -85,7 +85,7 @@ export function findFreeSpaceForItem(matrix, item, items = []) {
   }
 
   return {
-    y: getClosestToRow(items),
+    y: getLastItemStats(items),
     x: 0,
   };
 }
@@ -97,7 +97,7 @@ function assignPosition(item,position,value) {
 
 
 export function moveItem($item, items, cols, originalPosition) {
- let matrix = makeMatrixFromItemsIgnore(items, [$item.id], getClosestToRow(items), cols)
+ let matrix = makeMatrixFromItemsIgnore(items, [$item.id], getLastItemStats(items), cols)
 
  const closeBlocks = findCloseBlocks(items, matrix, $item)
  let closeObj = findItemsById(closeBlocks, items);
@@ -110,7 +110,7 @@ export function moveItem($item, items, cols, originalPosition) {
   if(originalPosition) {
     position = originalPosition
   } else {
-         let matrix = makeMatrixFromItemsIgnore(items, [$item.id], getClosestToRow(items), cols)
+         let matrix = makeMatrixFromItemsIgnore(items, [$item.id], getLastItemStats(items), cols)
           position = findFreeSpaceForItem(matrix,$item,items)
   }
 
@@ -119,7 +119,7 @@ export function moveItem($item, items, cols, originalPosition) {
   
  }
 
- matrix = makeMatrixFromItemsIgnore(items, closeBlocks, getClosestToRow(items), cols);
+ matrix = makeMatrixFromItemsIgnore(items, closeBlocks, getLastItemStats(items), cols);
 
   let tempItems = items;
 
@@ -136,7 +136,7 @@ export function moveItem($item, items, cols, originalPosition) {
       tempItems = tempItems.map(assignPosition.bind(null, item, position))
       let getIgnoreItems = tempCloseBlocks.filter(value => exclude.indexOf(value) === -1);
 
-      matrix = makeMatrixFromItemsIgnore(tempItems, getIgnoreItems, getClosestToRow(items), cols);
+      matrix = makeMatrixFromItemsIgnore(tempItems, getIgnoreItems, getLastItemStats(items), cols);
     }
 
   })

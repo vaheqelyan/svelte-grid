@@ -87,9 +87,9 @@
 <script>
 import { onMount, beforeUpdate,createEventDispatcher } from "svelte";
 
-import { resizeItems,getClosestToRow, getItemById, findFreeSpaceForItem, filterStatics, moveItem } from "./utils/item.js";
+import { resizeItems, getItemById, findFreeSpaceForItem, filterStatics, moveItem } from "./utils/item.js";
 import { getContainerHeight } from "./utils/container.js";
-import { debounce } from "./utils/other.js";
+import { debounce, getLastItemStats } from "./utils/other.js";
 import { makeMatrixFromItems, findCloseBlocks, makeMatrixFromItemsIgnore, clearItemFromMatrix, findItemsById,reOrderItemsFromMatrix } from "./utils/matrix.js";
 
 export let colWidth;
@@ -99,7 +99,7 @@ export let dragDebounceMs = 350;
 export let gap = 0;
 export let rowHeight;
 
-let rows = getClosestToRow(items);
+let rows = getLastItemStats(items);
 let container;
 
 let currItemNode;
@@ -130,7 +130,7 @@ let num;
 
 let containerHeight;
 
-let matrix = makeMatrixFromItems(items, getClosestToRow(items), cols);
+let matrix = makeMatrixFromItems(items, getLastItemStats(items), cols);
 
   
 const dispatch = createEventDispatcher();
@@ -181,7 +181,7 @@ function resizeOnMouseDown(id, e) {
 
   focuesdItem = item;
 
-  resizeNoDynamicCalc = item.h + item.y === getClosestToRow(items);
+  resizeNoDynamicCalc = item.h + item.y === getLastItemStats(items);
 
   shadow = {...shadow,...focuesdItem,...{active:true}}
 
@@ -326,7 +326,7 @@ function dragOnMouseDown(id, e) {
   focuesdItem = item;
   cacheItemPosition = {x:item.x,y:item.y}
   
-  isLast = getClosestToRow(items) === item.y + item.h;
+  isLast = getLastItemStats(items) === item.y + item.h;
 
   shadow = { ...shadow, ...item, active: true }; 
 
