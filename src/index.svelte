@@ -99,7 +99,6 @@ function shadowUp(e) {
 
 export let colWidth;
 export let items = [];
-export let correctContainerWidth = true;
 export let cols = 0;
 export let dragDebounceMs = 350;
 export let gap = 0;
@@ -439,11 +438,6 @@ function dragOnMouseUp(e) {
 
 // Will work on this, need to make code cleaner
 function recalculateGridPosition(action) {
-  if (action === "up" && correctContainerWidth) {
-    // bound = container.getBoundingClientRect();
-    // xPerPx = bound.width / cols;
-  }
-
   const dragItem = items[currentItemIndex];
 
   matrix = makeMatrixFromItemsIgnore(items, [dragItem.id], getClosestToRow(items), cols)
