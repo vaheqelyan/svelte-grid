@@ -59,3 +59,10 @@ typings/
 
 # next.js build output
 .next
+
+# This is for svelte, found in https://github.com/sveltejs/component-template/blob/master/.gitignore
+index.js
+index.mjs
+
+demo/
+public/
