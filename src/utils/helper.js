@@ -1,4 +1,4 @@
-import { findCloseBlocks, findItemsById, makeMatrixFromItemsIgnore, makeMatrixFromItems } from "../utils/matrix.js";
+import { makeMatrixFromItems } from "../utils/matrix.js";
 import { getLastItemStats, findFreeSpaceForItem, resizeItems, moveItem } from "../utils/item.js";
 
 function makeItem(item) {
