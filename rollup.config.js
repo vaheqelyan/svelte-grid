@@ -7,8 +7,6 @@ const name = pkg.name
   .replace(/^\w/, m => m.toUpperCase())
   .replace(/-\w/g, m => m[1].toUpperCase());
 
-const production = !process.env.ROLLUP_WATCH;
-
 export default {
   input: "src/index.svelte",
   output: [{ file: pkg.module, format: "es" }, { file: pkg.main, format: "umd", name }],
