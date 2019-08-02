@@ -97,6 +97,8 @@ export let items = [];
 export let cols = 0;
 export let dragDebounceMs = 350;
 export let gap = 0;
+export let rowHeight;
+
 let rows = getClosestToRow(items);
 let container;
 
@@ -119,7 +121,6 @@ let shadow = {
   max:{}
 };
 
-export let rowHeight;
 
 const yPerPx = rowHeight;
 
