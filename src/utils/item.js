@@ -1,4 +1,5 @@
 import { makeMatrix, makeMatrixFromItemsIgnore, findCloseBlocks, findItemsById } from "./matrix.js";
+import { getLastItemStats } from "./other.js";
 
 export function filterStatics(items) {
   return items.filter(value => !value.static);
