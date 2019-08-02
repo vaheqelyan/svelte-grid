@@ -14,8 +14,7 @@
     "dev": "run-p start:dev autobuild",
     "start": "sirv public --single",
     "start:dev": "sirv public --single --dev",
-    "go": "npm-run-all pretty lint build",
-    "preversion": "npm run go"
+    "go": "npm-run-all pretty lint build"
   },
   "repository": {
     "type": "git",
