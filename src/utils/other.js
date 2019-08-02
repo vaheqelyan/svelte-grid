@@ -6,7 +6,6 @@ export const debounce = (fn, ms = 0) => {
   };
 };
 
-
 export function getLastItemStats(items) {
   return Math.max(...items.map(val => val.y + val.h), 1);
 }
