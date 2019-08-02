@@ -87,7 +87,7 @@
 <script>
 import { onMount, beforeUpdate,createEventDispatcher } from "svelte";
 
-import { resizeItems,getClosestToRow, getItemById, findFreeSpaceForItem, filterStatics } from "./utils/item.js";
+import { resizeItems,getClosestToRow, getItemById, findFreeSpaceForItem, filterStatics, moveItem } from "./utils/item.js";
 import { getContainerHeight } from "./utils/container.js";
 import { debounce } from "./utils/other.js";
 import { makeMatrixFromItems, findCloseBlocks, makeMatrixFromItemsIgnore, clearItemFromMatrix, findItemsById,reOrderItemsFromMatrix } from "./utils/matrix.js";
@@ -302,6 +302,8 @@ let dragX = 0,
 const debounceRecalculateGridPosition = debounce(recalculateGridPosition, dragDebounceMs);
 
 let isLast;
+let cacheItemPosition = {};
+
 function dragOnMouseDown(id, e) {
   e.stopPropagation()
   const { touches: ev = e } = e;
@@ -312,19 +314,23 @@ function dragOnMouseDown(id, e) {
   let pageY = isTouch ? ev[0].pageY : ev.pageY;
 
   const { item, index } = getItemById(id, items);
-  currentItemIndex = index;
-
-
-  focuesdItem = item;
-  isLast = getClosestToRow(items) === item.y + item.h;
-
-  shadow = { ...shadow, ...item, active: true }; 
-
   if (item.static) {
     e.preventDefault();
     e.stopPropagation();
     return;
   }
+  
+  currentItemIndex = index;
+
+
+  focuesdItem = item;
+  cacheItemPosition = {x:item.x,y:item.y}
+  
+  isLast = getClosestToRow(items) === item.y + item.h;
+
+  shadow = { ...shadow, ...item, active: true }; 
+
+  
 
   let {
     currentTarget: { offsetLeft, offsetTop }
@@ -436,48 +442,8 @@ function dragOnMouseUp(e) {
 function recalculateGridPosition(action) {
   const dragItem = items[currentItemIndex];
 
-  matrix = makeMatrixFromItemsIgnore(items, [dragItem.id], getClosestToRow(items), cols)
 
-  const closeBlocks = findCloseBlocks(items, matrix, dragItem);
-  let closeObj = findItemsById(closeBlocks, items);
-
-
-  const overStatic = closeObj.find(value => value.static);
-  if (overStatic) {
-    if (action === "up") {
-      matrix = makeMatrixFromItemsIgnore(items, [dragItem.id], getClosestToRow(items), cols);
-      let position = findFreeSpaceForItem(matrix, dragItem, items);
-      items = items.map(value => (value.id === dragItem.id ? { ...dragItem, ...position } : value));
-    }
-
-    return;
-  }
-
-  matrix = makeMatrixFromItemsIgnore(items, closeBlocks, getClosestToRow(items), cols);
-
-  let _items = items;
-
-  let tempCloseBlocks = closeBlocks;
-
-  let tempExclude = [];
-
-  for (var i = 0; i < closeObj.length; i++) {
-    const item = closeObj[i];
-
-    let position = findFreeSpaceForItem(matrix, item, _items);
-
-    tempExclude.push(item.id);
-
-    if (position) {
-      _items = _items.map(value => (value.id === item.id ? { ...item, ...position } : value));
-
-      let getIgnoreItems = tempCloseBlocks.filter(value => tempExclude.indexOf(value) === -1);
-
-      matrix = makeMatrixFromItemsIgnore(_items, getIgnoreItems, getClosestToRow(items), cols);
-    } 
-  }
-
-  items = _items;
+  items = moveItem(dragItem, items, cols, cacheItemPosition);
 
   dispatch('recalculate', {
     focuesdItem: dragItem
