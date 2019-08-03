@@ -12,12 +12,6 @@
     border: 1px solid;
     z-index: 1000;
   }
-  .inner {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    border-radius: 4px;
-  }
 
 .backShadow {
   background: #f2bfbf;
