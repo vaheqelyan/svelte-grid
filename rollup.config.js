@@ -7,8 +7,14 @@ const name = pkg.name
   .replace(/^\w/, m => m.toUpperCase())
   .replace(/-\w/g, m => m[1].toUpperCase());
 
-export default {
-  input: "src/index.svelte",
-  output: [{ file: pkg.module, format: "es" }, { file: pkg.main, format: "umd", name }],
-  plugins: [svelte(), resolve()],
-};
+export default [
+  {
+    input: "src/index.svelte",
+    output: [{ file: pkg.module, format: "es" }, { file: pkg.main, format: "umd", name }],
+    plugins: [svelte(), resolve()],
+  },
+  {
+    input: "./src/utils/helper.js",
+    output: [{ file: "build/helper/index.mjs", format: "es" }, { file: "build/helper/index.js", format: "umd", name: "gridHelper" }],
+  },
+];
