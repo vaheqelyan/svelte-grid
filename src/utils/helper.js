@@ -1,5 +1,6 @@
 import { makeMatrixFromItems } from "../utils/matrix.js";
-import { getLastItemStats, findFreeSpaceForItem, resizeItems, moveItem } from "../utils/item.js";
+import { findFreeSpaceForItem, resizeItems, moveItem } from "../utils/item.js";
+import { getLastItemStats } from "./other.js";
 
 function makeItem(item) {
   return {
