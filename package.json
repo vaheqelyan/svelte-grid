@@ -35,5 +35,5 @@
     "rollup-plugin-svelte": "^5.1.0",
     "svelte": "^3.6.10"
   },
-  "files": ["src", "build/index.mjs", "build/index.js"]
+  "files": ["src", "build"]
 }
