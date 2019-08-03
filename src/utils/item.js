@@ -94,7 +94,9 @@ function assignPosition(item, position, value) {
   return value.id === item.id ? { ...item, ...position } : value;
 }
 
-export function moveItem($item, items, cols, originalPosition) {
+const replaceItem = (item, cachedItem, value) => (value.id === item.id ? cachedItem : value);
+
+export function moveItem($item, items, cols, originalItem) {
   let matrix = makeMatrixFromItemsIgnore(items, [$item.id], getLastItemStats(items), cols);
 
   const closeBlocks = findCloseBlocks(items, matrix, $item);
@@ -103,16 +105,9 @@ export function moveItem($item, items, cols, originalPosition) {
   const statics = closeObj.find(value => value.static);
 
   if (statics) {
-    let position;
-
-    if (originalPosition) {
-      position = originalPosition;
-    } else {
-      let matrix = makeMatrixFromItemsIgnore(items, [$item.id], getLastItemStats(items), cols);
-      position = findFreeSpaceForItem(matrix, $item, items);
+    if (originalItem) {
+      return items.map(replaceItem.bind(null, $item, originalItem));
     }
-
-    return items.map(assignPosition.bind(null, $item, position));
   }
 
   matrix = makeMatrixFromItemsIgnore(items, closeBlocks, getLastItemStats(items), cols);
