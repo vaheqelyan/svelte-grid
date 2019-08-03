@@ -175,6 +175,8 @@ function resizeOnMouseDown(id, e) {
 
   focuesdItem = item;
 
+  cacheItem = {...item}
+
   resizeNoDynamicCalc = item.h + item.y === getLastItemStats(items);
 
   shadow = {...shadow,...focuesdItem,...{active:true}}
@@ -296,7 +298,7 @@ let dragX = 0,
 const debounceRecalculateGridPosition = debounce(recalculateGridPosition, dragDebounceMs);
 
 let isLast;
-let cacheItemPosition = {};
+let cacheItem = {};
 
 function dragOnMouseDown(id, e) {
   e.stopPropagation()
@@ -318,7 +320,7 @@ function dragOnMouseDown(id, e) {
 
 
   focuesdItem = item;
-  cacheItemPosition = {x:item.x,y:item.y}
+  cacheItem = {...item}
   
   isLast = getLastItemStats(items) === item.y + item.h;
 
@@ -437,7 +439,7 @@ function recalculateGridPosition(action) {
   const dragItem = items[currentItemIndex];
 
 
-  items = moveItem(dragItem, items, cols, cacheItemPosition);
+  items = moveItem(dragItem, items, cols, cacheItem);
 
   dispatch('recalculate', {
     focuesdItem: dragItem
