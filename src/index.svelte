@@ -81,10 +81,10 @@
 <script>
 import { onMount, beforeUpdate,createEventDispatcher } from "svelte";
 
-import { resizeItems, getItemById, findFreeSpaceForItem, filterStatics, moveItem } from "./utils/item.js";
+import { resizeItems, getItemById, moveItem } from "./utils/item.js";
 import { getContainerHeight } from "./utils/container.js";
 import { debounce, getLastItemStats, getColumnFromBreakpoints } from "./utils/other.js";
-import { makeMatrixFromItems, findCloseBlocks, makeMatrixFromItemsIgnore, clearItemFromMatrix, findItemsById,reOrderItemsFromMatrix } from "./utils/matrix.js";
+import { makeMatrixFromItems } from "./utils/matrix.js";
 
 export let colWidth;
 export let items = [];
