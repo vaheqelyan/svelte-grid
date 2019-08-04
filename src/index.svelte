@@ -120,9 +120,6 @@ const yPerPx = rowHeight;
 
 let currentItemId;
 let focuesdItem;
-let num;
-
-let containerHeight;
 
 let matrix = makeMatrixFromItems(items, getLastItemStats(items), cols);
 
@@ -298,7 +295,6 @@ let dragX = 0,
 
 const debounceRecalculateGridPosition = debounce(recalculateGridPosition, dragDebounceMs);
 
-let isLast;
 let cacheItem = {};
 
 function dragOnMouseDown(id, e) {
@@ -323,8 +319,6 @@ function dragOnMouseDown(id, e) {
   focuesdItem = item;
   cacheItem = {...item}
   
-  isLast = getLastItemStats(items) === item.y + item.h;
-
   shadow = { ...shadow, ...item, active: true }; 
 
   
