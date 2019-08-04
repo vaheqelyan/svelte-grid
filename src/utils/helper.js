@@ -8,7 +8,7 @@ function makeItem(item) {
     ...{
       drag: { top: null, left: null, dragging: false },
       resize: { width: null, height: null, resizing: false },
-      responsive: { valueW: 0, valueH: 0 },
+      responsive: { valueW: 0 },
       min: {
         ...item.min,
       },

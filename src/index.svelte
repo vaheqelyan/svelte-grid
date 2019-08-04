@@ -112,7 +112,7 @@ let shadow = {
   y: 0,
   active: false,
   id: null,
-  responsive:{valueW:0,valueH:0},
+  responsive:{valueW:0},
   min:{},
   max:{}
 };
@@ -273,7 +273,7 @@ function resizeOnMouseUp(e) {
   window.removeEventListener("mouseup", resizeOnMouseUp, false);
   window.removeEventListener("touchend", resizeOnMouseUp, false);
 
-  shadow = {...shadow, ... {w:0,h:0,x:0,y:0,active:false,id:null,responsive:{valueW:0,valueH:0}}, min:{},max:{} } 
+  shadow = {...shadow, ... {w:0,h:0,x:0,y:0,active:false,id:null,responsive:{valueW:0}}, min:{},max:{} } 
 
   recalculateGridPosition("up");
 
