@@ -145,7 +145,7 @@ function onResize() {
   items = resizeItems(items, getCols);
 
 }
-let cacheXperPx;
+
 let ch = getContainerHeight(items, yPerPx);
 let docH;
 onMount(() => {
@@ -156,7 +156,6 @@ onMount(() => {
     cols:nC
   });
   xPerPx = bound.width / nC;
-  cacheXperPx=xPerPx
 });
 
 // resize
