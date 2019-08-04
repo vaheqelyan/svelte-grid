@@ -94,6 +94,7 @@ export let cols = 0;
 export let dragDebounceMs = 350;
 export let gap = 0;
 export let rowHeight;
+export let breakpoints;
 
 let rows = getLastItemStats(items);
 let container;
