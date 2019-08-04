@@ -20,16 +20,7 @@
     "type": "git",
     "url": "git+https://github.com/vaheqelyan/svelte-grid.git"
   },
-  "keywords": [
-    "svelte",
-    "grid",
-    "drag",
-    "draggable",
-    "resize",
-    "resizable",
-    "fluid",
-    "responsive"
-  ],
+  "keywords": ["svelte", "grid", "drag", "draggable", "resize", "resizable", "fluid", "responsive"],
   "author": "Vahe Araqelyan <vahe.araqelyan.2013@hotmail.com>",
   "license": "MIT",
   "bugs": {
@@ -44,8 +35,5 @@
     "rollup-plugin-svelte": "^5.1.0",
     "svelte": "^3.6.10"
   },
-  "files": [
-    "src",
-    "build"
-  ]
+  "files": ["src", "build"]
 }
