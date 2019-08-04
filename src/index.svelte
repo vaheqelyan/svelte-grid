@@ -47,8 +47,8 @@
 <div class=container bind:this={container} style="height: {ch}px">
   {#each items as item, i (item.id)}
 
-    <div on:mousedown={dragOnMouseDown.bind(this, item.id)}
-        on:touchstart={dragOnMouseDown.bind(this, item.id)}
+    <div on:mousedown={!item.static ? dragOnMouseDown.bind(this, item.id) : null}
+        on:touchstart={!item.static ? dragOnMouseDown.bind(this, item.id) : null}
         class=item style="
         width: {item.resize.resizing ? item.resize.width : ((item.w * xPerPx) - gap * 2) - (item.responsive.valueW*xPerPx)}px;
         height: {item.resize.resizing ? item.resize.height : (item.h * yPerPx) - gap * 2}px;
@@ -60,10 +60,12 @@
         >
 
           <slot {item} index={i}></slot>
-          <div class="resizer" 
+          {#if !item.static}
+            <div class="resizer" 
           on:touchstart={resizeOnMouseDown.bind(this,item.id)} 
           on:mousedown={resizeOnMouseDown.bind(this,item.id)}
           ></div>
+          {/if}
         </div>
 
 
