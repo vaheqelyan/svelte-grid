@@ -140,6 +140,8 @@ function onResize() {
     cols:getCols
   });
 
+  docH = window.innerHeight
+
   items = resizeItems(items, getCols);
 
 }
