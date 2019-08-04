@@ -181,10 +181,6 @@ function resizeOnMouseDown(id, e) {
 
   shadow = {...shadow,...focuesdItem,...{active:true}}
 
-  if (item.static) {
-    return;
-  }
-
   resizeStartX = pageX - bound.x;
   resizeStartY = pageY - bound.y;
 
@@ -266,11 +262,6 @@ function resizeOnMouseMove(e) {
 
 function resizeOnMouseUp(e) {
   e.stopPropagation();
-  if (focuesdItem && focuesdItem.static) {
-    e.preventDefault();
-    e.stopPropagation();
-    return;
-  }
 
   items[currentItemIndex].resize.resizing = false;
   items[currentItemIndex].resize.width = 0;
@@ -309,11 +300,6 @@ function dragOnMouseDown(id, e) {
   let pageY = isTouch ? ev[0].pageY : ev.pageY;
 
   const { item, index } = getItemById(id, items);
-  if (item.static) {
-    e.preventDefault();
-    e.stopPropagation();
-    return;
-  }
   
   currentItemIndex = index;
 
@@ -405,10 +391,6 @@ function dragOnMove(e) {
 }
 
 function dragOnMouseUp(e) {
-  if (focuesdItem && focuesdItem.static) {
-    return;
-  }
-
   window.removeEventListener("mousemove", dragOnMove, false);
   window.removeEventListener("touchmove", dragOnMove, false);
 
