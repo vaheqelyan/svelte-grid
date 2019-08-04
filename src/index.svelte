@@ -436,6 +436,9 @@ function recalculateGridPosition(action) {
 beforeUpdate(() => {
   if (!focuesdItem) {
     ch = getContainerHeight(items, yPerPx);
+    if(bound) {
+      xPerPx = bound.width/cols
+    }
   }
 });
 
