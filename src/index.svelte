@@ -152,11 +152,15 @@ let docH;
 onMount(() => {
   docH = window.innerHeight;
   bound = container.getBoundingClientRect();
-  var nC = Math.round(bound.width / colWidth)
-  dispatch('resize', {
-    cols:nC
-  });
-  xPerPx = bound.width / nC;
+
+  let getCols = getColumnFromBreakpoints(breakpoints, window.innerWidth, cols, initCols)
+
+  if(breakpoints) {
+    items = resizeItems(items, getCols)
+  }
+
+  xPerPx = bound.width / getCols
+
 });
 
 // resize
