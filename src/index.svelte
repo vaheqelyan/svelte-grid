@@ -128,6 +128,8 @@ let matrix = makeMatrixFromItems(items, getLastItemStats(items), cols);
   
 const dispatch = createEventDispatcher();
 
+let initCols = cols;
+
 function onResize() {
   bound = container.getBoundingClientRect();
 
