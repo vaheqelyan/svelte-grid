@@ -83,7 +83,7 @@ import { onMount, beforeUpdate,createEventDispatcher } from "svelte";
 
 import { resizeItems, getItemById, findFreeSpaceForItem, filterStatics, moveItem } from "./utils/item.js";
 import { getContainerHeight } from "./utils/container.js";
-import { debounce, getLastItemStats } from "./utils/other.js";
+import { debounce, getLastItemStats, getColumnFromBreakpoints } from "./utils/other.js";
 import { makeMatrixFromItems, findCloseBlocks, makeMatrixFromItemsIgnore, clearItemFromMatrix, findItemsById,reOrderItemsFromMatrix } from "./utils/matrix.js";
 
 export let colWidth;
@@ -129,19 +129,19 @@ let matrix = makeMatrixFromItems(items, getLastItemStats(items), cols);
   
 const dispatch = createEventDispatcher();
 
-function onResize(e) {
-  const newBound = container.getBoundingClientRect();
-  var nC = Math.round(newBound.width / colWidth)
+function onResize() {
+  bound = container.getBoundingClientRect();
+
+  let getCols = getColumnFromBreakpoints(breakpoints,window.innerWidth,cols,initCols)
+  
+  xPerPx = bound.width / getCols
 
   dispatch('resize', {
-    cols:nC
+    cols:getCols
   });
 
-  bound = newBound
+  items = resizeItems(items, getCols);
 
-  xPerPx = bound.width / nC;
-
-  items = resizeItems(items, nC);
 }
 let cacheXperPx;
 let ch = getContainerHeight(items, yPerPx);
