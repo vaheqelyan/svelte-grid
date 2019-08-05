@@ -1,17 +1,17 @@
 <style>
-   .container {
-    position: relative;
-    background: yellow;
-    width: 100%;
-  }
-  .item {
-    touch-action:none;
-    word-break: break-all;
-    position: absolute;
-    background: #ccc;
-    border: 1px solid;
-    z-index: 1000;
-  }
+ .container {
+  position: relative;
+  background: yellow;
+  width: 100%;
+}
+.item {
+  touch-action:none;
+  word-break: break-all;
+  position: absolute;
+  background: #ccc;
+  border: 1px solid;
+  z-index: 1000;
+}
 
 .backShadow {
   background: #f2bfbf;
@@ -19,9 +19,9 @@
 }
 
 
-  .resizer {
+.resizer {
   user-select: none;
- width: 20px;
+  width: 20px;
   height: 20px; 
   /*background: #ccc; */
   position:absolute; 
@@ -31,14 +31,14 @@
 }
 
 .resizer::after {
-      content: "";
-    position: absolute;
-    right: 3px;
-    bottom: 3px;
-    width: 5px;
-    height: 5px;
-    border-right: 2px solid rgba(0, 0, 0, 0.4);
-    border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+  content: "";
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  width: 5px;
+  height: 5px;
+  border-right: 2px solid rgba(0, 0, 0, 0.4);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.4);
 }
 </style>
 
