@@ -95,37 +95,28 @@ export let gap = 0;
 export let rowHeight;
 export let breakpoints;
 
-let container;
+let container,
+  focuesdItem,
+  bound,
+  xPerPx,
+  yPerPx,
+  currentItemIndex,
+  resizeNoDynamicCalc,
+  initCols = cols,
+  shadow = {
+    w: 0,
+    h: 0,
+    x: 0,
+    y: 0,
+    active: false,
+    id: null,
+    responsive: { valueW: 0 },
+    min: {},
+    max: {}
+  };
 
-let bound;
-let xPerPx;
-let currentItemIndex;
 
-let resizeNoDynamicCalc;
-
-let shadow = {
-  w: 0,
-  h: 0,
-  x: 0,
-  y: 0,
-  active: false,
-  id: null,
-  responsive:{valueW:0},
-  min:{},
-  max:{}
-};
-
-
-const yPerPx = rowHeight;
-
-let focuesdItem;
-
-let matrix = makeMatrixFromItems(items, getLastItemStats(items), cols);
-
-  
 const dispatch = createEventDispatcher();
-
-let initCols = cols;
 
 function onResize() {
 
