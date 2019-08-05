@@ -88,7 +88,6 @@ import { getContainerHeight } from "./utils/container.js";
 import { debounce, getLastItemStats, getColumnFromBreakpoints, getCordinates } from "./utils/other.js";
 import { makeMatrixFromItems } from "./utils/matrix.js";
 
-export let colWidth;
 export let items = [];
 export let cols = 0;
 export let dragDebounceMs = 350;
