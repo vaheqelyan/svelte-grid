@@ -85,7 +85,7 @@ import { onMount, beforeUpdate,createEventDispatcher } from "svelte";
 
 import { resizeItems, getItemById, moveItem } from "./utils/item.js";
 import { getContainerHeight } from "./utils/container.js";
-import { debounce, getLastItemStats, getColumnFromBreakpoints } from "./utils/other.js";
+import { debounce, getLastItemStats, getColumnFromBreakpoints, getCordinates } from "./utils/other.js";
 import { makeMatrixFromItems } from "./utils/matrix.js";
 
 export let colWidth;
@@ -171,10 +171,7 @@ let resizeStartX, resizeStartY, resizeStartWidth, resizeStartHeight;
 function resizeOnMouseDown(id, e) {
   e.stopPropagation();
 
-  const { touches: ev = e } = e;
-  const isTouch = ev.constructor === TouchList;
-  let pageX = isTouch ? ev[0].pageX : ev.pageX;
-  let pageY = isTouch ? ev[0].pageY : ev.pageY;
+  let {pageX,pageY} = getCordinates(e)
 
   const { item, index } = getItemById(id, items);
 
@@ -204,12 +201,8 @@ function resizeOnMouseDown(id, e) {
 }
 
 function resizeOnMouseMove(e) {
-  const { touches: ev = e } = e;
-  const isTouch = ev.constructor === TouchList;
-  let pageX = isTouch ? ev[0].pageX : ev.pageX;
-  let pageY = isTouch ? ev[0].pageY : ev.pageY;
 
-  let clientY = isTouch ? ev[0].clientY : ev.clientY;
+  let {pageX,pageY,clientY}=getCordinates(e);
 
   pageX = pageX - bound.x;
   pageY = pageY - bound.y;
@@ -299,12 +292,7 @@ let cacheItem = {};
 
 function dragOnMouseDown(id, e) {
   e.stopPropagation()
-  const { touches: ev = e } = e;
-
-
-  const isTouch = ev.constructor === TouchList;
-  let pageX = isTouch ? ev[0].pageX : ev.pageX;
-  let pageY = isTouch ? ev[0].pageY : ev.pageY;
+  let {pageX,pageY} = getCordinates(e)
 
   const { item, index } = getItemById(id, items);
   
@@ -345,12 +333,8 @@ let passCall = false;
 
 function dragOnMove(e) {
   e.stopPropagation()
-  const { touches: ev = e } = e;
-  const isTouch = ev.constructor === TouchList;
-  let pageX = isTouch ? ev[0].pageX : ev.pageX;
-  let pageY = isTouch ? ev[0].pageY : ev.pageY;
 
-  let clientY = isTouch ? ev[0].clientY : ev.clientY;
+  let {pageX,pageY,clientY} = getCordinates(e)
 
   const y = pageY - bound.y;
   const x = pageX - bound.x;
