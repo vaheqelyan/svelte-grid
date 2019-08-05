@@ -1,6 +1,6 @@
 {
   "name": "svelte-grid",
-  "version": "0.3.1",
+  "version": "1.0.0",
   "description": "A responsive, draggable and resizable grid layout, for Svelte.",
   "svelte": "src/index.svelte",
   "module": "build/index.mjs",
