@@ -132,29 +132,40 @@ const dispatch = createEventDispatcher();
 let initCols = cols;
 
 function onResize() {
-  bound = container.getBoundingClientRect();
 
-  let getCols = getColumnFromBreakpoints(breakpoints,window.innerWidth,cols,initCols)
-  
-  xPerPx = bound.width / getCols
+  let w = document.documentElement.clientWidth
 
-  dispatch('resize', {
-    cols:getCols
-  });
+  if(w !== documentWidth) {
+    documentWidth = w;
+    
+    bound = container.getBoundingClientRect();
 
-  docH = window.innerHeight
+    let getCols = getColumnFromBreakpoints(breakpoints,window.innerWidth,cols,initCols)
+    
+    xPerPx = bound.width / getCols
 
-  items = resizeItems(items, getCols);
+    dispatch('resize', {
+      cols:getCols
+    });
+
+    docH = window.innerHeight
+
+    items = resizeItems(items, getCols);
+
+  } 
 
 }
 
 let ch = getContainerHeight(items, yPerPx);
 let docH;
+let documentWidth;
 onMount(() => {
   docH = window.innerHeight;
   bound = container.getBoundingClientRect();
 
   let getCols = getColumnFromBreakpoints(breakpoints, window.innerWidth, cols, initCols)
+  
+  documentWidth = document.documentElement.clientWidth
 
   if(breakpoints) {
     items = resizeItems(items, getCols)
