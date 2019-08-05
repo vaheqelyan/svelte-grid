@@ -119,7 +119,6 @@ let shadow = {
 
 const yPerPx = rowHeight;
 
-let currentItemId;
 let focuesdItem;
 
 let matrix = makeMatrixFromItems(items, getLastItemStats(items), cols);
