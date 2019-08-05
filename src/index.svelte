@@ -1,10 +1,10 @@
 <style>
- .container {
+ .svlt-grid-container {
   position: relative;
   background: yellow;
   width: 100%;
 }
-.item {
+.svlt-grid-item {
   touch-action:none;
   word-break: break-all;
   position: absolute;
@@ -13,13 +13,13 @@
   z-index: 1000;
 }
 
-.backShadow {
+.svlt-grid-shadow {
   background: #f2bfbf;
   position: absolute;
 }
 
 
-.resizer {
+.svlt-grid-resizer {
   user-select: none;
   width: 20px;
   height: 20px; 
@@ -30,7 +30,7 @@
   cursor: se-resize; 
 }
 
-.resizer::after {
+.svlt-grid-resizer::after {
   content: "";
   position: absolute;
   right: 3px;
@@ -44,12 +44,12 @@
 
 <svelte:window on:resize={ debounce(onResize,300) } />
 
-<div class=container bind:this={container} style="height: {ch}px">
+<div class=svlt-grid-container bind:this={container} style="height: {ch}px">
   {#each items as item, i (item.id)}
 
     <div on:mousedown={!item.static ? dragOnMouseDown.bind(this, item.id) : null}
         on:touchstart={!item.static ? dragOnMouseDown.bind(this, item.id) : null}
-        class=item style="
+        class=svlt-grid-item style="
         width: {item.resize.resizing ? item.resize.width : ((item.w * xPerPx) - gap * 2) - (item.responsive.valueW*xPerPx)}px;
         height: {item.resize.resizing ? item.resize.height : (item.h * yPerPx) - gap * 2}px;
         top: {item.drag.dragging ? item.drag.top : (item.y * yPerPx) + gap}px;
@@ -61,7 +61,7 @@
 
           <slot {item} index={i}></slot>
           {#if !item.static}
-            <div class="resizer" 
+            <div class=svlt-grid-resizer 
           on:touchstart={resizeOnMouseDown.bind(this,item.id)} 
           on:mousedown={resizeOnMouseDown.bind(this,item.id)}
           ></div>
@@ -72,7 +72,7 @@
   {/each}
 
   {#if shadow.active}
-    <div class=backShadow style="
+    <div class=svlt-grid-shadow style="
     width:{((shadow.w * xPerPx) - gap * 2) - (shadow.responsive.valueW*xPerPx)}px;
     height:{(shadow.h * yPerPx) - gap * 2}px;
     top: {(shadow.y * yPerPx) + gap}px;
