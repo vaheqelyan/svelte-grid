@@ -2,3 +2,4 @@ public/
 *.svelte
 index.js
 index.mjs
+www/
