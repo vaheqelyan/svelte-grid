@@ -10,10 +10,6 @@
     "lint": "eslint .",
     "pretty": "prettier --config .prettierrc --write \"rollup.config.js\" \".eslintrc\" \"package.json\" \"src/**/*.js\" ",
     "build": "rollup -c",
-    "autobuild": "rollup -c -w",
-    "dev": "run-p start:dev autobuild",
-    "start": "sirv public --single",
-    "start:dev": "sirv public --single --dev",
     "go": "npm-run-all pretty lint build"
   },
   "repository": {
