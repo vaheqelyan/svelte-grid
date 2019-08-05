@@ -1,20 +1,16 @@
 <style>
  .svlt-grid-container {
   position: relative;
-  background: yellow;
-  width: 100%;
 }
+
 .svlt-grid-item {
   touch-action:none;
   word-break: break-all;
   position: absolute;
-  background: #ccc;
-  border: 1px solid;
   z-index: 1000;
 }
 
 .svlt-grid-shadow {
-  background: #f2bfbf;
   position: absolute;
 }
 
@@ -23,7 +19,6 @@
   user-select: none;
   width: 20px;
   height: 20px; 
-  /*background: #ccc; */
   position:absolute; 
   right: 0; 
   bottom: 0; 
