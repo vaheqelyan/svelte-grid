@@ -101,6 +101,8 @@ let container,
   xPerPx,
   yPerPx,
   currentItemIndex,
+  docH,
+  documentWidth,
   resizeNoDynamicCalc,
   initCols = cols,
   shadow = {
@@ -113,7 +115,10 @@ let container,
     responsive: { valueW: 0 },
     min: {},
     max: {}
-  };
+  },
+  ch = getContainerHeight(items, yPerPx);
+
+
 
 
 const dispatch = createEventDispatcher();
@@ -143,9 +148,7 @@ function onResize() {
 
 }
 
-let ch = getContainerHeight(items, yPerPx);
-let docH;
-let documentWidth;
+
 onMount(() => {
   docH = window.innerHeight;
   bound = container.getBoundingClientRect();
