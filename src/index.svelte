@@ -400,7 +400,7 @@ function dragOnMouseUp(e) {
 
   let assignItem = items[currentItemIndex]
   items[currentItemIndex] = {
-    ...assignItem
+    ...assignItem,
     drag: {
       dragging: false,
       top: 0,
