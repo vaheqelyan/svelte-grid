@@ -424,8 +424,8 @@ function dragOnMouseUp(e) {
 function recalculateGridPosition(action) {
   const dragItem = items[currentItemIndex];
 
-
-  items = moveItem(dragItem, items, cols, cacheItem);
+  let getCols = getColumnFromBreakpoints(breakpoints, window.innerWidth, cols, initCols)
+  items = moveItem(dragItem, items, getCols, cacheItem);
 
   dispatch('recalculate', {
     focuesdItem: dragItem
