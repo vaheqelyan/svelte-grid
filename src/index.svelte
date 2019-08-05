@@ -118,9 +118,6 @@ let container,
   },
   ch = getContainerHeight(items, yPerPx);
 
-
-
-
 const dispatch = createEventDispatcher();
 
 function onResize() {
@@ -249,12 +246,17 @@ function resizeOnMouseMove(e) {
 
   shadow = {...shadow, ...{w:wRes, h:hRes}} 
 
-  items[currentItemIndex].resize.resizing = true;
-  items[currentItemIndex].resize.width = width;
-  items[currentItemIndex].resize.height = height;
-
-  items[currentItemIndex].w = wRes;
-  items[currentItemIndex].h = hRes;
+  let assignItem = items[currentItemIndex]
+  items[currentItemIndex] = {
+    ...assignItem,
+    resize: {
+      resizing:true,
+      width,
+      height
+    },
+    w:wRes,
+    h:hRes
+  }
 
   if (!resizeNoDynamicCalc || passCall) {
     debounceRecalculateGridPosition();
@@ -264,9 +266,15 @@ function resizeOnMouseMove(e) {
 function resizeOnMouseUp(e) {
   e.stopPropagation();
 
-  items[currentItemIndex].resize.resizing = false;
-  items[currentItemIndex].resize.width = 0;
-  items[currentItemIndex].resize.height = 0;
+  let assignItem = items[currentItemIndex]
+  items[currentItemIndex] = {
+    ...assignItem,
+    resize:{
+      resizing:false,
+      width:0,
+      height:0
+    }
+  }
 
   window.removeEventListener("mousemove", resizeOnMouseMove, false);
   window.removeEventListener("touchmove", resizeOnMouseMove, false);
@@ -368,14 +376,20 @@ function dragOnMove(e) {
 
   yRes = Math.max(yRes, 0);
 
-  items[currentItemIndex].drag.top = y - dragY;
-  items[currentItemIndex].drag.left = x - dragX;
+  let assignItem = items[currentItemIndex];
 
-  items[currentItemIndex].drag.dragging = true;
+  items[currentItemIndex] = {
+    ...assignItem,
+    drag:{
+      dragging:true,
+      top:y - dragY,
+      left:x - dragX
+    },
+    x:xRes,
+    y:yRes
+  }
 
   shadow = {...shadow, ...{x:xRes,y:yRes}}
-  items[currentItemIndex].x = xRes;
-  items[currentItemIndex].y = yRes;
 
   if (!passCall) {
     debounceRecalculateGridPosition();
@@ -389,9 +403,15 @@ function dragOnMouseUp(e) {
   window.removeEventListener("mouseup", dragOnMouseUp, false);
   window.removeEventListener("touchend", dragOnMouseUp, false);
 
-  items[currentItemIndex].drag.dragging = false;
-  items[currentItemIndex].drag.top = 0;
-  items[currentItemIndex].drag.left = 0;
+  let assignItem = items[currentItemIndex]
+  items[currentItemIndex] = {
+    ...assignItem
+    drag: {
+      dragging: false,
+      top: 0,
+      left: 0
+    },
+  }
 
   dragX = 0;
   dragY = 0;
