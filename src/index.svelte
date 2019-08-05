@@ -71,7 +71,7 @@
     width:{((shadow.w * xPerPx) - gap * 2) - (shadow.responsive.valueW*xPerPx)}px;
     height:{(shadow.h * yPerPx) - gap * 2}px;
     top: {(shadow.y * yPerPx) + gap}px;
-    left: {(shadow.x * xPerPx) + gap}px">{shadow.id} {shadow.responsive.valueW}</div>
+    left: {(shadow.x * xPerPx) + gap}px"></div>
   {/if}
 </div>
 
