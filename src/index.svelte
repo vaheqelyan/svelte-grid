@@ -294,6 +294,8 @@ const debounceRecalculateGridPosition = debounce(recalculateGridPosition, dragDe
 
 let cacheItem = {};
 
+let getColsDrag;
+
 function dragOnMouseDown(id, e) {
   e.stopPropagation()
   let {pageX,pageY} = getCordinates(e)
@@ -320,6 +322,8 @@ function dragOnMouseDown(id, e) {
   dragX = pageX - offsetLeft;
 
   dragY = pageY - offsetTop;
+
+  getColsDrag = getColumnFromBreakpoints(breakpoints, window.innerWidth, cols, initCols)
 
 
   if (item) {
@@ -367,7 +371,7 @@ function dragOnMove(e) {
   let xRes = Math.round((x - dragX) / xPerPx);
   let yRes = Math.round((y - dragY) / yPerPx);
 
-  xRes = Math.max(xRes,0)
+  xRes = Math.max(Math.min(xRes,getColsDrag-(focuesdItem.w- focuesdItem.responsive.valueW)),0)
 
   yRes = Math.max(yRes, 0);
 
