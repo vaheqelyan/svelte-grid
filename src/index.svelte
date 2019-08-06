@@ -195,7 +195,7 @@ function resizeOnMouseDown(id, e) {
 
 function resizeOnMouseMove(e) {
 
-  let {pageX,pageY,clientY}=getCordinates(e);
+  let {pageX,pageY,clientY}=getCordinates(e, true);
 
   pageX = pageX - bound.x;
   pageY = pageY - bound.y;
@@ -342,7 +342,7 @@ let passCall = false;
 function dragOnMove(e) {
   e.stopPropagation()
 
-  let {pageX,pageY,clientY} = getCordinates(e)
+  let {pageX,pageY,clientY} = getCordinates(e, true)
 
   const y = pageY - bound.y;
   const x = pageX - bound.x;
