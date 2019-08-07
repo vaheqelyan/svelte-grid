@@ -40,4 +40,4 @@ const gridHelp = {
   },
 };
 
-export { gridHelp };
+export default gridHelp;
