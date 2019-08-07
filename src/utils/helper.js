@@ -4,18 +4,25 @@ import { getLastItemStats } from "./other.js";
 
 function makeItem(item) {
   return {
-    ...item,
-    ...{
-      drag: { top: null, left: null, dragging: false },
-      resize: { width: null, height: null, resizing: false },
-      responsive: { valueW: 0 },
-      min: {
-        ...item.min,
-      },
-      max: {
-        ...item.max,
-      },
+    drag: {
+      top: null,
+      left: null,
+      dragging: false,
     },
+    resize: {
+      width: null,
+      height: null,
+      resizing: false,
+    },
+    responsive: {
+      valueW: 0,
+    },
+    static: false,
+    resizable: !item.static,
+    draggable: !item.static,
+    min: { ...item.min },
+    max: { ...item.max },
+    ...item,
   };
 }
 
