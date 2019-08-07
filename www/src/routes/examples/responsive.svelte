@@ -24,7 +24,7 @@
 </style>
 
 <script>
-	import Grid from 'svelte-grid/src/index.svelte'
+	import Grid from 'svelte-grid'
 	import {makeItem,gridHelp} from 'svelte-grid/build/helper/index.mjs'
   import map from 'lodash.map'
   
