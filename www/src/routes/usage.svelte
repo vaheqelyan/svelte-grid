@@ -222,3 +222,7 @@ tr:nth-child(even) {
   </tr>
   
 </table>
+
+<p>Have questions ?</p>
+
+<p><a href=https://github.com/vaheqelyan/svelte-grid/issues/new target=_blank>Open an issue</a></p>
