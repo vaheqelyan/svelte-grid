@@ -113,6 +113,9 @@ tr:nth-child(even) {
     w: 0,
     h: 0
   },
+  draggable: Boolean,
+  resizable: Boolean,
+  draggable: Boolean,
   max: {
     w: 0,
     h: 0
