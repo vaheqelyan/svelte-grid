@@ -1,4 +1,13 @@
 <style>
+.scroll {
+  overflow-x: auto;
+}
+
+pre {
+ white-space: pre-wrap;
+ word-wrap: break-word; 
+}
+
 	table {
   border-collapse: collapse;
   width: 100%;
@@ -165,6 +174,7 @@ tr:nth-child(even) {
 
 <h2>Props</h2>
 
+<div class=scroll>
 <table>
   <tr>
     <th>Prop</th>
@@ -225,6 +235,7 @@ tr:nth-child(even) {
   </tr>
   
 </table>
+</div>
 
 <p>Have questions ?</p>
 
