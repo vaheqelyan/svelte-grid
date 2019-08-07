@@ -1,16 +1,27 @@
 <script>
 	import Nav from '../components/Nav.svelte';
+	import Footer from '../components/Footer.svelte'
 
 	export let segment;
 </script>
 
 <style>
-	div {
-		padding: 10px 16px;
-		box-sizing: border-box;
+	:global(body){
+		display: flex;
+	  min-height: 100vh;
+	  flex-direction: column;
+	}
+	.content {
+		flex: 1;
+		padding: 4% 7%;
+		/*padding:20% 100%;*/
 	}
 </style>
 
 <Nav {segment}/>
 
-<div><slot></slot></div>
+<div class=content>
+	<slot></slot>
+</div>
+
+<Footer/>
