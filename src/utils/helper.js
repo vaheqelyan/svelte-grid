@@ -34,6 +34,11 @@ const gridHelp = {
   resizeItems(items, col, rows) {
     return resizeItems(items, col, rows);
   },
+
+  item(obj) {
+    return makeItem(obj)
+  }
+
 };
 
-export { gridHelp, makeItem, getLastItemStats, resizeItems };
+export { gridHelp };
