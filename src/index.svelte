@@ -87,7 +87,7 @@ export let items = [];
 export let cols = 0;
 export let dragDebounceMs = 350;
 export let gap = 0;
-export let rowHeight;
+export let rowHeight = 150;
 export let breakpoints;
 
 let container,
