@@ -36,9 +36,8 @@ const gridHelp = {
   },
 
   item(obj) {
-    return makeItem(obj)
-  }
-
+    return makeItem(obj);
+  },
 };
 
 export { gridHelp };
