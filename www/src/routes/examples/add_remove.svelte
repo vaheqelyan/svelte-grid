@@ -35,7 +35,7 @@
 
 <script>
 	import Grid from 'svelte-grid'
-	import {makeItem,gridHelp} from 'svelte-grid/build/helper/index.mjs'
+	import gridHelp from 'svelte-grid/build/helper/index.mjs'
   import map from 'lodash.map'
   import {openInSource} from './github.js'
 
@@ -49,7 +49,7 @@
     function generateLayout(col) {
   return map(new Array(3), function(item, i) {
     const y = Math.ceil(Math.random() * 4) + 1;
-    return makeItem({
+    return gridHelp.item({
         x: (i * 2) % col,
         y: Math.floor(i / 6) * y,
         w: 2,
@@ -74,7 +74,7 @@ const randomNumberInRange = (min, max) => Math.random() * (max - min) + min;
     Very easy
   */
   function add() {
-    let newItem = makeItem({
+    let newItem = gridHelp.item({
       w: Math.round(randomNumberInRange(1, 4)),
       h: Math.round(randomNumberInRange(1, 4)),
       x: 0,
@@ -88,7 +88,7 @@ const randomNumberInRange = (min, max) => Math.random() * (max - min) + min;
   }
 
   function addAt() {
-    let newItem = makeItem({
+    let newItem = gridHelp.item({
       w:Math.round(randomNumberInRange(1,4)),
       h:Math.round(randomNumberInRange(1,4)),
       x:3,

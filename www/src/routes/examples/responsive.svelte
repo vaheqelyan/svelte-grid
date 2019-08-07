@@ -25,7 +25,7 @@
 
 <script>
 	import Grid from 'svelte-grid'
-	import {makeItem,gridHelp} from 'svelte-grid/build/helper/index.mjs'
+	import gridHelp from 'svelte-grid/build/helper/index.mjs'
   import map from 'lodash.map'
   
   import {openInSource} from './github.js'
@@ -39,7 +39,7 @@
     function generateLayout(col) {
   return map(new Array(20), function(item, i) {
     const y = Math.ceil(Math.random() * 4) + 1;
-    return makeItem({
+    return gridHelp.item({
         x: (i * 2) % col,
         y: Math.floor(i / 6) * y,
         w: 2,

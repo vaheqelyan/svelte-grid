@@ -25,7 +25,7 @@
 
 <script>
 	import Grid from 'svelte-grid'
-	import {makeItem} from 'svelte-grid/build/helper/index.mjs'
+	import gridHelp from 'svelte-grid/build/helper/index.mjs'
   import {openInSource} from './github.js'
 
 	const id = () =>
@@ -34,7 +34,8 @@
     .toString(36)
     .substr(2, 9);
 
-	let items = [makeItem({x:0,y:0,w:2,h:2,id:id()}),makeItem({x:2,y:0,w:2,h:2,id:id()})]
+	let items = [gridHelp.item({x:0,y:0,w:2,h:2,id:id()}),
+              gridHelp.item({x:2,y:0,w:2,h:2,id:id()})]
 
 </script>
 
