@@ -1,7 +1,4 @@
 <style>
-	.warn {
-		color: orange;
-	}
 		@media only screen and (max-width:400px) {
 			ul {
 				padding-left: 25px;
@@ -33,7 +30,6 @@
 	<li>Responsive breakpoints</li>
 	<li>Limit the minimum and maximum width / height when resizing</li>
 	<li>Provide helper functions</li>
-	<li class=warn>Scrolling the page while dragging the widget, both on the mobile and on the desktop. (<b>Not stable</b>)</li>
 </ul>
 
 <a href="https://github.com/vaheqelyan/svelte-grid/issues/new" target=_blank>Suggest your feature</a>
