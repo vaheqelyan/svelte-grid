@@ -42,8 +42,8 @@
 <div class=svlt-grid-container bind:this={container} style="height: {ch}px">
   {#each items as item, i (item.id)}
 
-    <div on:mousedown={item.dragging ? dragOnMouseDown.bind(this, item.id) : null}
-        on:touchstart={item.dragging ? dragOnMouseDown.bind(this, item.id) : null}
+    <div on:mousedown={item.draggable ? dragOnMouseDown.bind(this, item.id) : null}
+        on:touchstart={item.draggable ? dragOnMouseDown.bind(this, item.id) : null}
         class=svlt-grid-item style="
         width: {item.resize.resizing ? item.resize.width : ((item.w * xPerPx) - gap * 2) - (item.responsive.valueW*xPerPx)}px;
         height: {item.resize.resizing ? item.resize.height : (item.h * yPerPx) - gap * 2}px;
