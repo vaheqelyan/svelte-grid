@@ -95,7 +95,6 @@ let container,
   bound,
   xPerPx,
   currentItemIndex,
-  docH,
   getColsOnAction,
   documentWidth,
   resizeNoDynamicCalc,
@@ -133,8 +132,6 @@ function onResize() {
       cols:getCols
     });
 
-    docH = window.innerHeight
-
     items = resizeItems(items, getCols);
 
   } 
@@ -143,7 +140,6 @@ function onResize() {
 
 
 onMount(() => {
-  docH = window.innerHeight;
   bound = container.getBoundingClientRect();
 
   let getCols = getColumnFromBreakpoints(breakpoints, window.innerWidth, cols, initCols)
@@ -197,31 +193,10 @@ function resizeOnMouseDown(id, e) {
 
 function resizeOnMouseMove(e) {
 
-  let {pageX,pageY,clientY}=getCordinates(e, true);
+  let {pageX,pageY}=getCordinates(e);
 
   pageX = pageX - bound.x;
   pageY = pageY - bound.y;
-
-  if (docH - clientY <= 15) {
-    scroll({
-      behavior: "smooth",
-      top: scrollY + yPerPx
-    });
-    passCall = true;
-  } else {
-    passCall = false;
-  }
-
-  if (clientY < 0 && scrollY > 0) {
-    passCall = true;
-    scroll({
-      behavior: "smooth",
-      top: scrollY - yPerPx
-    });
-  } else {
-    passCall = false;
-  }
-
 
   const height = resizeStartHeight + pageY - resizeStartY;
   const width = resizeStartWidth + (pageX - resizeStartX)
@@ -255,7 +230,7 @@ function resizeOnMouseMove(e) {
     h:hRes
   }
 
-  if (!resizeNoDynamicCalc || passCall) {
+  if (!resizeNoDynamicCalc) {
     debounceRecalculateGridPosition();
   }
 }
@@ -284,7 +259,6 @@ function resizeOnMouseUp(e) {
   recalculateGridPosition("up");
 
   focuesdItem = undefined;
-  passCall = false;
   resizeNoDynamicCalc = false;
 }
 
@@ -337,36 +311,14 @@ function dragOnMouseDown(id, e) {
   }
 }
 
-let passCall = false;
 
 function dragOnMove(e) {
   e.stopPropagation()
 
-  let {pageX,pageY,clientY} = getCordinates(e, true)
+  let {pageX,pageY} = getCordinates(e)
 
   const y = pageY - bound.y;
   const x = pageX - bound.x;
-
-  if (docH - clientY <= 15) {
-    scroll({
-      behavior: "smooth",
-      top: scrollY + focuesdItem.h * yPerPx
-    });
-    passCall = true;
-  } else {
-    passCall = false;
-  }
-
-  if (clientY < 0 && scrollY >= 0) {
-    passCall = true;
-    scroll({
-      behavior: "smooth",
-      top: scrollY - yPerPx
-    });
-  } else {
-    passCall = false;
-  }
-
 
   let xRes = Math.round((x - dragX) / xPerPx);
   let yRes = Math.round((y - dragY) / yPerPx);
@@ -390,9 +342,7 @@ function dragOnMove(e) {
 
   shadow = {...shadow, ...{x:xRes,y:yRes}}
 
-  if (!passCall) {
-    debounceRecalculateGridPosition();
-  }
+  debounceRecalculateGridPosition();
 }
 
 function dragOnMouseUp(e) {
@@ -419,7 +369,6 @@ function dragOnMouseUp(e) {
   
   recalculateGridPosition("up");
 
-  passCall = false;
   focuesdItem = undefined;
 }
 
