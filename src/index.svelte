@@ -89,7 +89,7 @@ export let dragDebounceMs = 350;
 export let gap = 0;
 export let rowHeight = 150;
 export let breakpoints;
-export let fillSpaces = true;
+export let fillEmpty = true;
 
 let container,
   focuesdItem,
@@ -385,7 +385,7 @@ function recalculateGridPosition(action) {
   let getCols = getColumnFromBreakpoints(breakpoints, window.innerWidth, cols, initCols)
   let result = moveItem(dragItem, items, getCols, cacheItem);
 
-  if(fillSpaces) {
+  if(fillEmpty) {
     let matrix = makeMatrixFromItems([dragItem], getClosestToRow(result), getComputedCols)
     result = result.map((value,index)=>{
       if(value.id !== dragItem.id) {
