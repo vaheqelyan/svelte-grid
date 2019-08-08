@@ -78,7 +78,7 @@
 <script>
 import { onMount, beforeUpdate,createEventDispatcher } from "svelte";
 
-import { resizeItems, getItemById, moveItem } from "./utils/item.js";
+import { resizeItems, getItemById, moveItem, findFreeSpaceForItem } from "./utils/item.js";
 import { getContainerHeight } from "./utils/container.js";
 import { debounce, getLastItemStats, getColumnFromBreakpoints, getCordinates } from "./utils/other.js";
 import { makeMatrixFromItems } from "./utils/matrix.js";
@@ -89,13 +89,14 @@ export let dragDebounceMs = 350;
 export let gap = 0;
 export let rowHeight = 150;
 export let breakpoints;
+export let fillSpaces = true;
 
 let container,
   focuesdItem,
   bound,
   xPerPx,
   currentItemIndex,
-  getColsOnAction,
+  getComputedCols,
   documentWidth,
   resizeNoDynamicCalc,
   yPerPx = rowHeight,
@@ -126,6 +127,8 @@ function onResize() {
 
     let getCols = getColumnFromBreakpoints(breakpoints,window.innerWidth,cols,initCols)
     
+    getComputedCols = getCols
+
     xPerPx = bound.width / getCols
 
     dispatch('resize', {
@@ -144,6 +147,8 @@ onMount(() => {
 
   let getCols = getColumnFromBreakpoints(breakpoints, window.innerWidth, cols, initCols)
   
+  getComputedCols = getCols
+
   documentWidth = document.documentElement.clientWidth
 
   if(breakpoints) {
@@ -182,7 +187,7 @@ function resizeOnMouseDown(id, e) {
 
   resizeStartHeight = (item.h * yPerPx) - (gap * 2);
 
-  getColsOnAction = getColumnFromBreakpoints(breakpoints, window.innerWidth, cols, initCols)
+  getComputedCols = getColumnFromBreakpoints(breakpoints, window.innerWidth, cols, initCols)
 
   window.addEventListener("mousemove", resizeOnMouseMove, false);
   window.addEventListener("touchmove", resizeOnMouseMove, false);
@@ -206,7 +211,7 @@ function resizeOnMouseMove(e) {
   let wRes = Math.round(width / xPerPx) + valueW
 
   const {h:minHeight=1,w:minWidth=1} = focuesdItem.min
-  const {h:maxHeight,w:maxWidth = ((getColsOnAction - focuesdItem.x)+valueW)} = focuesdItem.max
+  const {h:maxHeight,w:maxWidth = ((getComputedCols - focuesdItem.x)+valueW)} = focuesdItem.max
 
   wRes = Math.min(Math.max(wRes,minWidth),maxWidth)/* min max*/
 
@@ -297,7 +302,7 @@ function dragOnMouseDown(id, e) {
 
   dragY = pageY - offsetTop;
 
-  getColsOnAction = getColumnFromBreakpoints(breakpoints, window.innerWidth, cols, initCols)
+  getComputedCols = getColumnFromBreakpoints(breakpoints, window.innerWidth, cols, initCols)
 
 
   if (item) {
@@ -323,7 +328,7 @@ function dragOnMove(e) {
   let xRes = Math.round((x - dragX) / xPerPx);
   let yRes = Math.round((y - dragY) / yPerPx);
 
-  xRes = Math.max(Math.min(xRes,getColsOnAction-(focuesdItem.w- focuesdItem.responsive.valueW)),0)
+  xRes = Math.max(Math.min(xRes,getComputedCols-(focuesdItem.w- focuesdItem.responsive.valueW)),0)
 
   yRes = Math.max(yRes, 0);
 
@@ -378,7 +383,22 @@ function recalculateGridPosition(action) {
   const dragItem = items[currentItemIndex];
 
   let getCols = getColumnFromBreakpoints(breakpoints, window.innerWidth, cols, initCols)
-  items = moveItem(dragItem, items, getCols, cacheItem);
+  let result = moveItem(dragItem, items, getCols, cacheItem);
+
+  if(fillSpaces) {
+    let matrix = makeMatrixFromItems([dragItem], getClosestToRow(result), getComputedCols)
+    result = result.map((value,index)=>{
+      if(value.id !== dragItem.id) {
+        let position = findFreeSpaceForItem(matrix, value);
+        return {...value,...position}
+      } else {
+        return value
+      }
+    })
+
+  }
+
+  items = result
 
   dispatch('recalculate', {
     focuesdItem: dragItem
