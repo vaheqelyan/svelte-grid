@@ -252,6 +252,14 @@ const items = [
     <td><pre>...</pre></td>
     <td>✘</td>
   </tr>
+
+  <tr>
+    <td>on:resize</td>
+    <td>{`Function<void>`}</td>
+    <td>The event is triggered when the grid is resized based on the document size</td>
+    <td><pre>...</pre></td>
+    <td>✘</td>
+  </tr>
   
 </table>
 </div>
