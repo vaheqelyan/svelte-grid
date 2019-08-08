@@ -118,14 +118,14 @@ tr:nth-child(even) {
   drag: { top: null, left: null, dragging: false },
   resize: { width: null, height: null, resizing: false },
   responsive: { valueW: 0 },
-  min: {
-    w: 0,
-    h: 0
-  },
   draggable: Boolean,
   resizable: Boolean,
   draggable: Boolean,
   max: {
+    w: 0,
+    h: 0
+  },
+  min: {
     w: 0,
     h: 0
   },
@@ -134,6 +134,25 @@ tr:nth-child(even) {
 
 `}
 	</pre>
+</code>
+
+<p>Example of use</p>
+
+<code>
+  <pre>
+    {`
+const items = [
+  gridHelp.item({
+    x: 0,
+    y: 0,
+    w: 2,
+    h: 2,
+    draggable: false,
+    max: { w: 2 }
+  })
+];
+    `}
+  </pre>
 </code>
 
 <hr/>
