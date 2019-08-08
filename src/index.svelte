@@ -96,6 +96,7 @@ let container,
   xPerPx,
   currentItemIndex,
   docH,
+  getColsOnAction,
   documentWidth,
   resizeNoDynamicCalc,
   yPerPx = rowHeight,
@@ -185,6 +186,7 @@ function resizeOnMouseDown(id, e) {
 
   resizeStartHeight = (item.h * yPerPx) - (gap * 2);
 
+  getColsOnAction = getColumnFromBreakpoints(breakpoints, window.innerWidth, cols, initCols)
 
   window.addEventListener("mousemove", resizeOnMouseMove, false);
   window.addEventListener("touchmove", resizeOnMouseMove, false);
@@ -229,7 +231,7 @@ function resizeOnMouseMove(e) {
   let wRes = Math.round(width / xPerPx) + valueW
 
   const {h:minHeight=1,w:minWidth=1} = focuesdItem.min
-  const {h:maxHeight,w:maxWidth = ((cols - focuesdItem.x)+valueW)} = focuesdItem.max
+  const {h:maxHeight,w:maxWidth = ((getColsOnAction - focuesdItem.x)+valueW)} = focuesdItem.max
 
   wRes = Math.min(Math.max(wRes,minWidth),maxWidth)/* min max*/
 
@@ -294,8 +296,6 @@ const debounceRecalculateGridPosition = debounce(recalculateGridPosition, dragDe
 
 let cacheItem = {};
 
-let getColsDrag;
-
 function dragOnMouseDown(id, e) {
   e.stopPropagation()
   let {pageX,pageY} = getCordinates(e)
@@ -323,7 +323,7 @@ function dragOnMouseDown(id, e) {
 
   dragY = pageY - offsetTop;
 
-  getColsDrag = getColumnFromBreakpoints(breakpoints, window.innerWidth, cols, initCols)
+  getColsOnAction = getColumnFromBreakpoints(breakpoints, window.innerWidth, cols, initCols)
 
 
   if (item) {
@@ -371,7 +371,7 @@ function dragOnMove(e) {
   let xRes = Math.round((x - dragX) / xPerPx);
   let yRes = Math.round((y - dragY) / yPerPx);
 
-  xRes = Math.max(Math.min(xRes,getColsDrag-(focuesdItem.w- focuesdItem.responsive.valueW)),0)
+  xRes = Math.max(Math.min(xRes,getColsOnAction-(focuesdItem.w- focuesdItem.responsive.valueW)),0)
 
   yRes = Math.max(yRes, 0);
 
