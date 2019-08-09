@@ -386,15 +386,8 @@ function recalculateGridPosition(action) {
   let result = moveItem(dragItem, items, getCols, cacheItem);
 
   if(fillEmpty) {
-    let matrix = makeMatrixFromItems([dragItem], getLastItemStats(result), getComputedCols)
-    result = result.map(value=>{
-      if(value.id !== dragItem.id) {
-        let position = findFreeSpaceForItem(matrix, value);
-        return {...value,...position}
-      } else {
-        return value
-      }
-    })
+
+     result = result.map(value=> value.id !== dragItem.id ? {...value,...findFreeSpaceForItem(makeMatrixFromItemsIgnore(result,[value.id],getClosestToRow(result)), value, result )} : value)
 
   }
 
