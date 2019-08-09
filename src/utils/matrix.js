@@ -30,36 +30,6 @@ export function findCloseBlocks(items, matrix, curObject) {
   // return [...new Set(result)];
 }
 
-export function clearIdsFromMatrix(closeBlocks, matrix) {
-  let reMap = matrix.map(row => {
-    return row.map(cel => {
-      if (cel) {
-        if (closeBlocks.indexOf(cel.id) !== -1) {
-          return null;
-        } else {
-          return cel;
-        }
-      }
-    });
-  });
-
-  return reMap;
-}
-
-export function clearItemFromMatrix(item, matrix) {
-  return matrix.map(row => {
-    return row.map(cel => {
-      if (cel) {
-        if (cel.id === item.id) {
-          return null;
-        } else {
-          return cel;
-        }
-      }
-    });
-  });
-}
-
 export function makeMatrixFromItemsIgnore(
   items,
   ignoreList,
@@ -87,25 +57,4 @@ export function makeMatrixFromItemsIgnore(
 
 export function findItemsById(closeBlocks, items) {
   return items.filter(value => closeBlocks.indexOf(value.id) !== -1);
-}
-
-export function reOrderItemsFromMatrix(matrix) {
-  var currentId,
-    items = [];
-  for (var i = 0; i < matrix.length; i++) {
-    var row = matrix[i];
-    var len = row.length;
-    for (var j = 0; j < len; j++) {
-      var column = row[j];
-      if (column) {
-        var { id, w } = column;
-        if (currentId !== id) {
-          items.push(column);
-          currentId = id;
-          len += w;
-        }
-      }
-    }
-  }
-  return items;
 }
