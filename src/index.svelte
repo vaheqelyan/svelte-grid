@@ -81,7 +81,7 @@ import { onMount, beforeUpdate,createEventDispatcher } from "svelte";
 import { resizeItems, getItemById, moveItem, findFreeSpaceForItem } from "./utils/item.js";
 import { getContainerHeight } from "./utils/container.js";
 import { debounce, getLastItemStats, getColumnFromBreakpoints, getCordinates } from "./utils/other.js";
-import { makeMatrixFromItems } from "./utils/matrix.js";
+import { makeMatrixFromItemsIgnore } from "./utils/matrix.js";
 
 export let items = [];
 export let cols = 0;
@@ -387,7 +387,7 @@ function recalculateGridPosition(action) {
 
   if(fillEmpty) {
 
-     result = result.map(value=> value.id !== dragItem.id ? {...value,...findFreeSpaceForItem(makeMatrixFromItemsIgnore(result,[value.id],getClosestToRow(result)), value, result )} : value)
+     result = result.map(value=> value.id !== dragItem.id ? {...value,...findFreeSpaceForItem(makeMatrixFromItemsIgnore(result,[value.id],getLastItemStats(result)), value, result )} : value)
 
   }
 
