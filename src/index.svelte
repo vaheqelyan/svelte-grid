@@ -394,7 +394,7 @@ function recalculateGridPosition(action) {
             ? {
                 ...$val,
                 ...findFreeSpaceForItem(
-                  makeMatrixFromItemsIgnore(result, [value.id], getClosestToRow(result), getCols),
+                  makeMatrixFromItemsIgnore(result, [value.id], getRowsCount(result), getCols),
                   value,
                   result
                 )
