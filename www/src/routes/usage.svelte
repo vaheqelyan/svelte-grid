@@ -252,6 +252,13 @@ const items = [
     <td><pre>...</pre></td>
     <td>✘</td>
   </tr>
+  <tr>
+    <td>fillEmpty</td>
+    <td>{`Boolean`}</td>
+    <td>Fills empty spaces with a widget if the widget fits in an empty space</td>
+    <td><pre>true</pre></td>
+    <td>✘</td>
+  </tr>
 
   <tr>
     <td>on:resize</td>
