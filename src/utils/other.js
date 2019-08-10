@@ -20,7 +20,7 @@ export function getCordinates(event, clientY = false) {
   return { pageX, pageY };
 }
 
-export function getLastItemStats(items) {
+export function getRowsCount(items) {
   return Math.max(...items.map(val => val.y + val.h), 1);
 }
 

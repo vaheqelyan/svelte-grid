@@ -80,7 +80,7 @@ import { onMount, beforeUpdate,createEventDispatcher } from "svelte";
 
 import { resizeItems, getItemById, moveItem, findFreeSpaceForItem } from "./utils/item.js";
 import { getContainerHeight } from "./utils/container.js";
-import { debounce, getLastItemStats, getColumnFromBreakpoints, getCordinates } from "./utils/other.js";
+import { debounce, getRowsCount, getColumnFromBreakpoints, getCordinates } from "./utils/other.js";
 import { makeMatrixFromItemsIgnore } from "./utils/matrix.js";
 
 export let items = [];
@@ -176,7 +176,7 @@ function resizeOnMouseDown(id, e) {
 
   cacheItem = {...item}
 
-  resizeNoDynamicCalc = item.h + item.y === getLastItemStats(items);
+  resizeNoDynamicCalc = item.h + item.y === getRowsCount(items);
 
   shadow = {...shadow,...focuesdItem,...{active:true}}
 

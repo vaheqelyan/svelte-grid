@@ -1,8 +1,8 @@
-import { getLastItemStats } from "./other.js";
+import { getRowsCount } from "./other.js";
 
 export const makeMatrix = (rows, cols) => Array.from(Array(rows), () => new Array(cols)); // make 2d array
 
-export function makeMatrixFromItems(items, _row = getLastItemStats(items), _col) {
+export function makeMatrixFromItems(items, _row = getRowsCount(items), _col) {
   let matrix = makeMatrix(_row, _col);
   for (var i = 0; i < items.length; i++) {
     const value = items[i];
@@ -33,7 +33,7 @@ export function findCloseBlocks(items, matrix, curObject) {
 export function makeMatrixFromItemsIgnore(
   items,
   ignoreList,
-  _row, //= getLastItemStats(items)
+  _row, //= getRowsCount(items)
   _col,
 ) {
   let matrix = makeMatrix(_row, _col);

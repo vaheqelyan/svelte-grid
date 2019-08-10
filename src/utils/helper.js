@@ -1,6 +1,6 @@
 import { makeMatrixFromItems } from "../utils/matrix.js";
 import { findFreeSpaceForItem, resizeItems, moveItem } from "../utils/item.js";
-import { getLastItemStats } from "./other.js";
+import { getRowsCount } from "./other.js";
 
 function makeItem(item) {
   return {
@@ -28,7 +28,7 @@ function makeItem(item) {
 
 const gridHelp = {
   findSpaceForItem(item, items, cols) {
-    let matrix = makeMatrixFromItems(items, getLastItemStats(items), cols);
+    let matrix = makeMatrixFromItems(items, getRowsCount(items), cols);
 
     let position = findFreeSpaceForItem(matrix, item, items);
     return position;
