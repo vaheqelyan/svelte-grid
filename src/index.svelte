@@ -407,7 +407,7 @@ function recalculateGridPosition(action) {
 
   items = result
 
-  dispatch('recalculate', {
+  dispatch('adjust', {
     focuesdItem: dragItem
   });
 
