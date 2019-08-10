@@ -260,6 +260,13 @@ const items = [
     <td><pre>...</pre></td>
     <td>✘</td>
   </tr>
+    <tr>
+    <td>on:adjust</td>
+    <td>{`Function<void>`}</td>
+    <td>The event is triggered when the grid is adjusted, when resizing, or when dragging</td>
+    <td><pre>...</pre></td>
+    <td>✘</td>
+  </tr>
   
 </table>
 </div>
