@@ -387,8 +387,22 @@ function recalculateGridPosition(action) {
 
   if(fillEmpty) {
 
-     result = result.map(value=> value.id !== dragItem.id ? {...value,...findFreeSpaceForItem(makeMatrixFromItemsIgnore(result,[value.id],getLastItemStats(result)), value, result )} : value)
-
+    result.forEach(value => {
+      if (value.id !== dragItem.id) {
+        result = result.map($val =>
+          $val.id === value.id
+            ? {
+                ...$val,
+                ...findFreeSpaceForItem(
+                  makeMatrixFromItemsIgnore(result, [value.id], getClosestToRow(result), getCols),
+                  value,
+                  result
+                )
+              }
+            : $val
+        );
+      }
+    });
   }
 
   items = result
