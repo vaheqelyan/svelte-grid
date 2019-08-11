@@ -6,17 +6,9 @@ export const debounce = (fn, ms = 0) => {
   };
 };
 
-export function getCordinates(event, clientY = false) {
-  const { touches: ev = event } = event;
-
-  const isTouch = ev.constructor === TouchList;
-  let pageX = isTouch ? ev[0].pageX : ev.pageX;
-  let pageY = isTouch ? ev[0].pageY : ev.pageY;
-
-  if (clientY) {
-    let clientY = isTouch ? ev[0].clientY : ev.clientY;
-    return { pageY, pageX, clientY };
-  }
+export function getCordinates(event) {
+  const pageX = event.changedTouches ? event.changedTouches[0].pageX : event.pageX;
+  const pageY = event.changedTouches ? event.changedTouches[0].pageY : event.pageY;
   return { pageX, pageY };
 }
 
