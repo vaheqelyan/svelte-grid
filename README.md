@@ -16,7 +16,7 @@
 
 ## About
 
-- 100% Svlete (or vanillajs) - no jQuery, no 3rd party dependencies
+- 100% Svelte (or vanillajs) - no jQuery, no 3rd party dependencies
 - Compatible with Sapper (SSR Svelte)
 - Draggable widgets
 - Resizable widgets
