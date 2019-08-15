@@ -84,8 +84,24 @@ tr:nth-child(even) {
   <li><code>.svlt-grid-shadow</code> — Class name for the back shadow when resizing or moving an element</li>
   <li><code>.svlt-grid-resizer</code> — Class name for resizer</li>
   <li><code>.svlt-grid-resizer::after</code> — Class name for resizer</li>
+  <li><code>.svlt-grid-transition</code> — Apply the transition to the grid</li>
 </ul>
 
+<h2>How to animate</h2>
+
+<code>
+  <pre>
+    {`
+<style>
+  :global(.svlt-grid-transition > .svlt-grid-item) {
+    transition: transform 0.2s;
+  }
+</style>
+    `}
+  </pre>
+</code>
+
+<p>You can also set the useTransform property to true if you want to use CSS3 translate() instead of the top/left position.</p>
 
 <h2>Helper functions</h2>
 
