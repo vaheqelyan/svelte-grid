@@ -253,6 +253,13 @@ const items = [
     <td>✘</td>
   </tr>
   <tr>
+    <td>useTransform</td>
+    <td>{`Boolean`}</td>
+    <td>Uses CSS3 translate() instead of position top/left.</td>
+    <td><pre>false</pre></td>
+    <td>✘</td>
+  </tr>
+  <tr>
     <td>fillEmpty</td>
     <td>{`Boolean`}</td>
     <td>Fills empty spaces with a widget if the widget fits in an empty space</td>
