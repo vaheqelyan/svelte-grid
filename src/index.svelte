@@ -135,7 +135,9 @@ function onResize() {
       cols:getCols
     });
 
-    items = resizeItems(items, getCols);
+    if(breakpoints) {
+    	items = resizeItems(items, getCols);
+    }
 
   } 
 
