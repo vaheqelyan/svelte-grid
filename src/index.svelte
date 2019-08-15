@@ -78,7 +78,7 @@ import { onMount, beforeUpdate,createEventDispatcher } from "svelte";
 
 import { resizeItems, getItemById, moveItem, findFreeSpaceForItem } from "./utils/item.js";
 import { getContainerHeight } from "./utils/container.js";
-import { debounce, getRowsCount, getColumnFromBreakpoints, getCordinates } from "./utils/other.js";
+import { debounce, getRowsCount, getColumnFromBreakpoints, getCordinates, getTranslate } from "./utils/other.js";
 import { makeMatrixFromItemsIgnore } from "./utils/matrix.js";
 
 export let useTransform = false;
@@ -292,9 +292,18 @@ function dragOnMouseDown(id, e) {
 
   
 
-  let {
-    currentTarget: { offsetLeft, offsetTop }
-  } = e;
+  let { currentTarget } = e;
+
+  let offsetLeft, offsetTop;
+
+  if(useTransform) {
+    const { x, y } = getTranslate(currentTarget.style.transform)
+    offsetLeft = x
+    offsetTop = y
+  } else {
+    offsetLeft = currentTarget.offsetLeft
+    offsetTop = currentTarget.offsetTop
+  }
 
   pageX = pageX - bound.x;
   pageY = pageY - bound.y;
