@@ -39,7 +39,7 @@
 
 <svelte:window on:resize={ debounce(onResize,300) } />
 
-<div class=svlt-grid-container bind:this={container} style="height: {ch}px">
+<div class:svlt-grid-transition={!focuesdItem} class=svlt-grid-container bind:this={container} style="height: {ch}px">
   {#each items as item, i (item.id)}
 
     <div on:mousedown={item.draggable ? dragOnMouseDown.bind(this, item.id) : null}
