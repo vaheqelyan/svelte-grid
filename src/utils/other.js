@@ -6,6 +6,17 @@ export const debounce = (fn, ms = 0) => {
   };
 };
 
+export function getTranslate(str) {
+  str = str.slice(10, -3);
+
+  var getIndex = str.indexOf("px, ");
+
+  var x = +str.slice(0, getIndex);
+
+  var y = +str.slice(getIndex + 4);
+  return { x, y };
+}
+
 export function getCordinates(event) {
   const pageX = event.changedTouches ? event.changedTouches[0].pageX : event.pageX;
   const pageY = event.changedTouches ? event.changedTouches[0].pageY : event.pageY;
