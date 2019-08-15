@@ -17,6 +17,10 @@
     border-color: white!important;
   }
 
+  :global(.svlt-grid-transition > .svlt-grid-item) {
+    transition: transform 0.2s;
+  }
+
   :global(.svlt-grid-shadow) {
     background: pink;
     border-radius: 6px;
@@ -85,6 +89,6 @@ let breakpoints = [[1000, 10], [700, 5], [500, 3], [400, 1]];
   <h4>A draggable and resizable grid layout with responsive breakpoints, for Svelte.</h4>
 </div>
 
-<Grid {breakpoints} gap={10} {items} bind:items={items} {cols} rowHeight={100} let:item={item}>
+<Grid useTransform {breakpoints} gap={10} {items} bind:items={items} {cols} rowHeight={100} let:item={item}>
 	<div class=content style="background: {item.static ? '#ccccee' : item.data}"></div>
 </Grid>
