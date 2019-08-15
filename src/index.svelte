@@ -44,16 +44,13 @@
 
     <div on:mousedown={item.draggable ? dragOnMouseDown.bind(this, item.id) : null}
         on:touchstart={item.draggable ? dragOnMouseDown.bind(this, item.id) : null}
-        class=svlt-grid-item style="
-        {useTransform ? `transform: translate(${item.drag.dragging ? item.drag.left : (item.x * xPerPx) + gap}px, ${item.drag.dragging ? item.drag.top : (item.y * yPerPx + gap)}px);` : ''};
+        class=svlt-grid-item style="{useTransform ? `transform: translate(${item.drag.dragging ? item.drag.left : (item.x * xPerPx) + gap}px, ${item.drag.dragging ? item.drag.top : (item.y * yPerPx + gap)}px);` : ''};
         {!useTransform ? `top: ${item.drag.dragging ? item.drag.top : (item.y * yPerPx) + gap}px` : ''};
         {!useTransform ? `left: ${item.drag.dragging ? item.drag.left : (item.x * xPerPx) + gap}px` : ''};
         width: {item.resize.resizing ? item.resize.width : ((item.w * xPerPx) - gap * 2) - (item.responsive.valueW*xPerPx)}px;
         height: {item.resize.resizing ? item.resize.height : (item.h * yPerPx) - gap * 2}px;
         z-index: {item.drag.dragging || item.resize.resizing ? 1000 : 100};
-        opacity: {item.resize.resizing ? 0.5 : 1}
-        "
-        >
+        opacity: {item.resize.resizing ? 0.5 : 1}">
 
           <slot {item} index={i}></slot>
           {#if item.resizable}
