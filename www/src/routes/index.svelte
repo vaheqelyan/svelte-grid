@@ -25,7 +25,8 @@
     background: pink;
     border-radius: 6px;
     border-bottom-right-radius: 3px;
-    transition: top 0.2s, left 0.2s;
+    /*transition: top 0.2s, left 0.2s;*/
+    transition: transform 0.2s;
   }
 
   .welcome {
