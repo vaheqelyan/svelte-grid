@@ -65,9 +65,9 @@
   {/each}
 
   {#if shadow.active}
-    <div class=svlt-grid-shadow style="${shadow.drag.dragging ? shadow.drag.top : (shadow.y * yPerPx + gap)}px);` : ''};
-    {!useTransform ? `top: ${shadow.drag.dragging ? shadow.drag.top : (shadow.y * yPerPx) + gap}px` : ''};
-    {!useTransform ? `left: ${shadow.drag.dragging ? shadow.drag.left : (shadow.x * xPerPx) + gap}px` : ''};
+    <div class=svlt-grid-shadow style="{useTransform ? `transform: translate(${shadow.drag.dragging ? shadow.drag.left : (shadow.x * xPerPx) + gap}px, ${shadow.drag.dragging ? shadow.drag.top : (shadow.y * yPerPx + gap)}px);` : ''};
+        {!useTransform ? `top: ${shadow.drag.dragging ? shadow.drag.top : (shadow.y * yPerPx) + gap}px` : ''};
+        {!useTransform ? `left: ${shadow.drag.dragging ? shadow.drag.left : (shadow.x * xPerPx) + gap}px` : ''};
     width:{((shadow.w * xPerPx) - gap * 2) - (shadow.responsive.valueW*xPerPx)}px;
     height:{(shadow.h * yPerPx) - gap * 2}px;"></div>
   {/if}
