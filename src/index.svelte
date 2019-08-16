@@ -65,11 +65,11 @@
   {/each}
 
   {#if shadow.active}
-    <div class=svlt-grid-shadow style="
+    <div class=svlt-grid-shadow style="${shadow.drag.dragging ? shadow.drag.top : (shadow.y * yPerPx + gap)}px);` : ''};
+    {!useTransform ? `top: ${shadow.drag.dragging ? shadow.drag.top : (shadow.y * yPerPx) + gap}px` : ''};
+    {!useTransform ? `left: ${shadow.drag.dragging ? shadow.drag.left : (shadow.x * xPerPx) + gap}px` : ''};
     width:{((shadow.w * xPerPx) - gap * 2) - (shadow.responsive.valueW*xPerPx)}px;
-    height:{(shadow.h * yPerPx) - gap * 2}px;
-    top: {(shadow.y * yPerPx) + gap}px;
-    left: {(shadow.x * xPerPx) + gap}px"></div>
+    height:{(shadow.h * yPerPx) - gap * 2}px;"></div>
   {/if}
 </div>
 
