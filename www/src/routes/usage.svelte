@@ -286,7 +286,14 @@ const items = [
   <tr>
     <td>on:resize</td>
     <td>{`Function<void>`}</td>
-    <td>The event is triggered when the grid is resized based on the document size</td>
+    <td>The event is triggered when the grid is resized based on the document size. There are a couple of properties in the detail property. {`{ cols: Number; xPerPx: Number; yPerPx: Number; }`}</td>
+    <td><pre>...</pre></td>
+    <td>✘</td>
+  </tr>
+  <tr>
+    <td>on:mount</td>
+    <td>{`Function<void>`}</td>
+    <td>Creating an event when a component is mounted. There are a couple of properties in the detail property. {`{ cols: Number; xPerPx: Number; yPerPx: Number; }`}</td>
     <td><pre>...</pre></td>
     <td>✘</td>
   </tr>
