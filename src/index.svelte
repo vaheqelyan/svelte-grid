@@ -133,7 +133,7 @@ function onResize() {
     dispatch('resize', {
       cols:getCols,
       xPerPx,
-      yPerPx
+      yPerPx // same as rowHeight
     });
 
     if(breakpoints) {
@@ -159,6 +159,12 @@ onMount(() => {
   }
 
   xPerPx = bound.width / getCols
+
+  dispatch('mount', {
+    cols: getCols,
+    xPerPx,
+    yPerPx // same as rowHeight
+  })
 
 });
 
