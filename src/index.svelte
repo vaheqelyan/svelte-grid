@@ -131,7 +131,9 @@ function onResize() {
     xPerPx = bound.width / getCols
 
     dispatch('resize', {
-      cols:getCols
+      cols:getCols,
+      xPerPx,
+      yPerPx
     });
 
     if(breakpoints) {
