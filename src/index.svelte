@@ -1,4 +1,8 @@
 <style>
+  :global(body) {
+    overflow: scroll;
+  }
+
  .svlt-grid-container {
   position: relative;
 }
