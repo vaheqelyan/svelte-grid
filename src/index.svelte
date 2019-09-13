@@ -119,6 +119,8 @@ let container,
 
 const dispatch = createEventDispatcher();
 
+const getDocWidth = () => document.documentElement.clientWidth
+
 function onResize() {
 
   let w = document.documentElement.clientWidth
@@ -128,7 +130,7 @@ function onResize() {
     
     bound = container.getBoundingClientRect();
 
-    let getCols = getColumnFromBreakpoints(breakpoints,window.innerWidth,cols,initCols)
+    let getCols = getColumnFromBreakpoints(breakpoints,w,cols,initCols)
     
     getComputedCols = getCols
 
@@ -152,7 +154,7 @@ function onResize() {
 onMount(() => {
   bound = container.getBoundingClientRect();
 
-  let getCols = getColumnFromBreakpoints(breakpoints, window.innerWidth, cols, initCols)
+  let getCols = getColumnFromBreakpoints(breakpoints, getDocWidth(), cols, initCols)
   
   getComputedCols = getCols
 
@@ -200,7 +202,7 @@ function resizeOnMouseDown(id, e) {
 
   resizeStartHeight = (item.h * yPerPx) - (gap * 2);
 
-  getComputedCols = getColumnFromBreakpoints(breakpoints, window.innerWidth, cols, initCols)
+  getComputedCols = getColumnFromBreakpoints(breakpoints, getDocWidth(), cols, initCols)
 
   window.addEventListener("mousemove", resizeOnMouseMove, false);
   window.addEventListener("touchmove", resizeOnMouseMove, false);
@@ -324,7 +326,7 @@ function dragOnMouseDown(id, e) {
 
   dragY = pageY - offsetTop;
 
-  getComputedCols = getColumnFromBreakpoints(breakpoints, window.innerWidth, cols, initCols)
+  getComputedCols = getColumnFromBreakpoints(breakpoints, getDocWidth(), cols, initCols)
 
 
   if (item) {
@@ -404,7 +406,7 @@ function dragOnMouseUp(e) {
 function recalculateGridPosition(action) {
   const dragItem = items[currentItemIndex];
 
-  let getCols = getColumnFromBreakpoints(breakpoints, window.innerWidth, cols, initCols)
+  let getCols = getColumnFromBreakpoints(breakpoints, getDocWidth(), cols, initCols)
   let result = moveItem(dragItem, items, getCols, cacheItem);
 
   if(fillEmpty) {
