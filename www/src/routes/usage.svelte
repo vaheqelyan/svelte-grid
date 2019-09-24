@@ -42,7 +42,19 @@
 <code>
   <pre>
     {`
-    <script ✂prettier:content✂="CiAgICAgIGltcG9ydCBHcmlkIGZyb20gJ3N2ZWx0ZS1ncmlkJwogICAgICBpbXBvcnQgZ3JpZEhlbHAgZnJvbSAnc3ZlbHRlLWdyaWQvYnVpbGQvaGVscGVyJwoKICAgICAgbGV0IGl0ZW1zID0gW2dyaWRIZWxwLml0ZW0oe3g6MCx5OjAsaDoxLHc6MSwgaWQ6J3VuaXF1ZV9pZCd9KV0KICAgIA==" ✂prettier:content✂="e30=" ✂prettier:content✂="e30=">{}</script>    <Grid items={items} cols={3} bind:items={items} let:item={item}>
+    <script>
+      import Grid from "svelte-grid";
+      import gridHelp from "svelte-grid/build/helper/index.mjs";
+
+      const id = () => "_" + Math.random().toString(36).substr(2, 9);
+
+      let items = [
+        gridHelp.item({ x: 0, y: 0, w: 2, h: 2, id: id() }),
+        gridHelp.item({ x: 2, y: 0, w: 2, h: 2, id: id() })
+      ];
+    </script>
+
+    <Grid items={items} cols={3} bind:items={items} let:item={item}>
       <div>{item.id}</div>
     </Grid>
   `}
@@ -68,7 +80,19 @@
 <p>For example</p>
 
 <code>
-  <pre>{`<style ✂prettier:content✂="CiAgOmdsb2JhbCguc3ZsdC1ncmlkLWNvbnRhaW5lcikgewogICAgYmFja2dyb3VuZDogcmVkOwogIH0K" ✂prettier:content✂="" ✂prettier:content✂=""></style>`}</pre>
+  <pre>{`
+    <style>
+      :global(.svlt-grid-shadow) { /* Back shadow */
+        background: pink;
+      }
+      :global(.svlt-grid-container) {
+        background: #eee;
+      }
+      :global(.svlt-grid-resizer::after) { /* Resizer color */
+        border-color: white !important;
+      }
+    </style>
+`}</pre>
 </code>
 
 <p>Here are the class names</p>
@@ -103,7 +127,18 @@
 <h2>How to animate</h2>
 
 <code>
-  <pre>{`<style ✂prettier:content✂="CiAgOmdsb2JhbCguc3ZsdC1ncmlkLXRyYW5zaXRpb24gPiAuc3ZsdC1ncmlkLWl0ZW0pIHsKICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAwLjJzOwogIH0K" ✂prettier:content✂="" ✂prettier:content✂=""></style>    `}</pre>
+  <pre>{`
+    <style>
+      :global(.svlt-grid-transition > .svlt-grid-item) {
+        transition: transform 0.2s;
+      }
+
+      :global(.svlt-grid-shadow) {
+        /*transition: top 0.2s, left 0.2s;*/
+        transition: transform 0.2s;
+      }
+    </style>
+`}</pre>
 </code>
 
 <p>You can also set the useTransform property to true if you want to use CSS3 translate() instead of the top/left position.</p>
