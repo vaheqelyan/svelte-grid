@@ -6,7 +6,13 @@ export function makeMatrixFromItems(items, _row = getRowsCount(items), _col) {
   let matrix = makeMatrix(_row, _col);
   for (var i = 0; i < items.length; i++) {
     const value = items[i];
-    const { x, y, w, h, responsive: { valueW } } = value;
+    const {
+      x,
+      y,
+      w,
+      h,
+      responsive: { valueW },
+    } = value;
 
     for (var j = y; j < y + h; j++) {
       const row = matrix[j];
@@ -19,7 +25,13 @@ export function makeMatrixFromItems(items, _row = getRowsCount(items), _col) {
 }
 
 export function findCloseBlocks(items, matrix, curObject) {
-  const { w, h, x, y, responsive: { valueW } } = curObject;
+  const {
+    w,
+    h,
+    x,
+    y,
+    responsive: { valueW },
+  } = curObject;
   const tempR = matrix.slice(y, y + h);
   let result = []; // new Set()
   for (var i = 0; i < tempR.length; i++) {
@@ -39,7 +51,14 @@ export function makeMatrixFromItemsIgnore(
   let matrix = makeMatrix(_row, _col);
   for (var i = 0; i < items.length; i++) {
     const value = items[i];
-    const { x, y, w, h, id, responsive: { valueW } } = value;
+    const {
+      x,
+      y,
+      w,
+      h,
+      id,
+      responsive: { valueW },
+    } = value;
 
     if (ignoreList.indexOf(id) === -1) {
       for (var j = y; j < y + h; j++) {

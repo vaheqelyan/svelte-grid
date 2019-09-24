@@ -1,27 +1,27 @@
-<script>
-	import Nav from '../components/Nav.svelte';
-	import Footer from '../components/Footer.svelte'
-
-	export let segment;
-</script>
-
 <style>
-	:global(#sapper) {
-		display: flex;
-	  min-height: 100vh;
-	  flex-direction: column;
-	}
-	.content {
-		flex: 1;
-		padding: 4% 7%;
-		/*padding:20% 100%;*/
-	}
+  :global(#sapper) {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+  .content {
+    flex: 1;
+    padding: 4% 7%;
+    /*padding:20% 100%;*/
+  }
 </style>
 
-<Nav {segment}/>
+<Nav {segment} />
 
-<div class=content>
-	<slot></slot>
+<div class="content">
+  <slot />
 </div>
 
-<Footer/>
+<Footer />
+
+<script>
+  import Nav from "../components/Nav.svelte";
+  import Footer from "../components/Footer.svelte";
+
+  export let segment;
+</script>
