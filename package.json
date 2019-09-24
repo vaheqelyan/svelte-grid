@@ -8,7 +8,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
-    "pretty": "prettier --config .prettierrc --write \"rollup.config.js\" \".eslintrc\" \"package.json\" \"src/**/*.js\" ",
+    "pretty":
+      "prettier --config .prettierrc --write --svelte-sort-order styles-markup-scripts \"rollup.config.js\" \".eslintrc\" \"package.json\" \"src/**/*.js\" \"www/src/*.svelte\" \"www/src/**/**/*.svelte\" \"src\" ",
     "build": "rollup -c",
     "go": "npm-run-all pretty lint build"
   },
@@ -16,16 +17,7 @@
     "type": "git",
     "url": "git+https://github.com/vaheqelyan/svelte-grid.git"
   },
-  "keywords": [
-    "svelte",
-    "grid",
-    "drag",
-    "draggable",
-    "resize",
-    "resizable",
-    "fluid",
-    "responsive"
-  ],
+  "keywords": ["svelte", "grid", "drag", "draggable", "resize", "resizable", "fluid", "responsive"],
   "author": "Vahe Araqelyan <vahe.araqelyan.2013@hotmail.com>",
   "license": "MIT",
   "bugs": {
@@ -41,8 +33,5 @@
     "rollup-plugin-svelte": "^5.1.0",
     "svelte": "^3.7.1"
   },
-  "files": [
-    "src",
-    "build"
-  ]
+  "files": ["src", "build"]
 }
