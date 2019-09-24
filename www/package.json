@@ -1,8 +1,7 @@
 {
   "scripts": {
     "dev": "sapper dev",
-    "build": "sapper build --legacy",
-    "export": "sapper export --legacy",
+    "build": "sapper export",
     "start": "node __sapper__/build"
   },
   "dependencies": {
