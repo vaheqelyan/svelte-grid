@@ -33,7 +33,7 @@
 <h1>Min/Max resize</h1>
 
 <p>
-  <a href="https://github.com/vaheqelyan/svelte-grid/issues/new" target="_blank">👌 That's all, offer what to add</a>
+  <a href="examples/localStorage">→ LocalStorage</a>
 </p>
 <p>
   <a href="examples/static">← Responsive</a>
