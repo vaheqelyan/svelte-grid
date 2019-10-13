@@ -9,7 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
     "pretty": "prettier --config .prettierrc --write --svelte-sort-order styles-markup-scripts \"rollup.config.js\" \".eslintrc\" \"package.json\" \"src/**/*.js\" \"www/src/*.svelte\" \"www/src/**/**/*.svelte\" \"*.md\" ",
-    "build": "rollup -c",
+    "build": "node_modules/.bin/rollup -c",
     "go": "npm-run-all pretty lint build"
   },
   "repository": {
