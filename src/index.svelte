@@ -53,7 +53,7 @@
         {!useTransform ? `left: ${item.drag.dragging ? item.drag.left : (item.x * xPerPx) + gap}px` : ''};
         width: {item.resize.resizing ? item.resize.width : ((item.w * xPerPx) - gap * 2) - (item.responsive.valueW*xPerPx)}px;
         height: {item.resize.resizing ? item.resize.height : (item.h * yPerPx) - gap * 2}px;
-        z-index: {item.drag.dragging || item.resize.resizing ? 3 : 'unset'};
+        z-index: {item.drag.dragging || item.resize.resizing ? 3 : 1};
         opacity: {item.resize.resizing ? 0.5 : 1}">
 
           <slot {item} index={i}></slot>
