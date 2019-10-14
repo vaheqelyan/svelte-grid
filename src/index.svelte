@@ -9,9 +9,7 @@
 
 .svlt-grid-item {
   touch-action:none;
-  word-break: break-all;
   position: absolute;
-  z-index: 1000;
 }
 
 .svlt-grid-shadow {
