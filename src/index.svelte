@@ -1,44 +1,46 @@
+
 <style>
   :global(body) {
     overflow: scroll;
   }
 
- .svlt-grid-container {
-  position: relative;
-}
+   .svlt-grid-container {
+    position: relative;
+  }
 
-.svlt-grid-item {
-  touch-action:none;
-  word-break: break-all;
-  position: absolute;
-  z-index: 1000;
-}
+  .svlt-grid-item {
+    touch-action:none;
+    word-break: break-all;
+    position: absolute;
+    z-index: 1000;
+  }
 
-.svlt-grid-shadow {
-  position: absolute;
-}
+  .svlt-grid-shadow {
+    position: absolute;
+  }
 
 
-.svlt-grid-resizer {
-  user-select: none;
-  width: 20px;
-  height: 20px; 
-  position:absolute; 
-  right: 0; 
-  bottom: 0; 
-  cursor: se-resize; 
-}
+  .svlt-grid-resizer {
+    user-select: none;
+    width: 20px;
+    height: 20px; 
+    position:absolute; 
+    right: 0; 
+    bottom: 0; 
+    cursor: se-resize;
+    z-index: 20; 
+  }
 
-.svlt-grid-resizer::after {
-  content: "";
-  position: absolute;
-  right: 3px;
-  bottom: 3px;
-  width: 5px;
-  height: 5px;
-  border-right: 2px solid rgba(0, 0, 0, 0.4);
-  border-bottom: 2px solid rgba(0, 0, 0, 0.4);
-}
+  .svlt-grid-resizer::after {
+    content: "";
+    position: absolute;
+    right: 3px;
+    bottom: 3px;
+    width: 5px;
+    height: 5px;
+    border-right: 2px solid rgba(0, 0, 0, 0.4);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+  }
 </style>
 
 <svelte:window on:resize={ debounce(onResize,300) } />
