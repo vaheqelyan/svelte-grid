@@ -8,12 +8,10 @@
     position: relative;
   }
 
-  .svlt-grid-item {
-    touch-action:none;
-    word-break: break-all;
-    position: absolute;
-    z-index: 1000;
-  }
+.svlt-grid-item {
+  touch-action:none;
+  position: absolute;
+}
 
   .svlt-grid-shadow {
     position: absolute;
@@ -28,7 +26,6 @@
     right: 0; 
     bottom: 0; 
     cursor: se-resize;
-    z-index: 20; 
   }
 
   .svlt-grid-resizer::after {
