@@ -4,7 +4,12 @@
     overflow: scroll;
   }
 
-   .svlt-grid-container {
+  :global(.svlt-grid-resizer){
+    z-index: 1500;
+  } 
+
+
+  .svlt-grid-container {
     position: relative;
   }
 
@@ -26,7 +31,6 @@
     right: 0; 
     bottom: 0; 
     cursor: se-resize;
-    z-index: 1500;
   }
 
   .svlt-grid-resizer::after {
