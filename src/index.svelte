@@ -26,6 +26,7 @@
     right: 0; 
     bottom: 0; 
     cursor: se-resize;
+    z-index: 1500;
   }
 
   .svlt-grid-resizer::after {
@@ -58,8 +59,8 @@
           <slot {item} index={i}></slot>
           {#if item.resizable}
             <div class=svlt-grid-resizer 
-          on:touchstart={resizeOnMouseDown.bind(this,item.id)} 
-          on:mousedown={resizeOnMouseDown.bind(this,item.id)}
+                on:touchstart={resizeOnMouseDown.bind(this,item.id)} 
+                on:mousedown={resizeOnMouseDown.bind(this,item.id)}
           ></div>
           {/if}
         </div>
