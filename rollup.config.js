@@ -10,11 +10,17 @@ const name = pkg.name
 export default [
   {
     input: "src/index.svelte",
-    output: [{ file: pkg.module, format: "es" }, { file: pkg.main, format: "umd", name }],
+    output: [
+      { file: pkg.module, format: "es" },
+      { file: pkg.main, format: "umd", name },
+    ],
     plugins: [svelte(), resolve()],
   },
   {
     input: "./src/utils/helper.js",
-    output: [{ file: "build/helper/index.mjs", format: "es" }, { file: "build/helper/index.js", format: "umd", name: "gridHelper" }],
+    output: [
+      { file: "build/helper/index.mjs", format: "es" },
+      { file: "build/helper/index.js", format: "umd", name: "gridHelper" },
+    ],
   },
 ];

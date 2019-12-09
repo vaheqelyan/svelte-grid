@@ -90,5 +90,10 @@
   items = generateLayout(cols);
   items = gridHelp.resizeItems(items, cols);
 
-  let breakpoints = [[1000, 10], [700, 5], [500, 3], [400, 1]];
+  let breakpoints = [
+    [1000, 10],
+    [700, 5],
+    [500, 3],
+    [400, 1],
+  ];
 </script>

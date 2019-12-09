@@ -97,5 +97,9 @@
   // Helper function which normalize. you need to pass items and columns
   let items = gridHelp.resizeItems(layout, cols);
   // Apply breakpoints
-  let breakpoints = [[1100, 5], [800, 4], [530, 1]];
+  let breakpoints = [
+    [1100, 5],
+    [800, 4],
+    [530, 1],
+  ];
 </script>
