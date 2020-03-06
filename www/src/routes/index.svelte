@@ -46,7 +46,7 @@
   <h4>A draggable and resizable grid layout with responsive breakpoints, for Svelte.</h4>
 </div>
 
-<Grid useTransform {breakpoints} gap={10} {items} bind:items {cols} rowHeight={100} let:item>
+<Grid useTransform {breakpoints} gap={10} items={items_arr} bind:items_arr {cols} rowHeight={100} let:item>
   <div class="content" style="background: {item.static ? '#ccccee' : item.data}" />
 </Grid>
 
@@ -67,7 +67,7 @@
     let n = (Math.random() * 0xfffff * 1000000).toString(16);
     return "#" + n.slice(0, 6);
   };
-  let items = [];
+  let items_arr = [];
 
   function generateLayout(col) {
     return map(new Array(20), function(item, i) {
@@ -87,8 +87,8 @@
 
   var cols = 15;
 
-  items = generateLayout(cols);
-  items = gridHelp.resizeItems(items, cols);
+  items_arr = generateLayout(cols);
+  items_arr = gridHelp.resizeItems(items_arr, cols);
 
   let breakpoints = [
     [1000, 10],

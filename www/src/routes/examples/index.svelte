@@ -35,7 +35,7 @@
   <title>Svelte-grid — Examples</title>
 </svelte:head>
 
-<Grid {items} bind:items {cols} let:item gap={10} {breakpoints}>
+<Grid {items} {cols} let:item gap={10} {breakpoints}>
   <div class="sample">
     <video controls={false} autoplay loop>
       <source src={`${cloudinary}/${item.id}.webm`} type="video/webm" />

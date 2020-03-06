@@ -66,7 +66,7 @@
   </label>
 </div>
 
-<Grid {items} bind:items {cols} let:item rowHeight={100} gap={10}>
+<Grid items={items_arr} bind:items_arr {cols} let:item rowHeight={100} gap={10}>
   <div class="content" style="background: #ccc; border: 1px solid black;">
     <span on:click={remove.bind(null, item)} class="close">✕</span>
     <!-- close x -->
@@ -107,7 +107,7 @@
   // Just generate messy layout
   let layout = generateLayout(cols);
   // Helper function which normalize. you need to pass items and columns
-  let items = gridHelp.resizeItems(layout, cols);
+  let items_arr = gridHelp.resizeItems(layout, cols);
 
   /*
     Add random item to our grid, using helper functions
@@ -122,9 +122,9 @@
       id: id(),
     });
 
-    let findOutPosition = gridHelp.findSpaceForItem(newItem, items, cols); // find out where to place
+    let findOutPosition = gridHelp.findSpaceForItem(newItem, items_arr, cols); // find out where to place
 
-    items = [...items, ...[{ ...newItem, ...findOutPosition }]];
+    items_arr = [...items_arr, ...[{ ...newItem, ...findOutPosition }]];
   }
 
   function addAt() {
@@ -135,14 +135,14 @@
       y: 0,
       id: id(),
     });
-    items = gridHelp.appendItem(newItem, items, cols);
+    items_arr = gridHelp.appendItem(newItem, items_arr, cols);
   }
 
   // Remove an item (Very easy)
   function remove(item, event) {
-    items = items.filter(value => value.id !== item.id);
+    items_arr = items_arr.filter(value => value.id !== item.id);
     if (adjustAfterRemove) {
-      items = gridHelp.resizeItems(items, cols);
+      items_arr = gridHelp.resizeItems(items_arr, cols);
     }
   }
 </script>
