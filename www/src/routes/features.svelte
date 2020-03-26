@@ -21,7 +21,7 @@
 <h1>Features</h1>
 
 <ul>
-  <li>100% Svlete (or vanillajs) - no jQuery, no 3rd party dependencies</li>
+  <li>100% Svelte (or vanillajs) - no jQuery, no 3rd party dependencies</li>
   <li>Compatible with Sapper (SSR Svelte)</li>
   <li>Draggable widgets</li>
   <li>Resizable widgets</li>
