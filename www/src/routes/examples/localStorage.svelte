@@ -61,7 +61,7 @@
       .substr(2, 9);
 
   let layoutOriginal = [gridHelp.item({ x: 0, y: 0, w: 2, h: 2, id: id() }), gridHelp.item({ x: 2, y: 0, w: 2, h: 2, id: id() })];
-  let layout;
+  let layout = layoutOriginal;
 
   if (typeof window !== "undefined") {
     if (!localStorage.getItem("layout")) {
