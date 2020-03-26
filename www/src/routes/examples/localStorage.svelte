@@ -45,7 +45,7 @@
 
 <button on:click={reset} class="button">Reset layout</button>
 
-<Grid on:adjust={onAdjust} items={items_arr} bind:items_arr cols={4} let:item rowHeight={100}>
+<Grid on:adjust={onAdjust} bind:items={items} cols={4} let:item rowHeight={100}>
   <div class="content" style="background: #ccc; border: 1px solid;">{item.id}</div>
 </Grid>
 
@@ -71,14 +71,14 @@
     }
   }
 
-  let items_arr = layout;
+  let items = layout;
 
   const onAdjust = () => {
-    localStorage.setItem("layout", JSON.stringify(items_arr));
+    localStorage.setItem("layout", JSON.stringify(items));
   };
 
   const reset = () => {
-    items_arr = layoutOriginal;
+    items = layoutOriginal;
     localStorage.setItem("layout", JSON.stringify(layoutOriginal));
   };
 </script>

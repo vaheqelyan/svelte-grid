@@ -46,7 +46,7 @@
   <a href="https://svelte.dev/repl/7a51dcc6fa574b1dbe6130cda428c039?version=3.7.1" target="_blank">Open in repl</a>
 </div>
 
-<Grid items={items_arr} bind:items_arr cols={8} let:item rowHeight={100} gap={10}>
+<Grid bind:items={items} cols={8} let:item rowHeight={100} gap={10}>
   <div class="content" style="background: {item.static ? '#cce' : '#ccc'};border:1px solid black;">{item.id}</div>
 </Grid>
 
@@ -61,5 +61,5 @@
       .toString(36)
       .substr(2, 9);
 
-  let items_arr = [gridHelp.item({ x: 0, y: 0, w: 2, h: 2, id: id() }), gridHelp.item({ x: 2, y: 0, w: 3, h: 2, id: id(), static: true }), gridHelp.item({ x: 5, y: 0, w: 3, h: 3, id: id() })];
+  let items = [gridHelp.item({ x: 0, y: 0, w: 2, h: 2, id: id() }), gridHelp.item({ x: 2, y: 0, w: 3, h: 2, id: id(), static: true }), gridHelp.item({ x: 5, y: 0, w: 3, h: 3, id: id() })];
 </script>

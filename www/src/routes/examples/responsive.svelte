@@ -57,7 +57,7 @@
   <a href="https://svelte.dev/repl/2cf339cc1dc14223a1457e386195e52d?version=3.7.1" target="_blank">Open in repl</a>
 </div>
 
-<Grid {breakpoints} items={items_arr} bind:items_arr {cols} let:item rowHeight={100} gap={10}>
+<Grid {breakpoints} bind:items={items} {cols} let:item rowHeight={100} gap={10}>
   <div class="content" style="background: #ccc; border: 1px solid black;">{item.id}</div>
 </Grid>
 
@@ -95,7 +95,7 @@
   // Just generate messy layout
   let layout = generateLayout(cols);
   // Helper function which normalize. you need to pass items and columns
-  let items_arr = gridHelp.resizeItems(layout, cols);
+  let items = gridHelp.resizeItems(layout, cols);
   // Apply breakpoints
   let breakpoints = [
     [1100, 5],
