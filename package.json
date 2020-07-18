@@ -39,8 +39,8 @@
     "prettier-plugin-svelte": "^0.7.0",
     "rollup": "^1.32.1",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-svelte": "^5.1.1",
-    "svelte": "^3.20.1"
+    "rollup-plugin-svelte": "^5.2.3",
+    "svelte": "^3.24.0"
   },
   "files": [
     "src",
