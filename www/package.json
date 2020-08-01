@@ -25,7 +25,7 @@
     "sapper": "^0.27.16",
     "sirv": "^1.0.5",
     "svelte": "^3.24.0",
-    "svelte-grid": "^1.11.0",
+    "svelte-grid": "^1.11.1",
     "svelte-loader": "^2.13.6",
     "webpack": "^4.44.1"
   }
