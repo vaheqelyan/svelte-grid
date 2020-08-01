@@ -410,7 +410,7 @@ function recalculateGridPosition(action) {
   if(fillEmpty) {
 
     result.forEach(value => {
-      if (value.id !== dragItem.id) {
+      if (value.id !== dragItem.id && !value.static) {
         result = result.map($val =>
           $val.id === value.id
             ? {
