@@ -41,7 +41,7 @@
 
 <svelte:window on:resize={ debounce(onResize,300) } />
 
-<div class:svlt-grid-transition={!focuesdItem} class=svlt-grid-container bind:this={container} style="height: {ch}px">
+<div class:svlt-grid-transition={!focusedItem} class=svlt-grid-container bind:this={container} style="height: {ch}px">
   {#each items as item, i (item.id)}
 
     <div on:mousedown={item.draggable ? dragOnMouseDown.bind(this, item.id) : null}
@@ -93,7 +93,7 @@ export let breakpoints;
 export let fillEmpty = true;
 
 let container,
-  focuesdItem,
+  focusedItem,
   bound,
   xPerPx,
   currentItemIndex,
@@ -185,18 +185,18 @@ function resizeOnMouseDown(id, e) {
 
   currentItemIndex = index;
 
-  focuesdItem = item;
+  focusedItem = item;
 
   cacheItem = {...item}
 
   resizeNoDynamicCalc = item.h + item.y === getRowsCount(items);
 
-  shadow = {...shadow,...focuesdItem,...{active:true}}
+  shadow = {...shadow,...focusedItem,...{active:true}}
 
   resizeStartX = pageX - bound.x;
   resizeStartY = pageY - bound.y;
 
-  resizeStartWidth = (item.w * xPerPx) - (gap * 2) - (focuesdItem.responsive.valueW * xPerPx);
+  resizeStartWidth = (item.w * xPerPx) - (gap * 2) - (focusedItem.responsive.valueW * xPerPx);
 
   resizeStartHeight = (item.h * yPerPx) - (gap * 2);
 
@@ -219,12 +219,12 @@ function resizeOnMouseMove(e) {
   const height = resizeStartHeight + pageY - resizeStartY;
   const width = resizeStartWidth + (pageX - resizeStartX)
 
-  const {responsive:{valueW} } = focuesdItem;
+  const {responsive:{valueW} } = focusedItem;
 
   let wRes = Math.round(width / xPerPx) + valueW
 
-  const {h:minHeight=1,w:minWidth=1} = focuesdItem.min
-  const {h:maxHeight,w:maxWidth = ((getComputedCols - focuesdItem.x)+valueW)} = focuesdItem.max
+  const {h:minHeight=1,w:minWidth=1} = focusedItem.min
+  const {h:maxHeight,w:maxWidth = ((getComputedCols - focusedItem.x)+valueW)} = focusedItem.max
 
   wRes = Math.min(Math.max(wRes,minWidth),maxWidth)/* min max*/
 
@@ -276,7 +276,7 @@ function resizeOnMouseUp(e) {
 
   recalculateGridPosition("up");
 
-  focuesdItem = undefined;
+  focusedItem = undefined;
   resizeNoDynamicCalc = false;
 }
 
@@ -297,7 +297,7 @@ function dragOnMouseDown(id, e) {
   currentItemIndex = index;
 
 
-  focuesdItem = item;
+  focusedItem = item;
   cacheItem = {...item}
   
   shadow = { ...shadow, ...item, active: true }; 
@@ -350,7 +350,7 @@ function dragOnMove(e) {
   let xRes = Math.round((x - dragX) / xPerPx);
   let yRes = Math.round((y - dragY) / yPerPx);
 
-  xRes = Math.max(Math.min(xRes,getComputedCols-(focuesdItem.w- focuesdItem.responsive.valueW)),0)
+  xRes = Math.max(Math.min(xRes,getComputedCols-(focusedItem.w- focusedItem.responsive.valueW)),0)
 
   yRes = Math.max(yRes, 0);
 
@@ -396,7 +396,7 @@ function dragOnMouseUp(e) {
   
   recalculateGridPosition("up");
 
-  focuesdItem = undefined;
+  focusedItem = undefined;
 }
 
 
@@ -430,13 +430,13 @@ function recalculateGridPosition(action) {
   items = result
 
   dispatch('adjust', {
-    focuesdItem: dragItem
+    focusedItem: dragItem
   });
 
 }
 
 beforeUpdate(() => {
-  if (!focuesdItem) {
+  if (!focusedItem) {
     ch = getContainerHeight(items, yPerPx);
     if(cols !== initCols) {
       if(bound) {
