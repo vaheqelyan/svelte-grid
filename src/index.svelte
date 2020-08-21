@@ -86,11 +86,17 @@ import { makeMatrixFromItemsIgnore } from "./utils/matrix.js";
 export let useTransform = false;
 export let items = [];
 export let cols = 0;
+export let rows = 0;
 export let dragDebounceMs = 350;
 export let gap = 0;
 export let rowHeight = 150;
 export let breakpoints;
 export let fillEmpty = true;
+
+let yPerPx = rowHeight;
+if (rows > 0) {
+  yPerPx = rowHeight = document.documentElement.clientHeight / rows;
+}
 
 let container,
   focusedItem,
@@ -100,7 +106,6 @@ let container,
   getComputedCols,
   documentWidth,
   resizeNoDynamicCalc,
-  yPerPx = rowHeight,
   initCols = cols,
   shadow = {
     w: 0,
@@ -122,6 +127,10 @@ const getDocWidth = () => document.documentElement.clientWidth
 function onResize() {
 
   let w = document.documentElement.clientWidth
+
+  if (rows > 0) {
+    yPerPx = rowHeight = document.documentElement.clientHeight / rows;
+  }
 
   if(w !== documentWidth) {
     documentWidth = w;
