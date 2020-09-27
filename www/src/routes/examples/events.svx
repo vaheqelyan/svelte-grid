@@ -14,9 +14,8 @@ align-items: center;
 </style>
 
 ## Events
-<small>REPL</small>
-<small>SOURCE</small>
-
+<small><a target=_blank href="https://svelte.dev/repl/eadd933ffa84449daca8df1468d9d617?version=latest">REPL</a></small>
+<small><a target=_blank  href={`${openSource}/events.svx`}>SOURCE</a></small>
 
 This particular example has dragging and resizing turned off.
 
