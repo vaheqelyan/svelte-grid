@@ -7,7 +7,7 @@
 
 ## Basic
 <small><a target=_blank href="https://svelte.dev/repl/35a506b9456d463ab441841859e1bb9f?version=latest">REPL</a></small>
-<small><a target=_blank  href={`${openSource}/basic.svelte`}>SOURCE</a></small>
+<small><a target=_blank  href={`${openSource}/basic.svx`}>SOURCE</a></small>
 
 Drag some boxes around, resize them. This is a basic, non-responsive layout. In order to make it responsive you have to create breakpoints
 
