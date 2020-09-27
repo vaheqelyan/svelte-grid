@@ -1,0 +1,55 @@
+<svelte:head>
+  <title>Example — Static</title>
+  <meta name="description" content="Svelte-grid — Example — Static" />
+  <meta name="keywords" content="draggable,resizable,grid,layout,responsive,breakpoints,Svelte,svelte,svelte.js,sveltejs,usage,example,examples,samples,static" />
+  <meta name="author" content="Vahe Araqelyan" />
+</svelte:head>
+
+<style>
+.content {
+height: 100%;
+display: flex; justify-content: center;
+align-items: center;
+}
+</style>
+
+## Fixed
+<small><a target=_blank href="https://svelte.dev/repl/35a506b9456d463ab441841859e1bb9f?version=latest">REPL</a></small>
+<small><a target=_blank  href={`${openSource}/fixed.svx`}>SOURCE</a></small>
+
+
+Fixed elements cannot be moved or resized. Other elements move themselves around a fixed element.
+
+<Grid bind:items={items} gap={10} rowHeight={100} let:item cols={10}>
+  <div class="content" style="background: {item.fixed ? '#cce' : '#ccc'};">
+    {item.fixed ? 'Fixed box' : 'Box'}
+  </div>
+</Grid>
+
+<script>
+import Grid from "../../components/svelte-grid/index.svelte";
+import gridHelp from "../../components/svelte-grid/utils/helper.js";
+import { openSource } from "./github.js";
+
+const id = () => "_" + Math.random().toString(36).substr(2, 9);
+
+let items = [
+  gridHelp.item({
+        x: 0,
+        y: 0,
+        w: 2,
+        h: 2,
+        id: id(),
+  }),
+  gridHelp.item({
+      x: 2, y: 0, w: 2, h: 2, id: id() 
+  }),
+
+gridHelp.item({
+      x: 4, y: 0, w: 5, h: 2, id: id(), fixed: true
+  }),
+
+
+
+];
+</script>

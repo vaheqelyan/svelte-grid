@@ -1,0 +1,50 @@
+<svelte:head>
+  <title>Example — Min/Max resize</title>
+  <meta name="description" content="Svelte-grid — Example — Min/Max resize" />
+  <meta name="keywords" content="draggable,resizable,grid,layout,responsive,breakpoints,Svelte,svelte,svelte.js,sveltejs,usage,example,examples,samples,min,max,resize,limit,control" />
+  <meta name="author" content="Vahe Araqelyan" />
+</svelte:head>
+
+<style>
+.content {
+display: flex;
+justify-content: center; align-items: center;
+height: 100%;
+}
+</style>
+
+
+## Min/Max size
+<small><a target=_blank href="https://svelte.dev/repl/2cf339cc1dc14223a1457e386195e52d?version=latest">REPL</a></small>
+<small><a target=_blank  href={`${openSource}/min_max.svx`}>SOURCE</a></small>
+
+Control how much can user resize the item.
+
+<Grid bind:items={items} gap={10} rowHeight={100} let:item cols={10} let:index>
+  <div class="content">
+   {index + 1} {item.max.w}
+  </div>
+</Grid>
+
+<script>
+import Grid from "../../components/svelte-grid/index.svelte";
+import gridHelp from "../../components/svelte-grid/utils/helper.js";
+import { openSource } from "./github.js";
+
+const id = () => "_" + Math.random().toString(36).substr(2, 9);
+
+let items = [
+  gridHelp.item({
+        x: 0,
+        y: 0,
+        w: 2,
+        h: 2,
+        id: id(),
+	max: { w: 2, h: 2 }
+  }),
+  gridHelp.item({
+      x: 2, y: 0, w: 2, h: 2, id: id(),
+      max: { w: 2, h: 2 }
+  }),
+];
+</script>

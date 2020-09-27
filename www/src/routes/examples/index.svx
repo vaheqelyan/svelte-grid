@@ -1,0 +1,42 @@
+<style>
+
+</style>
+
+<svelte:head>
+  <title>Svelte-grid — Examples</title>
+</svelte:head>
+
+Examples
+-----
+
+- [Basic][1]
+- [Gap][2]
+- [Responsive][3]
+- [Add/Remove][4]
+- [Min/Max size][5]
+- [Fixed][6]
+- [Serialize/Restore][7]
+- [Events][8]
+
+[1]: /examples/basic
+[2]: /examples/gap
+[3]: /examples/responsive
+[4]: /examples/add_remove
+[5]: /examples/min_max
+[6]: /examples/fixed
+[7]: /examples/local-storage
+[8]: /examples/events
+
+
+
+
+<script>
+
+
+const list = [
+
+{ title:'basic', link: '/basic' }
+
+];
+
+</script>

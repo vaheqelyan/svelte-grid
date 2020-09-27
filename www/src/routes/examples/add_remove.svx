@@ -1,0 +1,109 @@
+<svelte:head>
+  <title>Example — Add/Remove</title>
+  <meta name="description" content="Svelte-grid — Example — Add/Remove" />
+  <meta name="keywords" content="draggable,resizable,grid,layout,responsive,breakpoints,Svelte,svelte,svelte.js,sveltejs,usage,example,examples,samples,add,remove,dynamic" />
+  <meta name="author" content="Vahe Araqelyan" />
+</svelte:head>
+
+<style>
+.content {
+height: 100%;
+}
+.remove { cursor: pointer; position: absolute; right: 5px; top: 3px; }
+</style>
+
+## Add/Remove
+<small><a target=_blank href="https://svelte.dev/repl/6f3685b564d74eb0812cfe10e41f3186?version=latest">REPL</a></small>
+<small><a target=_blank  href={`${openSource}/add_remove.svx`}>SOURCE</a></small>
+
+
+This demo shows what happens when items are dynamically added and removed.
+You can remove an item by clicking its "x", and add a new one with the button.
+After adding an element, you can use the `normalize` or `adjust` functions. 
+But this will actually be used to prevent a situation where your box will overlap with another.
+
+
+<small>
+<a href=examples/gap>→ Add/Remove</a>
+</small>
+
+---
+
+  <button on:click={add}>Add (random size)</button>
+  <button on:click={addAt}>Add random (x=0,y=0)</button>
+  <label>
+    <input type="checkbox" bind:checked={adjustAfterRemove} />
+    Adjust elements after removing an item
+  </label>
+
+<Grid bind:items={items} gap={10} rowHeight={100} let:item {cols}>
+<div class=content>
+<span on:click={() => remove(item)} on:pointerdown={e=>e.preventDefault()} class=remove>✕</span>
+<p>{item.id}</p>
+</div>
+
+</Grid>
+
+<script>
+import Grid from "../../components/svelte-grid/index.svelte";
+import gridHelp from "../../components/svelte-grid/utils/helper.js";
+import { openSource } from "./github.js";
+
+const id = () => "_" + Math.random().toString(36).substr(2, 9);
+const randomNumberInRange = (min, max) => Math.random() * (max - min) + min;
+
+let adjustAfterRemove = false;
+
+
+let cols = 10;
+
+let items = [
+  gridHelp.item({
+        x: 0,
+        y: 0,
+        w: 2,
+        h: 2,
+        id: id(),
+  }),
+  gridHelp.item({
+      x: 2, y: 0, w: 5, h: 2, id: id() 
+  }),
+];
+
+function add() {
+    let newItem = gridHelp.item({
+      w: Math.round(randomNumberInRange(1, 4)),
+      h: Math.round(randomNumberInRange(1, 4)),
+      x: 0,
+      y: 0,
+      id: id(),
+    });
+
+    let findOutPosition = gridHelp.findSpace(newItem, items, cols);
+
+    items = [...items, ...[{ ...newItem, ...findOutPosition }]];
+  }
+
+const addAt = () => {
+let newItem = gridHelp.item({
+      w: Math.round(randomNumberInRange(1, 4)),
+      h: Math.round(randomNumberInRange(1, 4)),
+      x: 0,
+      y: 0,
+      id: id(),
+    });
+    items = [...[newItem],...items]
+    items = gridHelp.normalize(items, cols);
+}
+
+
+const remove = (item) => {
+
+items = items.filter(value => value.id !== item.id);
+
+if (adjustAfterRemove) {
+  items = gridHelp.adjust(items, cols);
+}
+
+}
+</script>
