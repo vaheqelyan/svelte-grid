@@ -1,5 +1,4 @@
 ## Serialize/Restore
-<small><a target=_blank href="https://svelte.dev/repl/7a51dcc6fa574b1dbe6130cda428c039?version=latest">REPL</a></small>
 <small><a target=_blank  href={`${openSource}/local-storage.svx`}>SOURCE</a></small>
 
 This simple demo synchronizes to localStorage.
