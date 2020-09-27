@@ -15,7 +15,7 @@ height: 100%;
 
 
 ## Min/Max size
-<small><a target=_blank href="https://svelte.dev/repl/2cf339cc1dc14223a1457e386195e52d?version=latest">REPL</a></small>
+<small><a target=_blank href="https://svelte.dev/repl/af1a9b29d8774bba8dee7987f0f24bb1?version=latest">REPL</a></small>
 <small><a target=_blank  href={`${openSource}/min_max.svx`}>SOURCE</a></small>
 
 Control how much can user resize the item.
@@ -35,16 +35,20 @@ const id = () => "_" + Math.random().toString(36).substr(2, 9);
 
 let items = [
   gridHelp.item({
-        x: 0,
-        y: 0,
-        w: 2,
-        h: 2,
-        id: id(),
-	max: { w: 2, h: 2 }
+    x: 0,
+    y: 0,
+    w: 2,
+    h: 2,
+    id: id(),
+    max: { w: 2, h: 2 },
   }),
   gridHelp.item({
-      x: 2, y: 0, w: 2, h: 2, id: id(),
-      max: { w: 2, h: 2 }
+    x: 2,
+    y: 0,
+    w: 2,
+    h: 2,
+    id: id(),
+    max: { w: 4, h: 5 },
   }),
 ];
 </script>
