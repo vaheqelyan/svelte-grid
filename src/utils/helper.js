@@ -1,49 +1,40 @@
 import { makeMatrixFromItems } from "../utils/matrix.js";
-import { findFreeSpaceForItem, resizeItems, moveItem } from "../utils/item.js";
+import { findFreeSpaceForItem, normalize, adjust } from "../utils/item.js";
 import { getRowsCount } from "./other.js";
 
 function makeItem(item) {
+  const { min = { w: 1, h: 1 }, max } = item;
   return {
-    drag: {
-      top: null,
-      left: null,
-      dragging: false,
+    fixed: false,
+    resizable: !item.fixed,
+    draggable: !item.fixed,
+    min: {
+      w: Math.max(1, min.w),
+      h: Math.max(1, min.h),
     },
-    resize: {
-      width: null,
-      height: null,
-      resizing: false,
-    },
-    responsive: {
-      valueW: 0,
-    },
-    static: false,
-    resizable: !item.static,
-    draggable: !item.static,
-    min: { ...item.min },
-    max: { ...item.max },
+    max: { ...max },
     ...item,
   };
 }
 
 const gridHelp = {
-  findSpaceForItem(item, items, cols) {
-    let matrix = makeMatrixFromItems(items, getRowsCount(items), cols);
-
-    let position = findFreeSpaceForItem(matrix, item, items);
-    return position;
+  normalize(items, col, rows) {
+    return normalize(items, col, rows);
   },
 
-  appendItem(item, items, cols) {
-    return moveItem(item, [...items, ...[item]], cols);
-  },
-
-  resizeItems(items, col, rows) {
-    return resizeItems(items, col, rows);
+  adjust(items, col) {
+    return adjust(items, col);
   },
 
   item(obj) {
     return makeItem(obj);
+  },
+
+  findSpace(item, items, cols) {
+    let matrix = makeMatrixFromItems(items, getRowsCount(items), cols);
+
+    let position = findFreeSpaceForItem(matrix, item, items);
+    return position;
   },
 };
 
