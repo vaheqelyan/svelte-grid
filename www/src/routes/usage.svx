@@ -1,0 +1,183 @@
+<style>
+  .table {
+    overflow-x: auto;
+  }
+</style>
+
+<svelte:head>
+  <title>Svelte-grid — Usage</title>
+  <!-- <meta name="description" content=""/> -->
+  <meta name="keywords" content="draggable,resizable,grid,layout,responsive,breakpoints,Svelte,svelte,svelte.js,sveltejs,usage" />
+  <meta name="author" content="Vahe Araqelyan" />
+</svelte:head>
+
+### Usage
+
+Use `Grid` like any other component.
+
+The basic example
+
+```svelte
+<script>
+import Grid from "svelte-grid";
+import gridHelp from "svelte-grid/build/helper/index.mjs";
+
+const id = () => "_" + Math.random().toString(36).substr(2, 9);
+
+let items = [
+  gridHelp.item({ x: 0, y: 0, w: 2, h: 2, id: id() }),
+  gridHelp.item({ x: 2, y: 0, w: 2, h: 2, id: id() }),
+];
+</script>
+<Grid cols={3} bind:items={items} let:item={item}>
+  <div>{item.id}</div>
+</Grid>
+```
+
+
+[See more examples](examples)
+
+
+### How to style
+
+Right now this is a problem for svelte
+
+But you can apply styles to a selector globally, use the, `:global(...)` modifier, for example
+```svelte
+<style>
+  :global(.svlt-grid-shadow) {
+    /* Back shadow */
+    background: pink;
+  }
+  :global(.svlt-grid-container) {
+    /* Container color */
+    background: #eee;
+  }
+  :global(.svlt-grid-resizer::after) {
+    /* Resizer color */
+    border-color: white !important;
+  }
+</style>
+```
+
+Here are the class names
+
+- `.svlt-grid-container` Class name for container grid
+- `.svlt-grid-item` Slot shell class name
+- `.svlt-grid-shadow` Class name for the back shadow when resizing or moving an element
+- `.svlt-grid-resizer` Class name for resizer
+
+
+### Helper functions
+
+The helper function is located in `svelte-grid/build/helper/index.mjs`
+
+```js
+import gridHelp from 'svelte-grid/build/helper'
+```
+
+### What's in there?
+
+Well, there are several functions that will help you manage the grid elements
+
+```js
+gridHelp.item(item: Object)
+```
+
+Returns an object with the properties necessary to create a widget.
+This is an object for a single widget
+
+```
+{
+  x: Number,
+  y: Number,
+  w: Number,
+  h: Number,
+  fixed: Boolean,
+  resizable: Boolean,
+  draggable: Boolean,
+  min: {
+    w: Number,
+    h: Number,
+  },
+  max: {
+    w: Number,
+    h: Number,
+  },
+}
+```
+
+Example of use
+
+```js
+const items = [
+  gridHelp.item({
+    x: 0,
+    y: 0,
+    w: 2,
+    h: 2,
+    draggable: false,
+    max: { w: 2 }
+  })
+];
+```
+
+### Responsiveness
+
+> See this [demo](examples/responsive)
+
+Add the `breakpoints` property to your element, like this.
+
+```svelte
+<Grid {breakpoints} rowHeight={150} />
+
+<script>
+// ...
+
+let items = [
+  gridHelp.item({
+    breakpoints: {
+      5: { x: 0, y: 0, w: 2, h: 2 },
+      2: { x: 0, y: 0, w: 1, h: 2 },
+    },
+  }),
+];
+
+const breakpoints = [
+  [1600, 5],
+  [1024, 2],
+];
+</script>
+
+```
+
+
+```js
+gridHelp.findSpace(item: Object, items: Array<Object>, cols: Number)
+```
+
+Find out where to place the widget in the grid by calculating from left to right returns an object of two properties x and y.
+
+
+### Props
+
+<div class=table>
+
+Prop | Type | Description | Required
+--- | --- | --- | --- |
+items | `Array<Object>` | items is an array of objects, see the demos for more complete usage | Yes
+cols | `Number` | Number of columns in layout | Yes
+gap | `Number` | Margin between items in px | No
+rowHeight | `Number` | Rows have a static height | No
+breakpoints | `Array<Array<Number>>` | Changes the column number for a specific breakpoint | No
+debounceUpdate | `Number` | Debounce grid recalculation, default value is `100` | No
+debounceResize | `Number` | Debounce grid recalculation, when the container changes its width. default value is `100` | No
+on:resize | `Function<void>` | The event is triggered when the grid is resized. There are a couple of properties in the detail property. | No
+on:change | `Function<void>` | The event is triggered when an element is resized or moved | No
+on:mount | `Function<void>` | The event is triggered when the grid is mounted. There are a couple of properties in the detail property. 
+
+</div>
+
+Have questions ? 
+
+[Open an issue](https://github.com/vaheqelyan/svelte-grid/issues/new)
