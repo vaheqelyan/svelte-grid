@@ -1,31 +1,25 @@
 <style>
   .content {
     width: 100%;
-    height: 100%; border-radius: 6px;
-    border-bottom-right-radius: 3px;
+    height: 100%;
+    border-radius: 6px;
   }
 
-  :global(*) {
-    user-select: none;
-  }
   :global(body) {
     overflow: scroll;
     margin: 0;
   }
+
   :global(.svlt-grid-resizer::after) {
     border-color: white !important;
   }
 
-  :global(.svlt-grid-transition > .svlt-grid-item) {
-    transition: transform 0.2s;
+  :global(.svlt-grid-shadow) {
+    border-radius: 6px;
   }
 
-  :global(.svlt-grid-shadow) {
-    background: pink;
+  :global(.svlt-grid-item) {
     border-radius: 6px;
-    border-bottom-right-radius: 3px;
-    /*transition: top 0.2s, left 0.2s;*/
-    transition: transform 0.2s;
   }
 
   .welcome {
@@ -45,14 +39,13 @@
   <h4>A draggable and resizable grid layout with responsive breakpoints, for Svelte.</h4>
 </div>
 
-<Grid bind:items={items} useTransform {breakpoints} gap={10} {cols} rowHeight={100} let:item>
-  <div class="content" style="background: {item.static ? '#ccccee' : item.data}" />
+<Grid bind:items gap={10} {cols} rowHeight={100} let:item>
+  <div class="content" style="background: {item.data};" />
 </Grid>
 
 <script>
-  import Grid from "svelte-grid";
-  import gridHelp from "svelte-grid/build/helper";
-  import map from "lodash.map";
+  import Grid from "../components/svelte-grid/index.svelte";
+  import gridHelp from "../components/svelte-grid/utils/helper.js";
 
   const id = () =>
     "_" +
@@ -60,16 +53,13 @@
       .toString(36)
       .substr(2, 9);
 
-  const random = (min, max) => Math.random() * (max - min) + min;
-
   const randomHexColorCode = () => {
     let n = (Math.random() * 0xfffff * 1000000).toString(16);
     return "#" + n.slice(0, 6);
   };
-  let items = [];
 
   function generateLayout(col) {
-    return map(new Array(20), function(item, i) {
+    return new Array(20).fill(null).map(function(item, i) {
       const y = Math.ceil(Math.random() * 4) + 1;
       return {
         ...gridHelp.item({
@@ -84,15 +74,11 @@
     });
   }
 
-  var cols = 15;
+  let cols = 16;
 
-  items = generateLayout(cols);
-  items = gridHelp.resizeItems(items, cols);
+  let items = gridHelp.adjust(generateLayout(cols), cols);
 
-  let breakpoints = [
-    [1000, 10],
-    [700, 5],
-    [500, 3],
-    [400, 1],
-  ];
+  const adjust = () => {
+    items = gridHelp.adjust(items, cols);
+  };
 </script>
