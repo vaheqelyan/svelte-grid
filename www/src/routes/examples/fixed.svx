@@ -35,21 +35,26 @@ const id = () => "_" + Math.random().toString(36).substr(2, 9);
 
 let items = [
   gridHelp.item({
-        x: 0,
-        y: 0,
-        w: 2,
-        h: 2,
-        id: id(),
+    x: 0,
+    y: 0,
+    w: 2,
+    h: 2,
+    id: id(),
   }),
   gridHelp.item({
-      x: 2, y: 0, w: 2, h: 2, id: id() 
+    x: 2,
+    y: 0,
+    w: 2,
+    h: 2,
+    id: id(),
   }),
-
-gridHelp.item({
-      x: 4, y: 0, w: 5, h: 2, id: id(), fixed: true
+  gridHelp.item({
+    x: 4,
+    y: 0,
+    w: 5,
+    h: 2,
+    id: id(),
+    fixed: true,
   }),
-
-
-
 ];
 </script>

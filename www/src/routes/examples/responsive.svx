@@ -52,7 +52,6 @@ import { openSource } from "./github.js";
 const id = () => "_" + Math.random().toString(36).substr(2, 9);
 
 let items = [
-
   gridHelp.item({
     id: id(),
     breakpoints: {
@@ -62,14 +61,12 @@ let items = [
         w: 2,
         h: 2,
       },
-      3: { x:0, w: 2, h: 2,y:0 },
-1: {x:0,y:0,w:1,h:2}
-
+      3: { x: 0, w: 2, h: 2, y: 0 },
+      1: { x: 0, y: 0, w: 1, h: 2 },
     },
   }),
 
-
-gridHelp.item({
+  gridHelp.item({
     id: id(),
     breakpoints: {
       5: {
@@ -78,13 +75,12 @@ gridHelp.item({
         w: 3,
         h: 2,
       },
-     3: { x:2, w: 1, h: 2,y:0 },
-1: {x:0,y:2,w:1,h:2}
-
+      3: { x: 2, w: 1, h: 2, y: 0 },
+      1: { x: 0, y: 2, w: 1, h: 2 },
     },
   }),
 
-gridHelp.item({
+  gridHelp.item({
     id: id(),
     breakpoints: {
       5: {
@@ -93,19 +89,15 @@ gridHelp.item({
         w: 5,
         h: 2,
       },
-      3: { x:0, w: 3, h: 2,y:2 },
-      1: { x:0, y: 4, w: 1, h:2 }
+      3: { x: 0, w: 3, h: 2, y: 2 },
+      1: { x: 0, y: 4, w: 1, h: 2 },
     },
   }),
-
-
-
-
 ];
 
 const breakpoints = [
   [1500, 5],
   [1024, 3],
-  [500, 1]
+  [500, 1],
 ];
 </script>

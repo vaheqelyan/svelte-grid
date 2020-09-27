@@ -24,12 +24,12 @@ But this will actually be used to prevent a situation where your box will overla
 
 ---
 
-  <button on:click={add}>Add (random size)</button>
-  <button on:click={addAt}>Add random (x=0,y=0)</button>
-  <label>
-    <input type="checkbox" bind:checked={adjustAfterRemove} />
-    Adjust elements after removing an item
-  </label>
+<button on:click={add}>Add (random size)</button>
+<button on:click={addAt}>Add random (x=0,y=0)</button>
+<label>
+  <input type="checkbox" bind:checked={adjustAfterRemove} />
+  Adjust elements after removing an item
+</label>
 
 <Grid bind:items={items} gap={10} rowHeight={100} let:item {cols}>
 <div class=content>
@@ -49,56 +49,56 @@ const randomNumberInRange = (min, max) => Math.random() * (max - min) + min;
 
 let adjustAfterRemove = false;
 
-
 let cols = 10;
 
 let items = [
   gridHelp.item({
-        x: 0,
-        y: 0,
-        w: 2,
-        h: 2,
-        id: id(),
+    x: 0,
+    y: 0,
+    w: 2,
+    h: 2,
+    id: id(),
   }),
   gridHelp.item({
-      x: 2, y: 0, w: 5, h: 2, id: id() 
+    x: 2,
+    y: 0,
+    w: 5,
+    h: 2,
+    id: id(),
   }),
 ];
 
 function add() {
-    let newItem = gridHelp.item({
-      w: Math.round(randomNumberInRange(1, 4)),
-      h: Math.round(randomNumberInRange(1, 4)),
-      x: 0,
-      y: 0,
-      id: id(),
-    });
+  let newItem = gridHelp.item({
+    w: Math.round(randomNumberInRange(1, 4)),
+    h: Math.round(randomNumberInRange(1, 4)),
+    x: 0,
+    y: 0,
+    id: id(),
+  });
 
-    let findOutPosition = gridHelp.findSpace(newItem, items, cols);
+  let findOutPosition = gridHelp.findSpace(newItem, items, cols);
 
-    items = [...items, ...[{ ...newItem, ...findOutPosition }]];
-  }
+  items = [...items, ...[{ ...newItem, ...findOutPosition }]];
+}
 
 const addAt = () => {
-let newItem = gridHelp.item({
-      w: Math.round(randomNumberInRange(1, 4)),
-      h: Math.round(randomNumberInRange(1, 4)),
-      x: 0,
-      y: 0,
-      id: id(),
-    });
-    items = [...[newItem],...items]
-    items = gridHelp.normalize(items, cols);
-}
-
+  let newItem = gridHelp.item({
+    w: Math.round(randomNumberInRange(1, 4)),
+    h: Math.round(randomNumberInRange(1, 4)),
+    x: 0,
+    y: 0,
+    id: id(),
+  });
+  items = [...[newItem], ...items];
+  items = gridHelp.normalize(items, cols);
+};
 
 const remove = (item) => {
+  items = items.filter((value) => value.id !== item.id);
 
-items = items.filter(value => value.id !== item.id);
-
-if (adjustAfterRemove) {
-  items = gridHelp.adjust(items, cols);
-}
-
-}
+  if (adjustAfterRemove) {
+    items = gridHelp.adjust(items, cols);
+  }
+};
 </script>
