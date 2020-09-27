@@ -22,11 +22,6 @@ You can remove an item by clicking its "x", and add a new one with the button.
 After adding an element, you can use the `normalize` or `adjust` functions. 
 But this will actually be used to prevent a situation where your box will overlap with another.
 
-
-<small>
-<a href=examples/gap>→ Add/Remove</a>
-</small>
-
 ---
 
   <button on:click={add}>Add (random size)</button>
