@@ -8,30 +8,30 @@
   "dependencies": {
     "compression": "^1.7.1",
     "polka": "next",
-    "sirv": "^1.0.6"
+    "sirv": "^1.0.7"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.6",
+    "@babel/core": "^7.12.3",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
-    "@babel/plugin-transform-runtime": "^7.11.5",
-    "@babel/preset-env": "^7.11.5",
-    "@babel/runtime": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/runtime": "^7.12.1",
     "@rollup/plugin-babel": "^5.2.1",
     "@rollup/plugin-commonjs": "^14.0.0",
     "@rollup/plugin-node-resolve": "^8.4.0",
-    "@rollup/plugin-replace": "^2.2.0",
+    "@rollup/plugin-replace": "^2.3.4",
     "mdsvex": "^0.8.8",
     "npm-run-all": "^4.1.5",
     "prism": "^4.1.2",
     "prism-svelte": "^0.4.7",
-    "prismjs": "^1.21.0",
+    "prismjs": "^1.22.0",
     "rehype-autolink-headings": "^4.0.0",
     "rehype-slug": "^3.0.0",
-    "rollup": "^2.28.2",
+    "rollup": "^2.32.1",
     "rollup-plugin-glob": "^1.0.2",
     "rollup-plugin-svelte": "^5.0.1",
     "rollup-plugin-terser": "^6.1.0",
-    "sapper": "^0.28.9",
-    "svelte": "^3.28.0"
+    "sapper": "^0.28.10",
+    "svelte": "^3.29.4"
   }
 }

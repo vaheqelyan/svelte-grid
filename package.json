@@ -8,7 +8,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
-    "pretty": "prettier --config .prettierrc --write --svelte-sort-order styles-markup-scripts \"rollup.config.js\" \".eslintrc\" \"package.json\" \"src/**/*.js\" \"www/src/*.svelte\" \"www/src/**/**/*.svelte\" \"*.md\" ",
+    "pretty": "prettier --config .prettierrc --write --svelte-sort-order styles-markup-scripts \"rollup.config.js\" \".eslintrc\" \"package.json\" \"src/**/*.js\" \"www/src/*.svelte\" \"www/src/**/**/*.svelte\" \"*.md\" \"src/*.svelte\" \"src/**/*.svelte\" ",
     "build": "node_modules/.bin/rollup -c",
     "go": "npm-run-all pretty lint build"
   },
@@ -40,7 +40,7 @@
     "rollup": "^1.32.1",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-svelte": "^5.2.3",
-    "svelte": "^3.28.0"
+    "svelte": "^3.29.4"
   },
   "files": [
     "src",
