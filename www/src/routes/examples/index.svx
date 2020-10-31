@@ -17,6 +17,7 @@ Examples
 - [Fixed][6]
 - [Serialize/Restore][7]
 - [Events][8]
+- [Dynamic][9]
 
 [1]: /examples/basic
 [2]: /examples/gap
@@ -26,6 +27,7 @@ Examples
 [6]: /examples/fixed
 [7]: /examples/local-storage
 [8]: /examples/events
+[9]: /examples/dynamic
 
 
 

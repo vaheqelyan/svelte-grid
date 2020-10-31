@@ -169,6 +169,7 @@ items | `Array<Object>` | items is an array of objects, see the demos for more c
 cols | `Number` | Number of columns in layout | Yes
 gap | `Number` | Margin between items in px | No
 rowHeight | `Number` | Rows have a static height | No
+dynamic | `Boolean` | Updates the grid as you move or size | No
 breakpoints | `Array<Array<Number>>` | Changes the column number for a specific breakpoint | No
 debounceUpdate | `Number` | Debounce grid recalculation, default value is `100` | No
 debounceResize | `Number` | Debounce grid recalculation, when the container changes its width. default value is `100` | No
