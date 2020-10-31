@@ -22,6 +22,7 @@
       {item}
       min={item.min}
       max={item.max}
+      {dynamic}
       cols={getComputedCols}>
       <slot {item} index={i} />
     </MoveResize>
@@ -47,6 +48,7 @@
 
   export let debounceUpdate = 100;
   export let debounceResize = 100;
+  export let dynamic = true;
 
   let getComputedCols;
 
@@ -121,6 +123,8 @@
     if (activeItem) {
       activeItem = Object.assign(activeItem, detail.shadow);
       items = moveItem(activeItem, items, getComputedCols, detail.clone);
+
+      if (detail.onUpdate) detail.onUpdate();
 
       dispatch("change", {
         unsafeItem: activeItem,

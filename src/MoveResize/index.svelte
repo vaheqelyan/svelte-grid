@@ -62,7 +62,13 @@
   }
 </style>
 
-<div on:pointerdown={draggable && pointerdown} class="svlt-grid-item" class:transition={!active} class:active class:no-user={active} style="width: {width}px; height:{height}px; transform: translate({left}px, {top}px);">
+<div
+  on:pointerdown={draggable && pointerdown}
+  class="svlt-grid-item"
+  class:transition={!active}
+  class:active
+  class:no-user={active}
+  style="width: {active ? cloneBound.width : width}px; height:{active ? cloneBound.height : height}px; transform: translate({active ? cloneBound.left : left}px, {active ? cloneBound.top : top}px);">
   <slot />
   {#if resizable}
     <div class="svlt-grid-resizer" on:pointerdown={resizePointerDown} />
@@ -93,6 +99,7 @@
 
   export let gap;
   export let item;
+  export let dynamic;
 
   export let max;
   export let min;
@@ -111,6 +118,18 @@
   let newXY = { x: 0, y: 0 };
 
   let clone = { ...item };
+  let cloneBound = { width, height, top, left };
+
+  const inActivate = () => (active = false);
+  let repaint = (listen = true) => {
+    const onUpdate = !listen ? false : inActivate;
+    dispatch("repaint", {
+      id,
+      shadow,
+      clone,
+      onUpdate,
+    });
+  };
 
   beforeUpdate(() => {
     if (xPerPx && !debounce) {
@@ -127,6 +146,7 @@
     initY = pageY;
 
     clone = { ...item };
+    cloneBound = { width, height, top, left };
 
     debounce = false;
 
@@ -139,32 +159,28 @@
 
   const pointermove = ({ pageX, pageY, clientX, clientY }) => {
     newXY = { x: initX - pageX, y: initY - pageY };
-    left = xyRef.x - newXY.x;
-    top = xyRef.y - newXY.y;
+    cloneBound.left = xyRef.x - newXY.x;
+    cloneBound.top = xyRef.y - newXY.y;
 
-    let gridX = Math.round(left / xPerPx);
-    let gridY = Math.round(top / yPerPx);
+    let gridX = Math.round(cloneBound.left / xPerPx);
+    let gridY = Math.round(cloneBound.top / yPerPx);
 
     shadow.x = Math.max(Math.min(gridX, cols - shadow.w), 0);
-
     shadow.y = Math.max(gridY, 0);
+
+    if (dynamic) repaint(false);
   };
 
   const pointerup = e => {
     xyRef.x -= newXY.x;
     xyRef.y -= newXY.y;
-    active = false;
 
     window.removeEventListener("pointerdown", pointerdown);
     window.removeEventListener("pointermove", pointermove);
     window.removeEventListener("pointerup", pointerup);
     window.removeEventListener("pointercancel", pointerup);
 
-    dispatch("repaint", {
-      id,
-      shadow,
-      clone,
-    });
+    repaint();
   };
 
   // Resize
@@ -184,6 +200,7 @@
     initialWidth = width;
     initialHeight = height;
     clone = { ...item };
+    cloneBound = { width, height, top, left };
 
     active = true;
     const { x, y, w, h } = item;
@@ -195,11 +212,11 @@
   };
 
   const resizePointerMove = ({ pageX, pageY }) => {
-    width = initialWidth + pageX - resizeInitX;
-    height = initialHeight + pageY - resizeInitY;
+    cloneBound.width = initialWidth + pageX - resizeInitX;
+    cloneBound.height = initialHeight + pageY - resizeInitY;
 
-    shadow.w = Math.round(width / xPerPx);
-    shadow.h = Math.round(height / yPerPx);
+    shadow.w = Math.round(cloneBound.width / xPerPx);
+    shadow.h = Math.round(cloneBound.height / yPerPx);
 
     let maxWidth = Math.min(max.w, cols) || cols;
 
@@ -214,13 +231,7 @@
   const resizePointerUp = e => {
     e.stopPropagation();
 
-    active = false;
-
-    dispatch("repaint", {
-      id,
-      shadow,
-      clone,
-    });
+    repaint();
 
     window.removeEventListener("pointermove", resizePointerMove);
     window.removeEventListener("pointerup", resizePointerUp);
