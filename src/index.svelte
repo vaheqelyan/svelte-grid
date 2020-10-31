@@ -120,7 +120,7 @@
 
     if (activeItem) {
       activeItem = Object.assign(activeItem, detail.shadow);
-      items = moveItem(activeItem, items, getComputedCols, detail.initial);
+      items = moveItem(activeItem, items, getComputedCols, detail.clone);
 
       dispatch("change", {
         unsafeItem: activeItem,

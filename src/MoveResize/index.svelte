@@ -110,7 +110,7 @@
   let xyRef = { x: left, y: top };
   let newXY = { x: 0, y: 0 };
 
-  let initial = { ...item };
+  let clone = { ...item };
 
   beforeUpdate(() => {
     if (xPerPx && !debounce) {
@@ -126,7 +126,7 @@
     initX = pageX;
     initY = pageY;
 
-    initial = { ...item };
+    clone = { ...item };
 
     debounce = false;
 
@@ -163,7 +163,7 @@
     dispatch("repaint", {
       id,
       shadow,
-      initial,
+      clone,
     });
   };
 
@@ -183,7 +183,7 @@
 
     initialWidth = width;
     initialHeight = height;
-    initial = { ...item };
+    clone = { ...item };
 
     active = true;
     const { x, y, w, h } = item;
@@ -219,7 +219,7 @@
     dispatch("repaint", {
       id,
       shadow,
-      initial,
+      clone,
     });
 
     window.removeEventListener("pointermove", resizePointerMove);
