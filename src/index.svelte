@@ -48,7 +48,7 @@
 
   export let debounceUpdate = 100;
   export let debounceResize = 100;
-  export let dynamic = true;
+  export let dynamic = false;
 
   let getComputedCols;
 
