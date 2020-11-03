@@ -9,7 +9,6 @@
     <MoveResize
       on:repaint={handleRepaint}
       id={item.id}
-      index={i}
       resizable={item.resizable}
       draggable={item.draggable}
       {xPerPx}
