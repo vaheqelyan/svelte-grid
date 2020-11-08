@@ -93,6 +93,6 @@ const reset = () => {
       },
     };
   });
-  localStorage.setItem("layout-responsive", JSON.stringify(layoutOriginal));
+  localStorage.setItem("layout-responsive", JSON.stringify(items));
 };
 </script>
