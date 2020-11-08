@@ -1,0 +1,98 @@
+## Responsive - Serialize/Restore
+<small><a target=_blank  href={`${openSource}/responsive-local-storage.svx`}>SOURCE</a></small>
+
+This is a simple demo of responsiveness and localStorage.
+
+----
+
+<button on:click={reset}>Reset</button>
+
+<Grid bind:items={items} gap={10} rowHeight={100} let:item let:index on:change={onChange} {breakpoints} on:mount={setCols} on:resize={setCols}>
+  <div>
+  {index}
+  </div>
+</Grid>
+
+<script>
+import Grid from "../../components/svelte-grid/index.svelte";
+import gridHelp from "../../components/svelte-grid/utils/helper.js";
+import { openSource } from "./github.js";
+
+const id = () => "_" + Math.random().toString(36).substr(2, 9);
+
+let columns = 1;
+
+const breakpoints = [
+  [1287, 4],
+  [700, 1],
+]
+
+let layoutOriginal = [
+  gridHelp.item({
+    id: id(),
+    breakpoints: {
+      4: { x: 0, w: 2, h: 2, y: 0 },
+      1: { x: 0, y: 0, w: 1, h: 2 },
+    },
+  }),
+  gridHelp.item({
+    id: id(),
+    breakpoints: {
+      4: { x: 2, w: 1, h: 2, y: 0 },
+      1: { x: 0, y: 2, w: 1, h: 2 },
+    },
+  }),
+];
+
+let layout = layoutOriginal;
+
+if (typeof window !== "undefined") {
+  if (!localStorage.getItem("layout-responsive")) {
+    localStorage.setItem("layout-responsive", JSON.stringify(layoutOriginal));
+  } else {
+    layout = JSON.parse(localStorage.getItem("layout-responsive"));
+  }
+}
+
+let items = layout;
+
+const onChange = (ev) => {
+  if (ev.detail.cols) {
+    let {x,y,w,h} = items.find(value => value.id === ev.detail.id);
+    items = items.map(value => {
+      if (value.id === ev.detail.id) {
+        return {
+          ...value,
+          breakpoints: {
+            ...value.breakpoints,
+            [ev.detail.cols]: { x, y, w, h }
+          },
+        };
+      }
+      return value;
+    });
+  }
+
+  localStorage.setItem("layout-responsive", JSON.stringify(items));
+};
+
+const setCols = e => columns = e.detail.cols
+
+
+const reset = () => {
+  items = items.map((value, index) => {
+    const originalItem = layoutOriginal[index];
+    const originalBreakpoint = originalItem.breakpoints[columns];
+
+    return {
+      ...value,
+      ...originalBreakpoint,
+      breakpoints: {
+        ...value.breakpoints,
+        [columns]: originalBreakpoint,
+      },
+    };
+  });
+  localStorage.setItem("layout-responsive", JSON.stringify(layoutOriginal));
+};
+</script>

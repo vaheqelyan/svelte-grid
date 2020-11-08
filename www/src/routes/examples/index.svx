@@ -18,6 +18,7 @@ Examples
 - [Serialize/Restore][7]
 - [Events][8]
 - [Dynamic][9]
+- [Responsive - Serialize/Resotre][10]
 
 [1]: /examples/basic
 [2]: /examples/gap
@@ -28,6 +29,7 @@ Examples
 [7]: /examples/local-storage
 [8]: /examples/events
 [9]: /examples/dynamic
+[10]: /examples/responsive-local-storage
 
 
 
