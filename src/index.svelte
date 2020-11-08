@@ -128,6 +128,7 @@
       dispatch("change", {
         unsafeItem: activeItem,
         id: activeItem.id,
+        cols: getComputedCols,
       });
     }
   };
