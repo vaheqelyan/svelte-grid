@@ -120,7 +120,13 @@
   let clone = { ...item };
   let cloneBound = { width, height, top, left };
 
-  const inActivate = () => (active = false);
+  const inActivate = () => {
+    active = false;
+    dispatch("pointerup", {
+      id,
+    });
+  };
+
   let repaint = (listen = true) => {
     const onUpdate = !listen ? false : inActivate;
     dispatch("repaint", {

@@ -8,6 +8,7 @@
   {#each items as item, i (item.id)}
     <MoveResize
       on:repaint={handleRepaint}
+      on:pointerup={pointerup}
       id={item.id}
       resizable={item.resizable}
       draggable={item.draggable}
@@ -70,6 +71,13 @@
     }
     prevCols = cols;
   }
+
+  const pointerup = ev => {
+    dispatch("pointerup", {
+      id: ev.detail.id,
+      cols: getComputedCols,
+    });
+  };
 
   const onResize = debounce(() => {
     if (breakpoints.length) {
