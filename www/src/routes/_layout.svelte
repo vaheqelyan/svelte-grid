@@ -7,9 +7,10 @@
   .content {
     flex: 1;
     padding: 4% 7%;
-    /*padding:20% 100%;*/
   }
 </style>
+
+<Ribbon />
 
 <Nav {segment} />
 
@@ -21,6 +22,7 @@
 
 <script>
   import Nav from "../components/Nav.svelte";
+  import Ribbon from "../components/Ribbon.svelte";
   import Footer from "../components/Footer.svelte";
 
   export let segment;
