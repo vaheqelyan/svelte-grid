@@ -3,7 +3,6 @@
     touch-action: none;
     position: absolute;
     background: #f1f1f1;
-    z-index: 1;
     will-change: transform;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
@@ -47,10 +46,13 @@
     cursor: grabbing;
   }
 
+  .shadow-active {
+    z-index: 2;
+  }
+
   .svlt-grid-shadow {
     position: absolute;
     background: red;
-    z-index: -1;
     will-change: transform;
     background: pink;
     backface-visibility: hidden;
@@ -76,7 +78,7 @@
 </div>
 
 {#if active}
-  <div class="svlt-grid-shadow transition" style=" width: {shadow.w * xPerPx - gap * 2}px; height: {shadow.h * yPerPx - gap * 2}px; transform: translate({shadow.x * xPerPx + gap}px, {shadow.y * yPerPx + gap}px); " />
+  <div class="svlt-grid-shadow transition shadow-active" style=" width: {shadow.w * xPerPx - gap * 2}px; height: {shadow.h * yPerPx - gap * 2}px; transform: translate({shadow.x * xPerPx + gap}px, {shadow.y * yPerPx + gap}px); " />
 {/if}
 
 <script>
@@ -106,7 +108,7 @@
 
   export let cols;
 
-  let shadow = { x: item.x, y: item.y, w: item.w, h: item.h };
+  let shadow = { x: item?.x, y: item?.y, w: item?.w, h: item?.h };
 
   let active = false;
 
@@ -117,7 +119,6 @@
   let xyRef = { x: left, y: top };
   let newXY = { x: 0, y: 0 };
 
-  let clone = { ...item };
   let cloneBound = { width, height, top, left };
 
   const inActivate = () => {
@@ -132,7 +133,6 @@
     dispatch("repaint", {
       id,
       shadow,
-      clone,
       onUpdate,
     });
   };
@@ -140,8 +140,7 @@
   beforeUpdate(() => {
     if (xPerPx && !debounce) {
       xyRef = { x: left, y: top };
-
-      shadow = { x: item.x, y: item.y, w: item.w, h: item.h };
+      shadow = { x: item?.x, y: item?.y, w: item?.w, h: item?.h };
 
       debounce = true;
     }
@@ -151,7 +150,6 @@
     initX = pageX;
     initY = pageY;
 
-    clone = { ...item };
     cloneBound = { width, height, top, left };
 
     debounce = false;
@@ -177,7 +175,7 @@
     if (dynamic) repaint(false);
   };
 
-  const pointerup = e => {
+  const pointerup = (e) => {
     xyRef.x -= newXY.x;
     xyRef.y -= newXY.y;
 
@@ -196,7 +194,7 @@
   let initialWidth = 0;
   let initialHeight = 0;
 
-  const resizePointerDown = e => {
+  const resizePointerDown = (e) => {
     e.stopPropagation();
     const { pageX, pageY } = e;
 
@@ -205,7 +203,6 @@
 
     initialWidth = width;
     initialHeight = height;
-    clone = { ...item };
     cloneBound = { width, height, top, left };
 
     active = true;
@@ -234,7 +231,7 @@
     }
   };
 
-  const resizePointerUp = e => {
+  const resizePointerUp = (e) => {
     e.stopPropagation();
 
     repaint();
