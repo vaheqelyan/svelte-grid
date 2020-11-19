@@ -18,7 +18,8 @@ function makeItem(item) {
 }
 
 const gridHelp = {
-  normalize(items, col, rows) {
+  normalize(items, col) {
+    const rows = getRowsCount(items, col);
     return normalize(items, col, rows);
   },
 
@@ -31,9 +32,9 @@ const gridHelp = {
   },
 
   findSpace(item, items, cols) {
-    let matrix = makeMatrixFromItems(items, getRowsCount(items), cols);
+    let matrix = makeMatrixFromItems(items, getRowsCount(items, cols), cols);
 
-    let position = findFreeSpaceForItem(matrix, item, items);
+    let position = findFreeSpaceForItem(matrix, item[cols], items);
     return position;
   },
 };

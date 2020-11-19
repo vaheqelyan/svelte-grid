@@ -1,27 +1,8 @@
 import { makeMatrix, makeMatrixFromItemsIgnore, findCloseBlocks, findItemsById, makeMatrixFromItems } from "./matrix.js";
 import { getRowsCount } from "./other.js";
 
-export function filterStatics(items) {
-  return items.filter(value => !value.static);
-}
-
-export function responsiveItems(items, cols) {
-  return items.map(val => {
-    const breakpoint = val.breakpoints[cols];
-    if (breakpoint) {
-      return { ...val, ...breakpoint };
-    }
-    return val;
-  });
-}
-
 export function getItemById(id, items) {
-  const index = items.findIndex(value => value.id === id);
-
-  return {
-    index,
-    item: items[index],
-  };
+  return items.find((value) => value.id === id);
 }
 
 export function findFreeSpaceForItem(matrix, item, items = []) {
@@ -33,9 +14,9 @@ export function findFreeSpaceForItem(matrix, item, items = []) {
     const row = matrix[i];
     for (var j = 0; j < xNtime + 1; j++) {
       const sliceA = row.slice(j, j + w);
-      const empty = sliceA.every(val => val === undefined);
+      const empty = sliceA.every((val) => val === undefined);
       if (empty) {
-        const isEmpty = matrix.slice(i, i + item.h).every(a => a.slice(j, j + w).every(n => n === undefined));
+        const isEmpty = matrix.slice(i, i + item.h).every((a) => a.slice(j, j + w).every((n) => n === undefined));
 
         if (isEmpty) {
           return { y: i, x: j };
@@ -45,77 +26,108 @@ export function findFreeSpaceForItem(matrix, item, items = []) {
   }
 
   return {
-    y: getRowsCount(items),
+    y: getRowsCount(items, cols),
     x: 0,
   };
 }
 
-function assignPosition(item, position, value) {
-  return value.id === item.id ? { ...item, ...position } : value;
-}
+const getItem = (item, col) => {
+  return { ...item[col], id: item.id };
+};
 
-const replaceItem = (item, cachedItem, value) => (value.id === item.id ? cachedItem : value);
-
-export function moveItem($item, items, cols, originalItem) {
-  let matrix = makeMatrixFromItemsIgnore(items, [$item.id], getRowsCount(items), cols);
-
-  const closeBlocks = findCloseBlocks(items, matrix, $item);
-  let closeObj = findItemsById(closeBlocks, items);
-
-  const fixed = closeObj.find(value => value.fixed);
-
-  if (fixed) {
-    if (originalItem) {
-      return items.map(replaceItem.bind(null, $item, originalItem));
+const updateItem = (elements, active, position, col) => {
+  return elements.map((value) => {
+    if (value.id === active.id) {
+      return { ...value, [col]: { ...value[col], ...position } };
     }
-  }
+    return value;
+  });
+};
 
-  matrix = makeMatrixFromItemsIgnore(items, closeBlocks, getRowsCount(items), cols);
+export function moveItem(active, items, cols, original) {
+  // Get current item from the breakpoint
+  const item = getItem(active, cols);
+  // Create matrix from the items expect the active
+  let matrix = makeMatrixFromItemsIgnore(items, [item.id], getRowsCount(items, cols), cols);
+  // Getting the ids of items under active Array<String>
+  const closeBlocks = findCloseBlocks(items, matrix, item);
+  // Getting the objects of items under active Array<Object>
+  let closeObj = findItemsById(closeBlocks, items);
+  // Getting whenever of these items is fixed
+  const fixed = closeObj.find((value) => value[cols].fixed);
 
+  // If found fixed, reset the active to its original position
+  if (fixed) return items;
+
+  // Update items
+  items = updateItem(items, active, item, cols);
+
+  // Create matrix of items expect close elements
+  matrix = makeMatrixFromItemsIgnore(items, closeBlocks, getRowsCount(items, cols), cols);
+
+  // Create temp vars
   let tempItems = items;
-
   let tempCloseBlocks = closeBlocks;
 
+  // Exclude resolved elements ids in array
   let exclude = [];
 
-  closeObj.forEach(item => {
-    let position = findFreeSpaceForItem(matrix, item, tempItems);
+  // Iterate over close elements under active item
+  closeObj.forEach((item) => {
+    // Find position for element
+    let position = findFreeSpaceForItem(matrix, item[cols], tempItems);
+    // Exclude item
     exclude.push(item.id);
 
+    // If position is found
     if (position) {
-      tempItems = tempItems.map(assignPosition.bind(null, item, position));
-      let getIgnoreItems = tempCloseBlocks.filter(value => exclude.indexOf(value) === -1);
+      // Assign the position to the element in the column
+      tempItems = updateItem(tempItems, item, position, cols);
 
-      matrix = makeMatrixFromItemsIgnore(tempItems, getIgnoreItems, getRowsCount(tempItems), cols);
+      // Recreate ids of elements
+      let getIgnoreItems = tempCloseBlocks.filter((value) => exclude.indexOf(value) === -1);
+
+      // Update matrix for next iteration
+      matrix = makeMatrixFromItemsIgnore(tempItems, getIgnoreItems, getRowsCount(tempItems, cols), cols);
     }
   });
 
+  // Return result
   return tempItems;
 }
 
+// Helper function
 export function normalize(items, col) {
   let result = items.slice();
 
-  result.forEach(value => {
-    if (!value.static) {
-      result = moveItem(value, result, col, { ...value });
+  result.forEach((value) => {
+    const getItem = value[col];
+    if (!getItem.static) {
+      result = moveItem(getItem, result, col, { ...getItem });
     }
   });
 
   return result;
 }
 
+// Helper function
 export function adjust(items, col) {
-  let matrix = makeMatrix(getRowsCount(items), col);
+  let matrix = makeMatrix(getRowsCount(items, col), col);
 
   let res = [];
 
-  items.forEach(item => {
-    let position = findFreeSpaceForItem(matrix, item, items);
+  items.forEach((item) => {
+    let position = findFreeSpaceForItem(matrix, item[col], items);
 
-    res.push({ ...item, ...position });
+    res.push({
+      ...item,
+      [col]: {
+        ...item[col],
+        ...position,
+      },
+    });
 
-    matrix = makeMatrixFromItems(res, getRowsCount(res), col);
+    matrix = makeMatrixFromItems(res, getRowsCount(res, col), col);
   });
 
   return res;

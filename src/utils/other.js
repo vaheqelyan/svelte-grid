@@ -1,31 +1,32 @@
 export const debounce = (fn, ms = 0) => {
   let timeoutId;
-  return function(...args) {
+  return function (...args) {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => fn.apply(this, args), ms);
   };
 };
 
-export function getRowsCount(items) {
-  return Math.max(...items.map(val => val.y + val.h), 1);
+export function getRowsCount(items, cols) {
+  return Math.max(
+    ...items.map((val) => {
+      const item = val[cols];
+      return item?.y + item?.h;
+    }),
+    1,
+  );
 }
 
-export const getColumnFromBreakpoints = (breakpoints, windowWidth, cols) => {
-  var found = false,
-    tempCols = cols;
-  if (breakpoints) {
-    for (var i = breakpoints.length - 1; i >= 0; i--) {
-      const [resolution, cols] = breakpoints[i];
-
-      if (windowWidth <= resolution) {
-        found = true;
-        tempCols = cols;
-        break;
-      }
-    }
+export const getColumn = (containerWidth, columns) => {
+  try {
+    let [_, cols] = columns
+      .slice()
+      .reverse()
+      .find((value) => {
+        const [width, cols] = value;
+        return containerWidth <= width;
+      });
+    return cols;
+  } catch {
+    return columns[columns.length - 1];
   }
-
-  if (!found) return cols;
-
-  return tempCols;
 };

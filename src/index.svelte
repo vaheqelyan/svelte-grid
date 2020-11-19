@@ -10,30 +10,31 @@
       on:repaint={handleRepaint}
       on:pointerup={pointerup}
       id={item.id}
-      resizable={item.resizable}
-      draggable={item.draggable}
+      index={i}
+      resizable={item[getComputedCols]?.resizable}
+      draggable={item[getComputedCols]?.draggable}
       {xPerPx}
       {yPerPx}
-      width={Math.min(getComputedCols, item.w) * xPerPx - gap * 2}
-      height={item.h * yPerPx - gap * 2}
-      top={item.y * yPerPx + gap}
-      left={item.x * xPerPx + gap}
+      width={Math.min(getComputedCols, item[getComputedCols]?.w) * xPerPx - gap * 2}
+      height={item[getComputedCols]?.h * yPerPx - gap * 2}
+      top={item[getComputedCols]?.y * yPerPx + gap}
+      left={item[getComputedCols]?.x * xPerPx + gap}
       {gap}
-      {item}
-      min={item.min}
-      max={item.max}
+      item={item[getComputedCols]}
+      min={item[getComputedCols]?.min}
+      max={item[getComputedCols]?.max}
       {dynamic}
       cols={getComputedCols}>
-      <slot {item} index={i} />
+      <slot dataItem={item} item={item[getComputedCols]} index={i} />
     </MoveResize>
   {/each}
 </div>
 
 <script>
   import { getContainerHeight } from "./utils/container.js";
-  import { responsiveItems, moveItem, getItemById } from "./utils/item.js";
+  import { moveItem, getItemById } from "./utils/item.js";
   import { onMount, createEventDispatcher } from "svelte";
-  import { debounce, getColumnFromBreakpoints } from "./utils/other.js";
+  import { debounce, getColumn } from "./utils/other.js";
 
   import MoveResize from "./MoveResize/index.svelte";
 
@@ -43,7 +44,6 @@
   export let rowHeight;
   export let cols;
   export let gap = 10;
-  export let breakpoints = [];
   export let dynamicCols = true;
 
   export let debounceUpdate = 100;
@@ -61,7 +61,7 @@
 
   let containerWidth;
 
-  $: containerHeight = getContainerHeight(items, yPerPx);
+  $: containerHeight = getContainerHeight(items, yPerPx, getComputedCols);
 
   let prevCols;
 
@@ -72,7 +72,7 @@
     prevCols = cols;
   }
 
-  const pointerup = ev => {
+  const pointerup = (ev) => {
     dispatch("pointerup", {
       id: ev.detail.id,
       cols: getComputedCols,
@@ -80,10 +80,6 @@
   };
 
   const onResize = debounce(() => {
-    if (breakpoints.length) {
-      items = responsiveItems(items, getComputedCols);
-    }
-
     dispatch("resize", {
       cols: getComputedCols,
       xPerPx,
@@ -93,20 +89,16 @@
   }, debounceResize);
 
   onMount(() => {
-    const sizeObserver = new ResizeObserver(entries => {
+    const sizeObserver = new ResizeObserver((entries) => {
       let width = entries[0].contentRect.width;
 
       if (width === containerWidth) return;
 
-      getComputedCols = getColumnFromBreakpoints(breakpoints, width, cols);
+      getComputedCols = getColumn(width, cols);
 
       xPerPx = width / getComputedCols;
 
       if (!containerWidth) {
-        if (breakpoints.length) {
-          items = responsiveItems(items, getComputedCols);
-        }
-
         dispatch("mount", {
           cols: getComputedCols,
           xPerPx,
@@ -125,11 +117,18 @@
   });
 
   const updateMatrix = ({ detail }) => {
-    let activeItem = getItemById(detail.id, items).item;
+    let activeItem = getItemById(detail.id, items);
 
     if (activeItem) {
-      activeItem = Object.assign(activeItem, detail.shadow);
-      items = moveItem(activeItem, items, getComputedCols, detail.clone);
+      activeItem = {
+        ...activeItem,
+        [getComputedCols]: {
+          ...activeItem[getComputedCols],
+          ...detail.shadow,
+        },
+      };
+
+      items = moveItem(activeItem, items, getComputedCols, getItemById(detail.id, items));
 
       if (detail.onUpdate) detail.onUpdate();
 
