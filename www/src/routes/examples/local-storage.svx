@@ -8,7 +8,7 @@ Try moving and resizing elements, then reloading.
 
 <button on:click={reset}>Reset</button>
 
-<Grid bind:items={items} gap={10} rowHeight={100} let:item {cols} let:index on:change={onChange}>
+<Grid bind:items={items} rowHeight={100} let:item {cols} let:index on:change={onChange}>
   <div>
   {index}
   </div>

@@ -19,7 +19,7 @@ align-items: center;
 
 This particular example has dragging and resizing turned off.
 
-<Grid bind:items={items} gap={10} rowHeight={100} let:item {cols}>
+<Grid bind:items={items} rowHeight={100} let:item {cols}>
   <div class="content">
     {item?.fixed ? 'Fixed box' : 'Box'}
   </div>

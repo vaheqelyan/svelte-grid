@@ -20,7 +20,7 @@ align-items: center;
 
 Fixed elements cannot be moved or resized. Other elements move themselves around a fixed element.
 
-<Grid bind:items={items} gap={10} rowHeight={100} let:item {cols}>
+<Grid bind:items={items} rowHeight={100} let:item {cols}>
   <div class="content" style="background: {item?.fixed ? '#cce' : '#ccc'};">
     {item?.fixed ? 'Fixed box' : 'Box'}
   </div>

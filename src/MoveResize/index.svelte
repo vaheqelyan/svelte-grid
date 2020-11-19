@@ -78,7 +78,7 @@
 </div>
 
 {#if active}
-  <div class="svlt-grid-shadow transition shadow-active" style=" width: {shadow.w * xPerPx - gap * 2}px; height: {shadow.h * yPerPx - gap * 2}px; transform: translate({shadow.x * xPerPx + gap}px, {shadow.y * yPerPx + gap}px); " />
+  <div class="svlt-grid-shadow transition shadow-active" style=" width: {shadow.w * xPerPx - gapX * 2}px; height: {shadow.h * yPerPx - gapY * 2}px; transform: translate({shadow.x * xPerPx + gapX}px, {shadow.y * yPerPx + gapY}px); " />
 {/if}
 
 <script>
@@ -99,7 +99,8 @@
   export let xPerPx;
   export let yPerPx;
 
-  export let gap;
+  export let gapX;
+  export let gapY;
   export let item;
   export let dynamic;
 

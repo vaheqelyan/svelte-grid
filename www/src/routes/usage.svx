@@ -127,7 +127,7 @@ const items = [
 
 const cols = [[1200, 6]];
 </script>
-<Grid {items} {cols} rowHeight={150} let:item let:dataItem>
+<Grid gap={[10, 5]} {items} {cols} rowHeight={150} let:item let:dataItem>
   <div>{item?.data}</div>
 </Grid>
 ```
@@ -177,7 +177,7 @@ Prop | Type | Description | Required
 --- | --- | --- | --- |
 items | `Array<Object>` | items is an array of objects, see the demos for more complete usage | Yes
 cols | `Number` | Number of columns in layout | Yes
-gap | `Number` | Margin between items in px | No
+gap | `Array<Number>` | Margin between items in px | No
 rowHeight | `Number` | Rows have a static height | No
 dynamic | `Boolean` | Updates the grid as you move or size | No
 debounceUpdate | `Number` | Debounce grid recalculation, default value is `100` | No

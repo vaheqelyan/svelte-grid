@@ -15,16 +15,17 @@
       draggable={item[getComputedCols]?.draggable}
       {xPerPx}
       {yPerPx}
-      width={Math.min(getComputedCols, item[getComputedCols]?.w) * xPerPx - gap * 2}
-      height={item[getComputedCols]?.h * yPerPx - gap * 2}
-      top={item[getComputedCols]?.y * yPerPx + gap}
-      left={item[getComputedCols]?.x * xPerPx + gap}
-      {gap}
+      width={Math.min(getComputedCols, item[getComputedCols]?.w) * xPerPx - gapX * 2}
+      height={item[getComputedCols]?.h * yPerPx - gapX * 2}
+      top={item[getComputedCols]?.y * yPerPx + gapY}
+      left={item[getComputedCols]?.x * xPerPx + gapX}
       item={item[getComputedCols]}
       min={item[getComputedCols]?.min}
       max={item[getComputedCols]?.max}
       {dynamic}
-      cols={getComputedCols}>
+      cols={getComputedCols}
+      {gapX}
+      {gapY}>
       <slot dataItem={item} item={item[getComputedCols]} index={i} />
     </MoveResize>
   {/each}
@@ -43,7 +44,7 @@
   export let items;
   export let rowHeight;
   export let cols;
-  export let gap = 10;
+  export let gap = [10, 10];
   export let dynamicCols = true;
 
   export let debounceUpdate = 100;
@@ -53,6 +54,8 @@
   let getComputedCols;
 
   let container;
+
+  $: [gapX, gapY] = gap;
 
   let xPerPx = 0;
   let yPerPx = rowHeight;

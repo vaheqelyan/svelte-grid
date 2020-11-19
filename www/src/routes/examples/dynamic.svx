@@ -11,7 +11,7 @@
 
 Updates the grid as you move or resize. You can do this by setting the `dynamic` property to `true`. Without this, the grid will be updated when the pointer is no longer active.
 
-<Grid bind:items={items} gap={10} rowHeight={100} let:item {cols} dynamic>
+<Grid bind:items={items} rowHeight={100} let:item {cols} dynamic>
   <div class="content" style="background: {item?.data};" />
 </Grid>
 

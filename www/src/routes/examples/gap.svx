@@ -11,7 +11,10 @@
 
 In this example we set the gap between rows and columns to 20px
 
-<Grid bind:items={items} gap={20} rowHeight={100} let:item {cols}>
+X axis <input type=number min={0} bind:value={gapX} />
+Y axis <input type=number min={0} bind:value={gapY} />
+
+<Grid bind:items={items} gap={[gapX, gapY]} rowHeight={100} let:item {cols}>
   <div class="content" style="background: {item?.data};" />
 </Grid>
 
@@ -21,6 +24,9 @@ import gridHelp from "../../../../src/utils/helper.js";
 import { openSource } from "./github.js";
 
 const id = () => "_" + Math.random().toString(36).substr(2, 9);
+
+let gapX = 20;
+let gapY = 20;
 
 let items = [
   {

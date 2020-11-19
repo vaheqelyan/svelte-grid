@@ -17,7 +17,7 @@
 
 ---
 
-<Grid bind:items={items} gap={10} rowHeight={100} let:item {cols} let:index>
+<Grid bind:items={items} rowHeight={100} let:item {cols} let:index>
   <div class=content>
     <h3>{index}</h3>
   </div>

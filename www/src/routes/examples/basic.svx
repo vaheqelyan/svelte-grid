@@ -11,7 +11,7 @@
 
 Drag some boxes around, resize them. This is a basic, non-responsive layout. In order to make it responsive you have to create breakpoints
 
-<Grid bind:items={items} gap={10} rowHeight={100} let:item let:dataItem {cols}>
+<Grid bind:items={items} rowHeight={100} let:item let:dataItem {cols}>
   <div class="content">{dataItem.id}</div>
 </Grid>
 
