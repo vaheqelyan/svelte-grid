@@ -30,17 +30,3 @@ Examples
 [8]: /examples/events
 [9]: /examples/dynamic
 [10]: /examples/responsive-local-storage
-
-
-
-
-<script>
-
-
-const list = [
-
-{ title:'basic', link: '/basic' }
-
-];
-
-</script>

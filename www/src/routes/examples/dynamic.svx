@@ -11,29 +11,36 @@
 
 Updates the grid as you move or resize. You can do this by setting the `dynamic` property to `true`. Without this, the grid will be updated when the pointer is no longer active.
 
-<Grid bind:items={items} gap={10} rowHeight={100} let:item cols={10} dynamic>
-  <div class="content" style="background: {item.data};" />
+<Grid bind:items={items} gap={10} rowHeight={100} let:item {cols} dynamic>
+  <div class="content" style="background: {item?.data};" />
 </Grid>
 
 <script>
-import Grid from "../../components/svelte-grid/index.svelte";
-import gridHelp from "../../components/svelte-grid/utils/helper.js";
+import Grid from "../../../../src/index.svelte";
+import gridHelp from "../../../../src/utils/helper.js";
 import { openSource } from "./github.js";
 
 const id = () => "_" + Math.random().toString(36).substr(2, 9);
 
+
+const COL = 10;
+
 let items = [
-  gridHelp.item({
-    x: 0, y: 0, w: 2, h: 2, id: id(),
-  }),
-  gridHelp.item({
-    x: 2, y: 0, w: 2, h: 2, id: id(),
-  }),
-  gridHelp.item({
-    x: 4, y: 0, w: 2, h: 2, id: id(),
-  }),
-  gridHelp.item({
-    x: 6, y: 0, w: 2, h: 2, id: id(),
-  }),
+  {[COL]:gridHelp.item({
+    x: 0, y: 0, w: 2, h: 2,
+  }), id:id()},
+  {[COL]:gridHelp.item({
+    x: 2, y: 0, w: 2, h: 2,
+  }), id:id()},
+  {[COL]:gridHelp.item({
+    x: 4, y: 0, w: 2, h: 2,
+  }), id:id()},
+  {[COL]:gridHelp.item({
+    x: 6, y: 0, w: 2, h: 2,
+  }), id:id()},
+];
+
+const cols = [
+  [ 1200, 10 ],
 ];
 </script>

@@ -13,89 +13,64 @@
 <small><a target=_blank href="https://svelte.dev/repl/2cf339cc1dc14223a1457e386195e52d?version=latest">REPL</a></small>
 <small><a target=_blank  href={`${openSource}/responsive.svx`}>SOURCE</a></small>
 
-In order to have a truly responsive layout, you need to provide two things
-
-You need to provide the `breakpoint` property. it looks like this. after that, the `cols` property will be used if the breakpoint is not found.
-You can also choose not to use it at all
-
 > Note. the width you provide is not the width of the screen, but the width of the container that the `<Grid />` is wrapped in
-
-See the source-code to understand more
-
-```svelte
-<Grid {breakpoints} />
-<script>
-const breakpoints = [
-  [ 1000, 5 ],
-  [ 500, 3 ]
-]
-</script>
-```
 
 ---
 
-<small>
-<a href=examples/add_remove>→ Add/Remove</a>
-</small>
-
-<Grid bind:items={items} gap={10} rowHeight={100} let:item {breakpoints} let:index>
+<Grid bind:items={items} gap={10} rowHeight={100} let:item {cols} let:index>
   <div class=content>
     <h3>{index}</h3>
   </div>
 </Grid>
 
 <script>
-import Grid from "../../components/svelte-grid/index.svelte";
-import gridHelp from "../../components/svelte-grid/utils/helper.js";
+import Grid from "../../../../src/index.svelte";
+import gridHelp from "../../../../src/utils/helper.js";
 import { openSource } from "./github.js";
+
+const {item} = gridHelp;
 
 const id = () => "_" + Math.random().toString(36).substr(2, 9);
 
 let items = [
-  gridHelp.item({
+  {
     id: id(),
-    breakpoints: {
-      5: {
-        x: 0,
-        y: 0,
-        w: 2,
-        h: 2,
-      },
-      3: { x: 0, w: 2, h: 2, y: 0 },
-      1: { x: 0, y: 0, w: 1, h: 2 },
-    },
-  }),
+    5: item({
+      x: 0,
+       y: 0,
+       w: 2,
+       h: 2,
+     }),
+     3: item({ x: 0, w: 2, h: 2, y: 0 }),
+     1: item({ x: 0, y: 0, w: 1, h: 2 }),
+  },
 
-  gridHelp.item({
+  {
     id: id(),
-    breakpoints: {
-      5: {
+      5: item({
         x: 2,
         y: 0,
         w: 3,
         h: 2,
-      },
-      3: { x: 2, w: 1, h: 2, y: 0 },
-      1: { x: 0, y: 2, w: 1, h: 2 },
-    },
-  }),
+      }),
+      3: item({ x: 2, w: 1, h: 2, y: 0 }),
+      1: item({ x: 0, y: 2, w: 1, h: 2 }),
+  },
 
-  gridHelp.item({
+  {
     id: id(),
-    breakpoints: {
-      5: {
+      5: item({
         x: 0,
         y: 2,
         w: 5,
         h: 2,
-      },
-      3: { x: 0, w: 3, h: 2, y: 2 },
-      1: { x: 0, y: 4, w: 1, h: 2 },
-    },
-  }),
+      }),
+      3: item({ x: 0, w: 3, h: 2, y: 2 }),
+      1: item({ x: 0, y: 4, w: 1, h: 2 }),
+  },
 ];
 
-const breakpoints = [
+const cols = [
   [1500, 5],
   [1024, 3],
   [500, 1],

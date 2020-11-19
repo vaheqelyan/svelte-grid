@@ -31,74 +31,99 @@ But this will actually be used to prevent a situation where your box will overla
   Adjust elements after removing an item
 </label>
 
-<Grid bind:items={items} gap={10} rowHeight={100} let:item {cols}>
+<Grid bind:items={items} gap={10} rowHeight={100} let:item let:dataItem {cols}>
 <div class=content>
-<span on:click={() => remove(item)} on:pointerdown={e=>e.preventDefault()} class=remove>✕</span>
-<p>{item.id}</p>
+<span on:pointerup={e=>e.stopPropagation()} on:click={() => remove(item)} on:pointerdown={e=>e.preventDefault()} class=remove>✕</span>
+<p>{dataItem.id}</p>
 </div>
 
 </Grid>
 
 <script>
-import Grid from "../../components/svelte-grid/index.svelte";
-import gridHelp from "../../components/svelte-grid/utils/helper.js";
+import Grid from "../../../../src/index.svelte";
+import gridHelp from "../../../../src/utils/helper.js";
 import { openSource } from "./github.js";
 
+const COLS = 6;
+
 const id = () => "_" + Math.random().toString(36).substr(2, 9);
+
 const randomNumberInRange = (min, max) => Math.random() * (max - min) + min;
 
-let adjustAfterRemove = false;
-
-let cols = 10;
-
 let items = [
-  gridHelp.item({
-    x: 0,
-    y: 0,
-    w: 2,
-    h: 2,
+  {
+    [COLS]: gridHelp.item({
+      x: 0,
+      y: 0,
+      w: 2,
+      h: 2,
+    }),
     id: id(),
-  }),
-  gridHelp.item({
-    x: 2,
-    y: 0,
-    w: 5,
-    h: 2,
+  },
+
+  {
+    [COLS]: gridHelp.item({
+      x: 2,
+      y: 0,
+      w: 2,
+      h: 2,
+    }),
     id: id(),
-  }),
+  },
+];
+
+const cols = [
+  [ 1200, 6 ],
 ];
 
 function add() {
-  let newItem = gridHelp.item({
-    w: Math.round(randomNumberInRange(1, 4)),
-    h: Math.round(randomNumberInRange(1, 4)),
-    x: 0,
-    y: 0,
-    id: id(),
-  });
+  let newItem = {
+  6: gridHelp.item({
+     w: Math.round(randomNumberInRange(1, 4)),
+     h: Math.round(randomNumberInRange(1, 4)),
+     x: 0,
+     y: 0,
+  }),
+  id: id(),
+  };
 
-  let findOutPosition = gridHelp.findSpace(newItem, items, cols);
+  let findOutPosition = gridHelp.findSpace(newItem, items, COLS);
 
-  items = [...items, ...[{ ...newItem, ...findOutPosition }]];
+  newItem = {
+  ...newItem,
+  [COLS]: {
+  ...newItem[COLS],
+  ...findOutPosition,
+  }
+  };
+
+  items = [...items, ...[newItem]];
 }
 
 const addAt = () => {
-  let newItem = gridHelp.item({
-    w: Math.round(randomNumberInRange(1, 4)),
-    h: Math.round(randomNumberInRange(1, 4)),
-    x: 0,
-    y: 0,
-    id: id(),
-  });
+
+let newItem = {
+  6: gridHelp.item({
+     w: Math.round(randomNumberInRange(1, 4)),
+     h: Math.round(randomNumberInRange(1, 4)),
+     x: 0,
+     y: 0,
+  }),
+  id: id(),
+  };
+
   items = [...[newItem], ...items];
-  items = gridHelp.normalize(items, cols);
+  
+  items = gridHelp.normalize(items, COLS);
 };
 
 const remove = (item) => {
   items = items.filter((value) => value.id !== item.id);
 
   if (adjustAfterRemove) {
-    items = gridHelp.adjust(items, cols);
+    items = gridHelp.adjust(items, COLS);
   }
 };
+
+let adjustAfterRemove = false;
 </script>
