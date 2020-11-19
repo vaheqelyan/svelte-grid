@@ -109,41 +109,51 @@ This is an object for a single widget
 
 Example of use
 
-```js
+```svelte
+<script>
 const items = [
-  gridHelp.item({
-    x: 0,
-    y: 0,
-    w: 2,
-    h: 2,
-    draggable: false,
-    max: { w: 2 }
-  })
+  {
+    6: gridHelp.item({
+      x: 0,
+      y: 0,
+      w: 2,
+      h: 2,
+      draggable: false,
+      max: { w: 2 },
+    }),
+    data: {/*YOUR DATE GOES HERE*/}
+  },
 ];
+
+const cols = [[1200, 6]];
+</script>
+<Grid {items} {cols} rowHeight={150} let:item let:dataItem>
+  <div>{item?.data}</div>
+</Grid>
 ```
+
+`dataItem` - Returns your item, you can use it to access your data
+`item` - Returns the item for the current breakpoint
 
 ### Responsiveness
 
 > See this [demo](examples/responsive)
 
-Add the `breakpoints` property to your element, like this.
+You can specify an item for the right column
 
 ```svelte
-<Grid {breakpoints} rowHeight={150} />
+<Grid {items} {cols} rowHeight={150} />
 
 <script>
-// ...
-
 let items = [
-  gridHelp.item({
-    breakpoints: {
-      5: { x: 0, y: 0, w: 2, h: 2 },
-      2: { x: 0, y: 0, w: 1, h: 2 },
-    },
-  }),
+  {
+    5: gridHelp.item({ x: 0, y: 0, w: 2, h: 2 }),
+    2: gridHelp.item({ x: 0, y: 0, w: 1, h: 2 }),
+  },
+  {/*..*/}
 ];
 
-const breakpoints = [
+const cols = [
   [1600, 5],
   [1024, 2],
 ];
@@ -170,7 +180,6 @@ cols | `Number` | Number of columns in layout | Yes
 gap | `Number` | Margin between items in px | No
 rowHeight | `Number` | Rows have a static height | No
 dynamic | `Boolean` | Updates the grid as you move or size | No
-breakpoints | `Array<Array<Number>>` | Changes the column number for a specific breakpoint | No
 debounceUpdate | `Number` | Debounce grid recalculation, default value is `100` | No
 debounceResize | `Number` | Debounce grid recalculation, when the container changes its width. default value is `100` | No
 on:resize | `Function<void>` | The event is triggered when the grid is resized. There are a couple of properties in the detail property. | No
