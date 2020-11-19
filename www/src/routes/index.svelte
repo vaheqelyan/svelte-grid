@@ -6,8 +6,7 @@
   }
 
   :global(body) {
-    overflow: scroll;
-    margin: 0;
+    overflow-y: scroll;
   }
 
   :global(.svlt-grid-resizer::after) {
@@ -39,19 +38,15 @@
   <h4>A draggable and resizable grid layout with responsive breakpoints, for Svelte.</h4>
 </div>
 
-<Grid bind:items gap={10} {cols} rowHeight={100} let:item>
-  <div class="content" style="background: {item.data};" />
+<Grid bind:items gap={10} {cols} rowHeight={100} let:dataItem>
+  <div class="content" style="background: {dataItem.data};" />
 </Grid>
 
 <script>
-  import Grid from "../components/svelte-grid/index.svelte";
-  import gridHelp from "../components/svelte-grid/utils/helper.js";
+  import Grid from "../../../src/index.svelte";
+  import gridHelp from "../../../src/utils/helper.js";
 
-  const id = () =>
-    "_" +
-    Math.random()
-      .toString(36)
-      .substr(2, 9);
+  const id = () => "_" + Math.random().toString(36).substr(2, 9);
 
   const randomHexColorCode = () => {
     let n = (Math.random() * 0xfffff * 1000000).toString(16);
@@ -59,26 +54,17 @@
   };
 
   function generateLayout(col) {
-    return new Array(20).fill(null).map(function(item, i) {
+    return new Array(20).fill(null).map(function (item, i) {
       const y = Math.ceil(Math.random() * 4) + 1;
       return {
-        ...gridHelp.item({
-          x: (i * 2) % col,
-          y: Math.floor(i / 6) * y,
-          w: 2,
-          h: y,
-          id: id(),
-        }),
-        ...{ data: randomHexColorCode() },
+        16: gridHelp.item({ x: (i * 2) % col, y: Math.floor(i / 6) * y, w: 2, h: y }),
+        id: id(),
+        data: randomHexColorCode(),
       };
     });
   }
 
-  let cols = 16;
+  let cols = [[1287, 16]];
 
-  let items = gridHelp.adjust(generateLayout(cols), cols);
-
-  const adjust = () => {
-    items = gridHelp.adjust(items, cols);
-  };
+  let items = gridHelp.adjust(generateLayout(16), 16);
 </script>
