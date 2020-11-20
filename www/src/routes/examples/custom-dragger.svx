@@ -24,7 +24,7 @@
 <small><a target=_blank href="https://svelte.dev/repl/65021e7906e544d694fa4aa25240cbec?version=latest">REPL</a></small>
 <small><a target=_blank  href={`${openSource}/custom-dragger.svx`}>SOURCE</a></small>
 
-By setting the 'custom' property true, you can specify the item to which the drag event will be assigned
+By setting the `custom` property to `true`, you can specify the element to which the drag event will be assigned
 
 <Grid bind:items={items} rowHeight={100} let:item let:dataItem {cols} let:pointerdown>
   <div class="content">
