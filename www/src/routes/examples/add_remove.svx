@@ -40,8 +40,8 @@ But this will actually be used to prevent a situation where your box will overla
 </Grid>
 
 <script>
-import Grid from "../../../../src/index.svelte";
-import gridHelp from "../../../../src/utils/helper.js";
+import Grid from "../../components/svelte-grid/index.svelte";
+import gridHelp from "../../components/svelte-grid/utils/helper.js";
 import { openSource } from "./github.js";
 
 const COLS = 6;

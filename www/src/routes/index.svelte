@@ -43,8 +43,8 @@
 </Grid>
 
 <script>
-  import Grid from "../../../src/index.svelte";
-  import gridHelp from "../../../src/utils/helper.js";
+  import Grid from "../components/svelte-grid/index.svelte";
+  import gridHelp from "../components/svelte-grid/utils/helper.js";
 
   const id = () => "_" + Math.random().toString(36).substr(2, 9);
 
