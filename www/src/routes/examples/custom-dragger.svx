@@ -1,0 +1,74 @@
+<svelte:head>
+  <title>Example — Custom dragger</title>
+  <meta name="description" content="Svelte-grid — Custom — Dragger" />
+  <meta name="keywords" content="draggable,resizable,grid,layout,responsive,breakpoints,Svelte,svelte,svelte.js,sveltejs,usage,example,examples,samples,showcase,custom,dragger" />
+  <meta name="author" content="Vahe Araqelyan" />
+</svelte:head>
+
+<style>
+.dragger {
+  cursor: default;
+  user-select: none;
+  color: white;
+  line-height: 30px;
+  text-align: center;
+  background: black;
+  width: 100px;
+  height: 30px;
+  margin-top: 10px;
+  border-radius: 3px;
+}
+</style>
+
+## Custom dragger
+<small><a target=_blank href="https://svelte.dev/repl/35a506b9456d463ab441841859e1bb9f?version=latest">REPL</a></small>
+<small><a target=_blank  href={`${openSource}/custom-dragger.svx`}>SOURCE</a></small>
+
+By setting the 'custom' property true, you can specify the item to which the drag event will be assigned
+
+<Grid bind:items={items} rowHeight={100} let:item let:dataItem {cols} let:pointerdown>
+  <div class="content">
+    {dataItem.id}
+    {#if item?.custom}
+      <div class=dragger on:pointerdown={pointerdown}>
+        ✋ Drag me!
+      </div>
+    {/if}
+  </div>
+</Grid>
+
+<script>
+import Grid from "../../../../src/index.svelte";
+import gridHelp from "../../../../src/utils/helper.js";
+import { openSource } from "./github.js";
+
+const id = () => "_" + Math.random().toString(36).substr(2, 9);
+
+
+let items = [
+  {
+    6: gridHelp.item({
+      x: 0,
+      y: 0,
+      w: 2,
+      h: 2,
+      custom: true,
+    }),
+    id: id(),
+  },
+
+  {
+    6: gridHelp.item({
+      x: 2,
+      y: 0,
+      w: 2,
+      h: 2,
+    }),
+    id: id(),
+  },
+];
+
+const cols = [
+  [ 1200, 6 ],
+];
+</script>

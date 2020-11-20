@@ -19,6 +19,7 @@ Examples
 - [Events][8]
 - [Dynamic][9]
 - [Responsive - Serialize/Resotre][10]
+- [Custom dragger][11]
 
 [1]: /examples/basic
 [2]: /examples/gap
@@ -30,3 +31,4 @@ Examples
 [8]: /examples/events
 [9]: /examples/dynamic
 [10]: /examples/responsive-local-storage
+[11]: /examples/custom-dragger

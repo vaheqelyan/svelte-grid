@@ -104,6 +104,7 @@ This is an object for a single widget
     w: Number,
     h: Number,
   },
+  custom: Boolean,
 }
 ```
 
@@ -186,7 +187,6 @@ on:resize | `Function<void>` | The event is triggered when the grid is resized. 
 on:change | `Function<void>` | The event is triggered when an element is resized or moved | No
 on:mount | `Function<void>` | The event is triggered when the grid is mounted. There are a couple of properties in the detail property. 
 on:pointerup | `Function<void>` | The event is fired when a pointer is no longer active| No
-
 </div>
 
 Have questions ? 
