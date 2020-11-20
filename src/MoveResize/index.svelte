@@ -3,7 +3,7 @@
     touch-action: none;
     position: absolute;
     background: #f1f1f1;
-    will-change: transform;
+    will-change: auto;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
   }
