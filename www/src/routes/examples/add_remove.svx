@@ -72,48 +72,45 @@ let items = [
   },
 ];
 
-const cols = [
-  [ 1200, 6 ],
-];
+const cols = [[1200, 6]];
 
 function add() {
   let newItem = {
-  6: gridHelp.item({
-     w: Math.round(randomNumberInRange(1, 4)),
-     h: Math.round(randomNumberInRange(1, 4)),
-     x: 0,
-     y: 0,
-  }),
-  id: id(),
+    6: gridHelp.item({
+      w: Math.round(randomNumberInRange(1, 4)),
+      h: Math.round(randomNumberInRange(1, 4)),
+      x: 0,
+      y: 0,
+    }),
+    id: id(),
   };
 
   let findOutPosition = gridHelp.findSpace(newItem, items, COLS);
 
   newItem = {
-  ...newItem,
-  [COLS]: {
-  ...newItem[COLS],
-  ...findOutPosition,
-  }
+    ...newItem,
+    [COLS]: {
+      ...newItem[COLS],
+      ...findOutPosition,
+    },
   };
 
   items = [...items, ...[newItem]];
 }
 
 const addAt = () => {
-
-let newItem = {
-  6: gridHelp.item({
-     w: Math.round(randomNumberInRange(1, 4)),
-     h: Math.round(randomNumberInRange(1, 4)),
-     x: 0,
-     y: 0,
-  }),
-  id: id(),
+  let newItem = {
+    6: gridHelp.item({
+      w: Math.round(randomNumberInRange(1, 4)),
+      h: Math.round(randomNumberInRange(1, 4)),
+      x: 0,
+      y: 0,
+    }),
+    id: id(),
   };
 
   items = [...[newItem], ...items];
-  
+
   items = gridHelp.normalize(items, COLS);
 };
 

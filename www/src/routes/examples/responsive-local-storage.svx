@@ -27,22 +27,20 @@ let columns = 0;
 const cols = [
   [1287, 4],
   [700, 1],
-]
+];
 
 let layoutOriginal = [
-{
-4: gridHelp.item({ x: 0, w: 2, h: 2, y: 0 }),
-1: gridHelp.item({ x: 0, y: 0, w: 1, h: 2 }),
-id: id()
-},
+  {
+    4: gridHelp.item({ x: 0, w: 2, h: 2, y: 0 }),
+    1: gridHelp.item({ x: 0, y: 0, w: 1, h: 2 }),
+    id: id(),
+  },
 
-{
-4: gridHelp.item({ x: 2, w: 1, h: 2, y: 0 }),
-1: gridHelp.item({ x: 0, y: 2, w: 1, h: 2 }),
-id:id(),
-},
-
-
+  {
+    4: gridHelp.item({ x: 2, w: 1, h: 2, y: 0 }),
+    1: gridHelp.item({ x: 0, y: 2, w: 1, h: 2 }),
+    id: id(),
+  },
 ];
 
 let layout = layoutOriginal;
@@ -55,25 +53,23 @@ if (typeof window !== "undefined") {
   }
 }
 
-
 const handleSync = () => {
   localStorage.setItem("layout-responsive", JSON.stringify(items));
 };
 
 let items = layout;
 
-const setCols = e => columns = e.detail.cols
+const setCols = (e) => (columns = e.detail.cols);
 
 const reset = () => {
-
-items = items.map((value,index)=> {
-const restore = layoutOriginal[index][columns];
-console.log(restore)
-return {
-...value,
-[columns]: restore
-}
-})
+  items = items.map((value, index) => {
+    const restore = layoutOriginal[index][columns];
+    console.log(restore);
+    return {
+      ...value,
+      [columns]: restore,
+    };
+  });
 
   localStorage.setItem("layout-responsive", JSON.stringify(items));
 };

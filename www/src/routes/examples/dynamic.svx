@@ -22,25 +22,46 @@ import { openSource } from "./github.js";
 
 const id = () => "_" + Math.random().toString(36).substr(2, 9);
 
-
 const COL = 10;
 
 let items = [
-  {[COL]:gridHelp.item({
-    x: 0, y: 0, w: 2, h: 2,
-  }), id:id()},
-  {[COL]:gridHelp.item({
-    x: 2, y: 0, w: 2, h: 2,
-  }), id:id()},
-  {[COL]:gridHelp.item({
-    x: 4, y: 0, w: 2, h: 2,
-  }), id:id()},
-  {[COL]:gridHelp.item({
-    x: 6, y: 0, w: 2, h: 2,
-  }), id:id()},
+  {
+    [COL]: gridHelp.item({
+      x: 0,
+      y: 0,
+      w: 2,
+      h: 2,
+    }),
+    id: id(),
+  },
+  {
+    [COL]: gridHelp.item({
+      x: 2,
+      y: 0,
+      w: 2,
+      h: 2,
+    }),
+    id: id(),
+  },
+  {
+    [COL]: gridHelp.item({
+      x: 4,
+      y: 0,
+      w: 2,
+      h: 2,
+    }),
+    id: id(),
+  },
+  {
+    [COL]: gridHelp.item({
+      x: 6,
+      y: 0,
+      w: 2,
+      h: 2,
+    }),
+    id: id(),
+  },
 ];
 
-const cols = [
-  [ 1200, 10 ],
-];
+const cols = [[1200, 10]];
 </script>
