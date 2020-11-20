@@ -25,8 +25,9 @@
       {dynamic}
       cols={getComputedCols}
       {gapX}
-      {gapY}>
-      <slot dataItem={item} item={item[getComputedCols]} index={i} />
+      {gapY}
+      let:pointerdown>
+      <slot {pointerdown} dataItem={item} item={item[getComputedCols]} index={i} />
     </MoveResize>
   {/each}
 </div>

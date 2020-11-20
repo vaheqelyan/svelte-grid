@@ -65,13 +65,13 @@
 </style>
 
 <div
-  on:pointerdown={draggable && pointerdown}
+  on:pointerdown={item?.custom ? null : draggable && pointerdown}
   class="svlt-grid-item"
   class:transition={!active}
   class:active
   class:no-user={active}
   style="width: {active ? cloneBound.width : width}px; height:{active ? cloneBound.height : height}px; transform: translate({active ? cloneBound.left : left}px, {active ? cloneBound.top : top}px);">
-  <slot />
+  <slot {pointerdown} />
   {#if resizable}
     <div class="svlt-grid-resizer" on:pointerdown={resizePointerDown} />
   {/if}
