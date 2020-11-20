@@ -30,6 +30,8 @@
 - Responsive breakpoints
 - Limit the minimum and maximum width / height when resizing
 - Provide helper functions
+- Custom dragging
+- Grid gap
 
 ## Installation
 
