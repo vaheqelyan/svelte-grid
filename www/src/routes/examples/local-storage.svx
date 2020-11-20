@@ -4,6 +4,8 @@
 This simple demo synchronizes to localStorage.
 Try moving and resizing elements, then reloading.
 
+> Please clear your local storage if you have problems with this example
+
 ----
 
 <button on:click={reset}>Reset</button>

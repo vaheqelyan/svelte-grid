@@ -3,6 +3,8 @@
 
 This is a simple demo of responsiveness and localStorage.
 
+> Please clear your local storage if you have problems with this example
+
 ----
 
 <button on:click={reset}>Reset</button>
