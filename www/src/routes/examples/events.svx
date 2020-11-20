@@ -21,7 +21,7 @@ This particular example has dragging and resizing turned off.
 
 <Grid bind:items={items} rowHeight={100} let:item {cols}>
   <div class="content">
-    {item?.fixed ? 'Fixed box' : 'Box'}
+    Box
   </div>
 </Grid>
 
@@ -36,14 +36,12 @@ const COL = 6;
 
 let items = [
   {
-[COL]: gridHelp.item({
+    [COL]: gridHelp.item({
       x: 0,
       y: 0,
       w: 2,
       h: 2,
-
-draggable: false,
-    resizable: false,
+      draggable: false,
     }),
     id: id(),
   },
@@ -54,17 +52,11 @@ draggable: false,
       y: 0,
       w: 2,
       h: 2,
-
-draggable: false,
-    resizable: false,
+      resizable: false,
     }),
     id: id(),
   },
 ];
 
-
-const cols = [
-  [ 1200, 6 ],
-];
-
+const cols = [[1200, 6]];
 </script>

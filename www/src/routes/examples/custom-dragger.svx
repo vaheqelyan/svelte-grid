@@ -21,7 +21,7 @@
 </style>
 
 ## Custom dragger
-<small><a target=_blank href="https://svelte.dev/repl/35a506b9456d463ab441841859e1bb9f?version=latest">REPL</a></small>
+<small><a target=_blank href="https://svelte.dev/repl/65021e7906e544d694fa4aa25240cbec?version=latest">REPL</a></small>
 <small><a target=_blank  href={`${openSource}/custom-dragger.svx`}>SOURCE</a></small>
 
 By setting the 'custom' property true, you can specify the item to which the drag event will be assigned
@@ -43,7 +43,6 @@ import gridHelp from "../../components/svelte-grid/utils/helper.js";
 import { openSource } from "./github.js";
 
 const id = () => "_" + Math.random().toString(36).substr(2, 9);
-
 
 let items = [
   {
