@@ -72,7 +72,7 @@ let items = [
   },
 ];
 
-const cols = [[1200, 6]];
+const cols = [[1100, 6]];
 
 function add() {
   let newItem = {

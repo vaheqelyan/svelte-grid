@@ -63,5 +63,5 @@ let items = [
   },
 ];
 
-const cols = [[1200, 10]];
+const cols = [[1100, 10]];
 </script>

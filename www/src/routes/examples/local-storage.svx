@@ -47,7 +47,7 @@ let layoutOriginal = [
 ];
 
 const cols = [
-  [ 1200, 6 ],
+  [ 1100, 6 ],
 ];
 
 

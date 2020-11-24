@@ -25,7 +25,7 @@ const id = () => "_" + Math.random().toString(36).substr(2, 9);
 let columns = 0;
 
 const cols = [
-  [1287, 4],
+  [1100, 4],
   [700, 1],
 ];
 
