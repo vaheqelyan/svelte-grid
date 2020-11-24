@@ -16,7 +16,7 @@
       {xPerPx}
       {yPerPx}
       width={Math.min(getComputedCols, item[getComputedCols]?.w) * xPerPx - gapX * 2}
-      height={item[getComputedCols]?.h * yPerPx - gapX * 2}
+      height={item[getComputedCols]?.h * yPerPx - gapY * 2}
       top={item[getComputedCols]?.y * yPerPx + gapY}
       left={item[getComputedCols]?.x * xPerPx + gapX}
       item={item[getComputedCols]}
