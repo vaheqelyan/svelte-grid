@@ -48,6 +48,26 @@ let items = [
     }),
     id: id(),
   },
+
+  {
+    6: gridHelp.item({
+      x: 0,
+      y: 2,
+      w: 2,
+      h: 2,
+    }),
+    id: id(),
+  },
+
+  {
+    6: gridHelp.item({
+      x: 2,
+      y: 2,
+      w: 2,
+      h: 2,
+    }),
+    id: id(),
+  },
 ];
 
 const cols = [
