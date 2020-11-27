@@ -16,7 +16,7 @@ export default [
       { file: pkg.module, format: "es" },
       { file: pkg.main, format: "umd", name },
     ],
-    plugins: [svelte({ dev: true, preprocess: sveltePreprocess({ babel: true }) }), resolve()],
+    plugins: [svelte({ preprocess: sveltePreprocess({ babel: true }) }), resolve()],
   },
   {
     input: "./src/utils/helper.js",
