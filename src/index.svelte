@@ -10,7 +10,6 @@
       on:repaint={handleRepaint}
       on:pointerup={pointerup}
       id={item.id}
-      index={i}
       resizable={item[getComputedCols]?.resizable}
       draggable={item[getComputedCols]?.draggable}
       {xPerPx}
