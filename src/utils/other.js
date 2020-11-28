@@ -10,7 +10,7 @@ export function getRowsCount(items, cols) {
   return Math.max(
     ...items.map((val) => {
       const item = val[cols];
-      return item && item.y + item && item.h;
+      return (item && item.y) + (item && item.h);
     }),
     1,
   );
