@@ -65,7 +65,7 @@
 </style>
 
 <div
-  on:pointerdown={item?.custom ? null : draggable && pointerdown}
+  on:pointerdown={item && item.custom ? null : draggable && pointerdown}
   class="svlt-grid-item"
   class:transition={!active}
   class:active
@@ -109,7 +109,7 @@
 
   export let cols;
 
-  let shadow = { x: item?.x, y: item?.y, w: item?.w, h: item?.h };
+  let shadow = {};
 
   let active = false;
 
@@ -139,9 +139,9 @@
   };
 
   beforeUpdate(() => {
-    if (xPerPx && !debounce) {
+    if (xPerPx && !debounce && item) {
       xyRef = { x: left, y: top };
-      shadow = { x: item?.x, y: item?.y, w: item?.w, h: item?.h };
+      shadow = { x: item.x, y: item.y, w: item.w, h: item.h };
 
       debounce = true;
     }
