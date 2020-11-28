@@ -15,7 +15,7 @@ X axis <input type=number min={0} bind:value={gapX} />
 Y axis <input type=number min={0} bind:value={gapY} />
 
 <Grid bind:items={items} gap={[gapX, gapY]} rowHeight={100} let:item {cols}>
-  <div class="content" style="background: {item?.data};" />
+  <div class="content" />
 </Grid>
 
 <script>
