@@ -64,7 +64,6 @@ const setCols = (e) => (columns = e.detail.cols);
 const reset = () => {
   items = items.map((value, index) => {
     const restore = layoutOriginal[index][columns];
-    console.log(restore);
     return {
       ...value,
       [columns]: restore,
