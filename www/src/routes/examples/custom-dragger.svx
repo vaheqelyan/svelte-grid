@@ -27,16 +27,14 @@
 By setting the `custom` property to `true`, you can specify the element to which the drag event will be assigned
 
 <Grid bind:items={items} rowHeight={100} let:item let:dataItem {cols} let:pointerdown>
-  {#if item}
-    <div class="content">
-      {dataItem.id}
-      {#if item.custom}
-        <div class=dragger on:pointerdown={pointerdown}>
-          ✋ Drag me!
-        </div>
-      {/if}
-    </div>
-  {/if}
+  <div class="content">
+    {dataItem.id}
+    {#if item.custom}
+      <div class=dragger on:pointerdown={pointerdown}>
+        ✋ Drag me!
+      </div>
+    {/if}
+  </div>
 </Grid>
 
 <script>

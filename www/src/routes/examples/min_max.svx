@@ -21,11 +21,9 @@ height: 100%;
 Control how much can user resize the item.
 
 <Grid bind:items={items} rowHeight={100} let:item {cols} let:index>
-  {#if item}
-    <div class="content">
-      {index + 1} {item.max.w}
-    </div>
-  {/if}
+  <div class="content">
+    {index + 1} {item.max.w}
+  </div>
 </Grid>
 
 <script>

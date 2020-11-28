@@ -12,7 +12,7 @@ Try moving and resizing elements, then reloading.
 
 <Grid bind:items={items} rowHeight={100} let:item {cols} let:index on:change={onChange}>
   <div>
-  {index}
+   {index}
   </div>
 </Grid>
 

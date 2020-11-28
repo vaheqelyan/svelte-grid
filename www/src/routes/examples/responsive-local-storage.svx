@@ -11,7 +11,7 @@ This is a simple demo of responsiveness and localStorage.
 
 <Grid bind:items={items} rowHeight={100} let:item let:index {cols} on:mount={setCols} on:resize={setCols} on:pointerup={handleSync}>
   <div>
-  {index}
+   {index}
   </div>
 </Grid>
 
