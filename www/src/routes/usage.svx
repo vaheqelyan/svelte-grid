@@ -129,7 +129,7 @@ const items = [
 const cols = [[1200, 6]];
 </script>
 <Grid gap={[10, 5]} {items} {cols} rowHeight={150} let:item let:dataItem>
-  <div>{item?.data}</div>
+  <div>{item.data}</div>
 </Grid>
 ```
 
