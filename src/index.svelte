@@ -26,7 +26,9 @@
       {gapX}
       {gapY}
       let:pointerdown>
-      <slot {pointerdown} dataItem={item} item={item[getComputedCols]} index={i} />
+      {#if item[getComputedCols]}
+        <slot {pointerdown} dataItem={item} item={item[getComputedCols]} index={i} />
+      {/if}
     </MoveResize>
   {/each}
 </div>
