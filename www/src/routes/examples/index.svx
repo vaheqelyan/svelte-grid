@@ -20,6 +20,7 @@ Examples
 - [Dynamic][9]
 - [Responsive - Serialize/Resotre][10]
 - [Custom dragger][11]
+- [Fast start][12]
 
 [1]: /examples/basic
 [2]: /examples/gap
@@ -32,3 +33,4 @@ Examples
 [9]: /examples/dynamic
 [10]: /examples/responsive-local-storage
 [11]: /examples/custom-dragger
+[12]: /examples/fast-start

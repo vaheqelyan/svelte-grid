@@ -1,0 +1,50 @@
+<svelte:head>
+  <title>Example — Fast start</title>
+  <meta name="description" content="Svelte-grid — Example — Basic" />
+  <meta name="keywords" content="draggable,resizable,grid,layout,responsive,breakpoints,Svelte,svelte,svelte.js,sveltejs,usage,example,examples,samples,basic,showcase,fast,start" />
+  <meta name="author" content="Vahe Araqelyan" />
+</svelte:head>
+
+## Fast start
+<small><a target=_blank href="https://svelte.dev/repl/3284ce920dad4a39810dcf901626e76a?version=latest">REPL</a></small>
+<small><a target=_blank  href={`${openSource}/fast-start.svx`}>SOURCE</a></small>
+
+Set `fastStart` property to `true` to disable animation on startup
+
+<Grid bind:items={items} rowHeight={100} let:item let:dataItem {cols} fastStart={true}>
+  <div class="content">{dataItem.id}</div>
+</Grid>
+
+<script>
+import Grid from "../../components/svelte-grid/index.svelte";
+import gridHelp from "../../components/svelte-grid/utils/helper.js";
+import { openSource } from "./github.js";
+
+const id = () => "_" + Math.random().toString(36).substr(2, 9);
+
+let items = [
+  {
+    6: gridHelp.item({
+      x: 0,
+      y: 0,
+      w: 2,
+      h: 2,
+    }),
+    id: id(),
+  },
+
+  {
+    6: gridHelp.item({
+      x: 2,
+      y: 0,
+      w: 2,
+      h: 2,
+    }),
+    id: id(),
+  },
+];
+
+const cols = [
+  [ 1100, 6 ],
+];
+</script>
