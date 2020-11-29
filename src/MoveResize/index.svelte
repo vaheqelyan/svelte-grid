@@ -129,12 +129,11 @@
     });
   };
 
-  let repaint = (listen = true) => {
-    const onUpdate = !listen ? false : inActivate;
+  let repaint = (cb) => {
     dispatch("repaint", {
       id,
       shadow,
-      onUpdate,
+      onUpdate: cb,
     });
   };
 
@@ -173,7 +172,7 @@
     shadow.x = Math.max(Math.min(gridX, cols - shadow.w), 0);
     shadow.y = Math.max(gridY, 0);
 
-    if (dynamic) repaint(false);
+    if (dynamic) repaint();
   };
 
   const pointerup = (e) => {
@@ -185,7 +184,7 @@
     window.removeEventListener("pointerup", pointerup);
     window.removeEventListener("pointercancel", pointerup);
 
-    repaint();
+    repaint(inActivate);
   };
 
   // Resize
@@ -230,12 +229,14 @@
     if (max.h) {
       shadow.h = Math.min(max.h, shadow.h);
     }
+
+    if (dynamic) repaint();
   };
 
   const resizePointerUp = (e) => {
     e.stopPropagation();
 
-    repaint();
+    repaint(inActivate);
 
     window.removeEventListener("pointermove", resizePointerMove);
     window.removeEventListener("pointerup", resizePointerUp);
