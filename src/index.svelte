@@ -5,32 +5,34 @@
 </style>
 
 <div class="svlt-grid-container" style="height: {containerHeight}px" bind:this={container}>
-  {#each items as item, i (item.id)}
-    <MoveResize
-      on:repaint={handleRepaint}
-      on:pointerup={pointerup}
-      id={item.id}
-      resizable={item[getComputedCols] && item[getComputedCols].resizable}
-      draggable={item[getComputedCols] && item[getComputedCols].draggable}
-      {xPerPx}
-      {yPerPx}
-      width={Math.min(getComputedCols, item[getComputedCols] && item[getComputedCols].w) * xPerPx - gapX * 2}
-      height={(item[getComputedCols] && item[getComputedCols].h) * yPerPx - gapY * 2}
-      top={(item[getComputedCols] && item[getComputedCols].y) * yPerPx + gapY}
-      left={(item[getComputedCols] && item[getComputedCols].x) * xPerPx + gapX}
-      item={item[getComputedCols]}
-      min={item[getComputedCols] && item[getComputedCols].min}
-      max={item[getComputedCols] && item[getComputedCols].max}
-      {dynamic}
-      cols={getComputedCols}
-      {gapX}
-      {gapY}
-      let:pointerdown>
-      {#if item[getComputedCols]}
-        <slot {pointerdown} dataItem={item} item={item[getComputedCols]} index={i} />
-      {/if}
-    </MoveResize>
-  {/each}
+  {#if xPerPx || !fastStart}
+    {#each items as item, i (item.id)}
+      <MoveResize
+        on:repaint={handleRepaint}
+        on:pointerup={pointerup}
+        id={item.id}
+        resizable={item[getComputedCols] && item[getComputedCols].resizable}
+        draggable={item[getComputedCols] && item[getComputedCols].draggable}
+        {xPerPx}
+        {yPerPx}
+        width={Math.min(getComputedCols, item[getComputedCols] && item[getComputedCols].w) * xPerPx - gapX * 2}
+        height={(item[getComputedCols] && item[getComputedCols].h) * yPerPx - gapY * 2}
+        top={(item[getComputedCols] && item[getComputedCols].y) * yPerPx + gapY}
+        left={(item[getComputedCols] && item[getComputedCols].x) * xPerPx + gapX}
+        item={item[getComputedCols]}
+        min={item[getComputedCols] && item[getComputedCols].min}
+        max={item[getComputedCols] && item[getComputedCols].max}
+        {dynamic}
+        cols={getComputedCols}
+        {gapX}
+        {gapY}
+        let:pointerdown>
+        {#if item[getComputedCols]}
+          <slot {pointerdown} dataItem={item} item={item[getComputedCols]} index={i} />
+        {/if}
+      </MoveResize>
+    {/each}
+  {/if}
 </div>
 
 <script>
@@ -48,7 +50,7 @@
   export let cols;
   export let gap = [10, 10];
   export let dynamicCols = true;
-
+  export let fastStart = false;
   export let debounceUpdate = 100;
   export let debounceResize = 100;
   export let dynamic = false;
