@@ -16,9 +16,9 @@
   }
 
   @media (max-width: 700px) {
-   :global(.github-corner) {
-     display: none;
-   }
+    :global(.github-corner) {
+      display: none;
+    }
   }
 </style>
 
