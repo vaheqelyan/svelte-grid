@@ -74,7 +74,7 @@
 
   $: {
     if (prevCols !== cols && dynamicCols) {
-      xPerPx = containerWidth / cols;
+      xPerPx = containerWidth / getColumn(containerWidth, cols);
     }
     prevCols = cols;
   }
