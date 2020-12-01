@@ -73,8 +73,9 @@
   let prevCols;
 
   $: {
+    getComputedCols = getColumn(width, cols);
     if (prevCols !== cols && dynamicCols) {
-      xPerPx = containerWidth / getColumn(containerWidth, cols);
+      xPerPx = containerWidth / getComputedCols;
     }
     prevCols = cols;
   }
