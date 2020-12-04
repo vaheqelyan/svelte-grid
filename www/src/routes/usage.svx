@@ -188,6 +188,7 @@ on:change | `Function<void>` | The event is triggered when an element is resized
 on:mount | `Function<void>` | The event is triggered when the grid is mounted. There are a couple of properties in the detail property. 
 on:pointerup | `Function<void>` | The event is fired when a pointer is no longer active| No
 fastStart | `Boolean` | Removes transition onload | No
+fillSpace | `Boolean` | Each grid element (except active element) finds its own position.
 </div>
 
 Have questions ? 

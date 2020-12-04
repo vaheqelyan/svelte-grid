@@ -1,0 +1,51 @@
+<svelte:head>
+  <title>Example — Fiil space</title>
+  <meta name="description" content="Svelte-grid — Example — Fiil space" />
+  <meta name="keywords" content="draggable,resizable,grid,layout,responsive,breakpoints,Svelte,svelte,svelte.js,sveltejs,usage,example,examples,samples,basic,showcase" />
+  <meta name="author" content="Vahe Araqelyan" />
+</svelte:head>
+
+## Fill space
+<small><a target=_blank href="https://svelte.dev/repl/35a506b9456d463ab441841859e1bb9f?version=latest">REPL</a></small>
+<small><a target=_blank  href={`${openSource}/fill-space.svx`}>SOURCE</a></small>
+
+`fillSpace` means that each grid element (except active element) must find its own position.
+
+<label>
+<input type=checkbox bind:checked={fillFree} />
+'Fill space' is {fillFree ? 'enabled' : 'disabled'}
+</label>
+
+<Grid bind:items={items} rowHeight={100} let:item let:dataItem {cols} fillSpace={fillFree}>
+  <div class="content">{dataItem.id}</div>
+</Grid>
+
+<script>
+import Grid from "../../components/svelte-grid/index.svelte";
+import gridHelp from "../../components/svelte-grid/utils/helper.js";
+import { openSource } from "./github.js";
+
+let fillFree = true;
+
+const id = () => "_" + Math.random().toString(36).substr(2, 9);
+
+  const randomHexColorCode = () => {
+    let n = (Math.random() * 0xfffff * 1000000).toString(16);
+    return "#" + n.slice(0, 6);
+  };
+
+  function generateLayout(col) {
+    return new Array(20).fill(null).map(function (item, i) {
+      const y = Math.ceil(Math.random() * 4) + 1;
+      return {
+        16: gridHelp.item({ x: (i * 2) % col, y: Math.floor(i / 6) * y, w: 2, h: y }),
+        id: id(),
+        data: randomHexColorCode(),
+      };
+    });
+  }
+
+  let cols = [[1287, 16]];
+
+  let items = gridHelp.adjust(generateLayout(16), 16);
+</script>
