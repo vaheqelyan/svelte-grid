@@ -44,6 +44,41 @@ const updateItem = (elements, active, position, col) => {
   });
 };
 
+export function moveItemsAroundItem(active, items, cols, original) {
+  // Get current item from the breakpoint
+  const activeItem = getItem(active, cols);
+  const ids = items.map((value) => value.id).filter((value) => value !== activeItem.id);
+
+  const els = items.filter((value) => value.id !== activeItem.id);
+
+  // Update items
+  let newItems = updateItem(items, active, activeItem, cols);
+
+  let matrix = makeMatrixFromItemsIgnore(newItems, ids, getRowsCount(newItems, cols), cols);
+  let tempItems = newItems;
+
+  // Exclude resolved elements ids in array
+  let exclude = [];
+
+  els.forEach((item) => {
+    // Find position for element
+    let position = findFreeSpaceForItem(matrix, item[cols], tempItems);
+    // Exclude item
+    exclude.push(item.id);
+
+    tempItems = updateItem(tempItems, item, position, cols);
+
+    // Recreate ids of elements
+    let getIgnoreItems = ids.filter((value) => exclude.indexOf(value) === -1);
+
+    // Update matrix for next iteration
+    matrix = makeMatrixFromItemsIgnore(tempItems, getIgnoreItems, getRowsCount(tempItems, cols), cols);
+  });
+
+  // Return result
+  return tempItems;
+}
+
 export function moveItem(active, items, cols, original) {
   // Get current item from the breakpoint
   const item = getItem(active, cols);

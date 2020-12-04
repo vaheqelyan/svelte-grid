@@ -37,7 +37,7 @@
 
 <script>
   import { getContainerHeight } from "./utils/container.js";
-  import { moveItem, getItemById } from "./utils/item.js";
+  import { moveItemsAroundItem, moveItem, getItemById } from "./utils/item.js";
   import { onMount, createEventDispatcher } from "svelte";
   import { debounce, getColumn } from "./utils/other.js";
 
@@ -45,6 +45,7 @@
 
   const dispatch = createEventDispatcher();
 
+  export let fillSpace = false;
   export let items;
   export let rowHeight;
   export let cols;
@@ -135,7 +136,11 @@
         },
       };
 
-      items = moveItem(activeItem, items, getComputedCols, getItemById(detail.id, items));
+      if (fillSpace) {
+        items = moveItemsAroundItem(activeItem, items, getComputedCols, getItemById(detail.id, items));
+      } else {
+        items = moveItem(activeItem, items, getComputedCols, getItemById(detail.id, items));
+      }
 
       if (detail.onUpdate) detail.onUpdate();
 
