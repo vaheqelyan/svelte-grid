@@ -221,7 +221,8 @@
     shadow.w = Math.round(cloneBound.width / xPerPx);
     shadow.h = Math.round(cloneBound.height / yPerPx);
 
-    let maxWidth = Math.min(max.w, cols) || cols;
+    let maxWidth = cols - shadow.x;
+    maxWidth = Math.min(max.w, maxWidth) || maxWidth;
 
     shadow.w = Math.max(Math.min(maxWidth, shadow.w), min.w);
     shadow.h = Math.max(shadow.h, min.h);
