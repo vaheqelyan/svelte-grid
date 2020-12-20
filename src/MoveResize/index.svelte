@@ -218,18 +218,20 @@
     cloneBound.width = initialWidth + pageX - resizeInitX;
     cloneBound.height = initialHeight + pageY - resizeInitY;
 
-    shadow.w = Math.round(cloneBound.width / xPerPx);
-    shadow.h = Math.round(cloneBound.height / yPerPx);
-
+    // Get max col number
     let maxWidth = cols - shadow.x;
     maxWidth = Math.min(max.w, maxWidth) || maxWidth;
 
-    shadow.w = Math.max(Math.min(maxWidth, shadow.w), min.w);
-    shadow.h = Math.max(shadow.h, min.h);
+    // Limit bound
+    cloneBound.width = Math.max(Math.min(cloneBound.width, maxWidth * xPerPx - gapX * 2), min.w * xPerPx - gapX * 2);
+    cloneBound.height = Math.max(cloneBound.height, min.h * yPerPx - gapY * 2);
 
     if (max.h) {
-      shadow.h = Math.min(max.h, shadow.h);
+      cloneBound.height = Math.min(cloneBound.height, max.h * yPerPx - gapY * 2);
     }
+    // Limit col & row
+    shadow.w = Math.round(cloneBound.width / xPerPx);
+    shadow.h = Math.round(cloneBound.height / yPerPx);
 
     if (dynamic) repaint();
   };
