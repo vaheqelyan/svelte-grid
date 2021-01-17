@@ -82,6 +82,7 @@ export function moveItemsAroundItem(active, items, cols, original) {
 export function moveItem(active, items, cols, original) {
   // Get current item from the breakpoint
   const item = getItem(active, cols);
+
   // Create matrix from the items expect the active
   let matrix = makeMatrixFromItemsIgnore(items, [item.id], getRowsCount(items, cols), cols);
   // Getting the ids of items under active Array<String>
@@ -114,17 +115,14 @@ export function moveItem(active, items, cols, original) {
     // Exclude item
     exclude.push(item.id);
 
-    // If position is found
-    if (position) {
-      // Assign the position to the element in the column
-      tempItems = updateItem(tempItems, item, position, cols);
+    // Assign the position to the element in the column
+    tempItems = updateItem(tempItems, item, position, cols);
 
-      // Recreate ids of elements
-      let getIgnoreItems = tempCloseBlocks.filter((value) => exclude.indexOf(value) === -1);
+    // Recreate ids of elements
+    let getIgnoreItems = tempCloseBlocks.filter((value) => exclude.indexOf(value) === -1);
 
-      // Update matrix for next iteration
-      matrix = makeMatrixFromItemsIgnore(tempItems, getIgnoreItems, getRowsCount(tempItems, cols), cols);
-    }
+    // Update matrix for next iteration
+    matrix = makeMatrixFromItemsIgnore(tempItems, getIgnoreItems, getRowsCount(tempItems, cols), cols);
   });
 
   // Return result

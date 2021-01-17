@@ -2,7 +2,6 @@
   .svlt-grid-item {
     touch-action: none;
     position: absolute;
-    background: #f1f1f1;
     will-change: auto;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
@@ -28,26 +27,24 @@
     border-bottom: 2px solid rgba(0, 0, 0, 0.4);
   }
 
-  .no-user {
+  .svlt-grid-active {
+    z-index: 3;
+    cursor: grabbing;
+    position: fixed;
+    opacity: 0.5;
+
+    /*No user*/
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
     -o-backface-visibility: hidden;
     -ms-backface-visibility: hidden;
-    -webkit-user-drag: none;
-    -moz-user-drag: none;
-    -o-user-drag: none;
-    user-drag: none;
     user-select: none;
-  }
-
-  .active {
-    z-index: 3;
-    cursor: grabbing;
   }
 
   .shadow-active {
     z-index: 2;
+    transition: all 0.2s;
   }
 
   .svlt-grid-shadow {
@@ -58,34 +55,31 @@
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
   }
-
-  .transition {
-    transition: all 0.2s;
-  }
 </style>
 
 <div
-  on:pointerdown={item && item.custom ? null : draggable && pointerdown}
+  draggable={false}
+  on:pointerdown={item && item.customDragger ? null : draggable && pointerdown}
   class="svlt-grid-item"
-  class:transition={!active}
-  class:active
-  class:no-user={active}
-  style="width: {active ? cloneBound.width : width}px; height:{active ? cloneBound.height : height}px; transform: translate({active ? cloneBound.left : left}px, {active ? cloneBound.top : top}px);">
-  <slot {pointerdown} />
-  {#if resizable}
+  class:svlt-grid-active={active || (trans && rect)}
+  style="width: {active ? newSize.width : width}px; height:{active ? newSize.height : height}px; 
+  {active ? `transform: translate(${cordDiff.x}px, ${cordDiff.y}px);top:${rect.top}px;left:${rect.left}px;` : trans ? `transform: translate(${cordDiff.x}px, ${cordDiff.y}px); position:absolute; transition: width 0.2s, height 0.2s;` : `transition: transform 0.2s, opacity 0.2s; transform: translate(${left}px, ${top}px); `} ">
+  <slot movePointerDown={pointerdown} {resizePointerDown} />
+  {#if resizable && !item.customResizer}
     <div class="svlt-grid-resizer" on:pointerdown={resizePointerDown} />
   {/if}
 </div>
 
-{#if active}
-  <div class="svlt-grid-shadow transition shadow-active" style=" width: {shadow.w * xPerPx - gapX * 2}px; height: {shadow.h * yPerPx - gapY * 2}px; transform: translate({shadow.x * xPerPx + gapX}px, {shadow.y * yPerPx + gapY}px); " />
+{#if active || trans}
+  <div class="svlt-grid-shadow shadow-active" style="width: {shadow.w * xPerPx - gapX * 2}px; height: {shadow.h * yPerPx - gapY * 2}px; transform: translate({shadow.x * xPerPx + gapX}px, {shadow.y * yPerPx + gapY}px); " bind:this={shadowElement} />
 {/if}
 
 <script>
-  import { createEventDispatcher, beforeUpdate } from "svelte";
+  import { onMount, createEventDispatcher } from "svelte";
 
   const dispatch = createEventDispatcher();
 
+  export let sensor;
   export let width;
   export let height;
   export let left;
@@ -95,6 +89,7 @@
   export let draggable;
 
   export let id;
+  export let container;
 
   export let xPerPx;
   export let yPerPx;
@@ -102,28 +97,50 @@
   export let gapX;
   export let gapY;
   export let item;
-  export let dynamic;
 
   export let max;
   export let min;
 
   export let cols;
 
+  export let nativeContainer;
+
+  let shadowElement;
   let shadow = {};
 
   let active = false;
 
-  let debounce = false;
-
   let initX, initY;
 
-  let xyRef = { x: left, y: top };
-  let newXY = { x: 0, y: 0 };
+  let capturePos = {
+    x: 0,
+    y: 0,
+  };
 
-  let cloneBound = { width, height, top, left };
+  let cordDiff = { x: 0, y: 0 };
+
+  let newSize = { width, height };
+  let trans = false;
+
+  let anima;
 
   const inActivate = () => {
+    const shadowBound = shadowElement.getBoundingClientRect();
+    const xdragBound = rect.left + cordDiff.x;
+    const ydragBound = rect.top + cordDiff.y;
+
+    cordDiff.x = shadow.x * xPerPx + gapX - (shadowBound.x - xdragBound);
+    cordDiff.y = shadow.y * yPerPx + gapY - (shadowBound.y - ydragBound);
+
     active = false;
+    trans = true;
+
+    clearTimeout(anima);
+
+    anima = setTimeout(() => {
+      trans = false;
+    }, 100);
+
     dispatch("pointerup", {
       id,
     });
@@ -137,103 +154,171 @@
     });
   };
 
-  beforeUpdate(() => {
-    if (xPerPx && !debounce && item) {
-      xyRef = { x: left, y: top };
-      shadow = { x: item.x, y: item.y, w: item.w, h: item.h };
+  // Autoscroll
+  let _scrollTop = 0;
+  let containerFrame;
+  let rect;
+  let scrollElement;
 
-      debounce = true;
+  const getContainerFrame = (element) => {
+    if (element === document.documentElement || !element) {
+      const { height, top, right, bottom, left } = nativeContainer.getBoundingClientRect();
+
+      return {
+        top: Math.max(0, top),
+        bottom: Math.min(window.innerHeight, bottom),
+      };
     }
-  });
 
-  const pointerdown = ({ pageX, pageY, clientX, clientY }) => {
-    initX = pageX;
-    initY = pageY;
+    return element.getBoundingClientRect();
+  };
 
-    cloneBound = { width, height, top, left };
+  const getScroller = (element) => (!element ? document.documentElement : element);
 
-    debounce = false;
+  const pointerdown = ({ clientX, clientY, target }) => {
+    initX = clientX;
+    initY = clientY;
+
+    capturePos = { x: left, y: top };
+    shadow = { x: item.x, y: item.y, w: item.w, h: item.h };
+    newSize = { width, height };
+
+    containerFrame = getContainerFrame(container);
+    scrollElement = getScroller(container);
+
+    cordDiff = { x: 0, y: 0 };
+    rect = target.closest(".svlt-grid-item").getBoundingClientRect();
 
     active = true;
+    trans = false;
+    _scrollTop = scrollElement.scrollTop;
 
     window.addEventListener("pointermove", pointermove);
     window.addEventListener("pointerup", pointerup);
-    window.addEventListener("pointercancel", pointerup);
   };
 
-  const pointermove = ({ pageX, pageY, clientX, clientY }) => {
-    newXY = { x: initX - pageX, y: initY - pageY };
-    cloneBound.left = xyRef.x - newXY.x;
-    cloneBound.top = xyRef.y - newXY.y;
+  let sign = { x: 0, y: 0 };
+  let vel = { x: 0, y: 0 };
+  let intervalId = 0;
 
-    let gridX = Math.round(cloneBound.left / xPerPx);
-    let gridY = Math.round(cloneBound.top / yPerPx);
+  const stopAutoscroll = () => {
+    clearInterval(intervalId);
+    intervalId = false;
+    sign = { x: 0, y: 0 };
+    vel = { x: 0, y: 0 };
+  };
+
+  const update = () => {
+    const _newScrollTop = scrollElement.scrollTop - _scrollTop;
+
+    const boundX = capturePos.x + cordDiff.x;
+    const boundY = capturePos.y + (cordDiff.y + _newScrollTop);
+
+    let gridX = Math.round(boundX / xPerPx);
+    let gridY = Math.round(boundY / yPerPx);
 
     shadow.x = Math.max(Math.min(gridX, cols - shadow.w), 0);
     shadow.y = Math.max(gridY, 0);
 
-    if (dynamic) repaint();
+    if (max.y) {
+      shadow.y = Math.min(shadow.y, max.y);
+    }
+
+    repaint();
+  };
+
+  const pointermove = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+
+    const { clientX, clientY } = event;
+    cordDiff = { x: clientX - initX, y: clientY - initY };
+
+    const Y_SENSOR = sensor;
+
+    let velocityTop = Math.max(0, (containerFrame.top + Y_SENSOR - clientY) / Y_SENSOR);
+    let velocityBottom = Math.max(0, (clientY - (containerFrame.bottom - Y_SENSOR)) / Y_SENSOR);
+
+    const topSensor = velocityTop > 0 && velocityBottom === 0;
+    const bottomSensor = velocityBottom > 0 && velocityTop === 0;
+
+    sign.y = topSensor ? -1 : bottomSensor ? 1 : 0;
+    vel.y = sign.y === -1 ? velocityTop : velocityBottom;
+
+    if (vel.y > 0) {
+      if (!intervalId) {
+        // Start scrolling
+        // TODO Use requestAnimationFrame
+        intervalId = setInterval(() => {
+          scrollElement.scrollTop += 2 * (vel.y + Math.sign(vel.y)) * sign.y;
+          update();
+        }, 10);
+      }
+    } else if (intervalId) {
+      stopAutoscroll();
+    } else {
+      update();
+    }
   };
 
   const pointerup = (e) => {
-    xyRef.x -= newXY.x;
-    xyRef.y -= newXY.y;
+    stopAutoscroll();
 
     window.removeEventListener("pointerdown", pointerdown);
     window.removeEventListener("pointermove", pointermove);
     window.removeEventListener("pointerup", pointerup);
-    window.removeEventListener("pointercancel", pointerup);
-
     repaint(inActivate);
   };
 
   // Resize
 
-  let resizeInitX, resizeInitY;
-
-  let initialWidth = 0;
-  let initialHeight = 0;
+  let resizeInitPos = { x: 0, y: 0 };
+  let initSize = { width: 0, height: 0 };
 
   const resizePointerDown = (e) => {
     e.stopPropagation();
     const { pageX, pageY } = e;
 
-    resizeInitX = pageX;
-    resizeInitY = pageY;
+    resizeInitPos = { x: pageX, y: pageY };
+    initSize = { width, height };
 
-    initialWidth = width;
-    initialHeight = height;
-    cloneBound = { width, height, top, left };
+    cordDiff = { x: 0, y: 0 };
+    rect = e.target.closest(".svlt-grid-item").getBoundingClientRect();
+    newSize = { width, height };
 
     active = true;
-    const { x, y, w, h } = item;
-    shadow = { x, y, w, h };
+    trans = false;
+    shadow = { x: item.x, y: item.y, w: item.w, h: item.h };
+
+    containerFrame = getContainerFrame(container);
+    scrollElement = getScroller(container);
 
     window.addEventListener("pointermove", resizePointerMove);
     window.addEventListener("pointerup", resizePointerUp);
-    window.addEventListener("pointercancel", resizePointerUp);
   };
 
   const resizePointerMove = ({ pageX, pageY }) => {
-    cloneBound.width = initialWidth + pageX - resizeInitX;
-    cloneBound.height = initialHeight + pageY - resizeInitY;
+    newSize.width = initSize.width + pageX - resizeInitPos.x;
+    newSize.height = initSize.height + pageY - resizeInitPos.y;
 
     // Get max col number
     let maxWidth = cols - shadow.x;
     maxWidth = Math.min(max.w, maxWidth) || maxWidth;
 
     // Limit bound
-    cloneBound.width = Math.max(Math.min(cloneBound.width, maxWidth * xPerPx - gapX * 2), min.w * xPerPx - gapX * 2);
-    cloneBound.height = Math.max(cloneBound.height, min.h * yPerPx - gapY * 2);
+    newSize.width = Math.max(Math.min(newSize.width, maxWidth * xPerPx - gapX * 2), min.w * xPerPx - gapX * 2);
+
+    newSize.height = Math.max(newSize.height, min.h * yPerPx - gapY * 2);
 
     if (max.h) {
-      cloneBound.height = Math.min(cloneBound.height, max.h * yPerPx - gapY * 2);
+      newSize.height = Math.min(newSize.height, max.h * yPerPx - gapY * 2);
     }
     // Limit col & row
-    shadow.w = Math.round(cloneBound.width / xPerPx);
-    shadow.h = Math.round(cloneBound.height / yPerPx);
+    shadow.w = Math.round((newSize.width + gapX * 2) / xPerPx);
+    shadow.h = Math.round((newSize.height + gapY * 2) / yPerPx);
 
-    if (dynamic) repaint();
+    repaint();
   };
 
   const resizePointerUp = (e) => {
@@ -243,6 +328,5 @@
 
     window.removeEventListener("pointermove", resizePointerMove);
     window.removeEventListener("pointerup", resizePointerUp);
-    window.removeEventListener("pointercancel", resizePointerUp);
   };
 </script>

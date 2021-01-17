@@ -22,13 +22,16 @@
         item={item[getComputedCols]}
         min={item[getComputedCols] && item[getComputedCols].min}
         max={item[getComputedCols] && item[getComputedCols].max}
-        {dynamic}
         cols={getComputedCols}
         {gapX}
         {gapY}
-        let:pointerdown>
+        {sensor}
+        container={scroller}
+        nativeContainer={container}
+        let:resizePointerDown
+        let:movePointerDown>
         {#if item[getComputedCols]}
-          <slot {pointerdown} dataItem={item} item={item[getComputedCols]} index={i} />
+          <slot {movePointerDown} {resizePointerDown} dataItem={item} item={item[getComputedCols]} index={i} />
         {/if}
       </MoveResize>
     {/each}
@@ -39,7 +42,8 @@
   import { getContainerHeight } from "./utils/container.js";
   import { moveItemsAroundItem, moveItem, getItemById } from "./utils/item.js";
   import { onMount, createEventDispatcher } from "svelte";
-  import { debounce, getColumn } from "./utils/other.js";
+  import { getColumn } from "./utils/other.js";
+  import throttle from "lodash.throttle";
 
   import MoveResize from "./MoveResize/index.svelte";
 
@@ -52,9 +56,11 @@
   export let gap = [10, 10];
   export let dynamicCols = true;
   export let fastStart = false;
-  export let debounceUpdate = 100;
-  export let debounceResize = 100;
-  export let dynamic = false;
+  export let throttleUpdate = 100;
+  export let throttleResize = 100;
+
+  export let scroller;
+  export let sensor = 20;
 
   let getComputedCols;
 
@@ -87,14 +93,14 @@
     });
   };
 
-  const onResize = debounce(() => {
+  const onResize = throttle(() => {
     dispatch("resize", {
       cols: getComputedCols,
       xPerPx,
       yPerPx,
       width: containerWidth,
     });
-  }, debounceResize);
+  }, throttleResize);
 
   onMount(() => {
     const sizeObserver = new ResizeObserver((entries) => {
@@ -152,5 +158,5 @@
     }
   };
 
-  const handleRepaint = debounce(updateMatrix, debounceUpdate);
+  const handleRepaint = throttle(updateMatrix, throttleUpdate);
 </script>
