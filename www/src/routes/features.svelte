@@ -30,6 +30,7 @@
   <li>Responsive breakpoints</li>
   <li>Limit the minimum and maximum width / height when resizing</li>
   <li>Provide helper functions</li>
+  <li>Auto-scroll</li>
 </ul>
 
 <a href="https://github.com/vaheqelyan/svelte-grid/issues/new" target="_blank">Suggest your feature</a>
