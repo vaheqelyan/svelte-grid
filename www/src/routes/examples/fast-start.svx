@@ -12,9 +12,9 @@
 Set `fastStart` property to `true` to disable animation on startup
 
 <div class=demo-container>
-<Grid bind:items={items} rowHeight={100} let:item let:dataItem {cols} fastStart={true} >
-  <div class=demo-widget>{dataItem.id}</div>
-</Grid>
+  <Grid bind:items={items} rowHeight={100} let:item let:dataItem {cols} fastStart={true} >
+    <div class=demo-widget>{dataItem.id}</div>
+  </Grid>
 </div>
 
 <script>

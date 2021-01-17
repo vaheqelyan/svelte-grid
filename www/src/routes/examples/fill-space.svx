@@ -12,14 +12,14 @@
 `fillSpace` means that each grid element (except active element) must find its own position.
 
 <label>
-<input type=checkbox bind:checked={fillFree} />
-'Fill space' is {fillFree ? 'enabled' : 'disabled'}
+  <input type=checkbox bind:checked={fillFree} />
+  'Fill space' is {fillFree ? 'enabled' : 'disabled'}
 </label>
 
 <div class=demo-container>
-<Grid bind:items={items} rowHeight={100} let:item let:dataItem {cols} fillSpace={fillFree}>
-  <div class=demo-widget>{dataItem.id}</div>
-</Grid>
+  <Grid bind:items={items} rowHeight={100} let:item let:dataItem {cols} fillSpace={fillFree}>
+    <div class=demo-widget>{dataItem.id}</div>
+  </Grid>
 </div>
 
 <script>
