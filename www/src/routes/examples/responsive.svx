@@ -1,13 +1,16 @@
+<style>
+.size {
+  max-width: 1100px;
+  width: 100%;
+}
+</style>
+
 <svelte:head>
-  <title>Example — Add/Remove</title>
+  <title>Example — Responsive</title>
   <meta name="description" content="Svelte-grid — Example — Add/Remove" />
   <meta name="keywords" content="draggable,resizable,grid,layout,responsive,breakpoints,Svelte,svelte,svelte.js,sveltejs,usage,example,examples,samples,responsive,breakpoints" />
   <meta name="author" content="Vahe Araqelyan" />
 </svelte:head>
-
-<style>
-.content { display: flex; justify-content: center; align-items: center; height: 100%; }
-</style>
 
 ## Responsive
 <small><a target=_blank href="https://svelte.dev/repl/2cf339cc1dc14223a1457e386195e52d?version=latest">REPL</a></small>
@@ -17,11 +20,13 @@
 
 ---
 
+<div class="demo-container size">
 <Grid bind:items={items} rowHeight={100} let:item {cols} let:index>
-  <div class=content>
+  <div class="demo-widget content">
     <h3>{index}</h3>
   </div>
 </Grid>
+</div>
 
 <script>
 import Grid from "../../components/svelte-grid/index.svelte";

@@ -14,9 +14,11 @@ In this example we set the gap between rows and columns to 20px
 X axis <input type=number min={0} bind:value={gapX} />
 Y axis <input type=number min={0} bind:value={gapY} />
 
-<Grid bind:items={items} gap={[gapX, gapY]} rowHeight={100} let:item {cols}>
-  <div class="content" />
-</Grid>
+<div class=demo-container>
+  <Grid bind:items={items} gap={[gapX, gapY]} rowHeight={100} let:item {cols}>
+    <div class=demo-widget />
+  </Grid>
+</div>
 
 <script>
 import Grid from "../../components/svelte-grid/index.svelte";

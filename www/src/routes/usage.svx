@@ -104,7 +104,8 @@ This is an object for a single widget
     w: Number,
     h: Number,
   },
-  custom: Boolean,
+  customDragger: Boolean,
+  customResizer: Boolean,
 }
 ```
 
@@ -169,6 +170,14 @@ gridHelp.findSpace(item: Object, items: Array<Object>, cols: Number)
 
 Find out where to place the widget in the grid by calculating from left to right returns an object of two properties x and y.
 
+### How to disable opacity animation ?
+
+```css
+:global(.svlt-grid-active) {
+  opacity: 1!important;
+}
+```
+
 
 ### Props
 
@@ -180,15 +189,16 @@ items | `Array<Object>` | items is an array of objects, see the demos for more c
 cols | `Number` | Number of columns in layout | Yes
 gap | `Array<Number>` | Margin between items in px | No
 rowHeight | `Number` | Rows have a static height | No
-dynamic | `Boolean` | Updates the grid as you move or size | No
-debounceUpdate | `Number` | Debounce grid recalculation, default value is `100` | No
-debounceResize | `Number` | Debounce grid recalculation, when the container changes its width. default value is `100` | No
+throttleUpdate | `Number` | Throttle grid recalculation, default value is `100` | No
+throttleResize | `Number` | Throttle grid recalculation, when the container changes its width. default value is `100` | No
 on:resize | `Function<void>` | The event is triggered when the grid is resized. There are a couple of properties in the detail property. | No
 on:change | `Function<void>` | The event is triggered when an element is resized or moved | No
 on:mount | `Function<void>` | The event is triggered when the grid is mounted. There are a couple of properties in the detail property. 
 on:pointerup | `Function<void>` | The event is fired when a pointer is no longer active| No
 fastStart | `Boolean` | Removes transition onload | No
 fillSpace | `Boolean` | Each grid element (except active element) finds its own position.
+sensor | `Number` | Set the distance from the cursor to the edge | No
+scroller | `Element` | Element reference for setting `Element.scrollTop`. The default is `document.documentElement` | No
 </div>
 
 Have questions ? 

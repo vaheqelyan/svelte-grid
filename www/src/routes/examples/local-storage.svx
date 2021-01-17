@@ -1,3 +1,10 @@
+<style>
+.size {
+  max-width: 1100px;
+  width: 100%;
+}
+</style>
+
 ## Serialize/Restore
 <small><a target=_blank  href={`${openSource}/local-storage.svx`}>SOURCE</a></small>
 
@@ -10,11 +17,13 @@ Try moving and resizing elements, then reloading.
 
 <button on:click={reset}>Reset</button>
 
-<Grid bind:items={items} rowHeight={100} let:item {cols} let:index on:change={onChange}>
-  <div>
-   {index}
-  </div>
-</Grid>
+<div class="demo-container size">
+  <Grid bind:items={items} rowHeight={100} let:item {cols} let:index on:change={onChange} >
+    <div class=demo-widget>
+     {index}
+    </div>
+  </Grid>
+</div>
 
 <script>
 import Grid from "../../components/svelte-grid/index.svelte";
@@ -22,7 +31,6 @@ import gridHelp from "../../components/svelte-grid/utils/helper.js";
 import { openSource } from "./github.js";
 
 const id = () => "_" + Math.random().toString(36).substr(2, 9);
-
 
 let layoutOriginal = [
   {

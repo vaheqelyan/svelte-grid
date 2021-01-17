@@ -5,25 +5,19 @@
   <meta name="author" content="Vahe Araqelyan" />
 </svelte:head>
 
-<style>
-.content {
-height: 100%;
-display: flex; justify-content: center;
-align-items: center;
-}
-</style>
-
 ## Events
 <small><a target=_blank href="https://svelte.dev/repl/eadd933ffa84449daca8df1468d9d617?version=latest">REPL</a></small>
 <small><a target=_blank  href={`${openSource}/events.svx`}>SOURCE</a></small>
 
 This particular example has dragging and resizing turned off.
 
-<Grid bind:items={items} rowHeight={100} let:item {cols}>
-  <div class="content">
-    Box
-  </div>
-</Grid>
+<div class=demo-container>
+  <Grid bind:items={items} rowHeight={100} let:item {cols}>
+    <div class=demo-widget>
+      Box
+    </div>
+  </Grid>
+</div>
 
 <script>
 import Grid from "../../components/svelte-grid/index.svelte";

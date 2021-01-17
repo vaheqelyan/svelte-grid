@@ -5,14 +5,6 @@
   <meta name="author" content="Vahe Araqelyan" />
 </svelte:head>
 
-<style>
-.content {
-height: 100%;
-display: flex; justify-content: center;
-align-items: center;
-}
-</style>
-
 ## Fixed
 <small><a target=_blank href="https://svelte.dev/repl/fced8519aa334a59ae05f3a7d7e4e5c2?version=latest">REPL</a></small>
 <small><a target=_blank  href={`${openSource}/fixed.svx`}>SOURCE</a></small>
@@ -20,11 +12,13 @@ align-items: center;
 
 Fixed elements cannot be moved or resized. Other elements move themselves around a fixed element.
 
+<div class=demo-container>
 <Grid bind:items={items} rowHeight={100} let:item {cols}>
-  <div class="content" style="background: {item.fixed ? '#cce' : '#ccc'};">
+  <div class=demo-widget style="background: {item.fixed ? '#cce' : '#ccc'};">
     {item.fixed ? 'Fixed box' : 'Box'}
   </div>
 </Grid>
+</div>
 
 <script>
 import Grid from "../../components/svelte-grid/index.svelte";

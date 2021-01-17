@@ -11,9 +11,11 @@
 
 Set `fastStart` property to `true` to disable animation on startup
 
-<Grid bind:items={items} rowHeight={100} let:item let:dataItem {cols} fastStart={true}>
-  <div class="content">{dataItem.id}</div>
+<div class=demo-container>
+<Grid bind:items={items} rowHeight={100} let:item let:dataItem {cols} fastStart={true} >
+  <div class=demo-widget>{dataItem.id}</div>
 </Grid>
+</div>
 
 <script>
 import Grid from "../../components/svelte-grid/index.svelte";

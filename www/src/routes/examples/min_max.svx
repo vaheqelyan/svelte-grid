@@ -5,26 +5,19 @@
   <meta name="author" content="Vahe Araqelyan" />
 </svelte:head>
 
-<style>
-.content {
-display: flex;
-justify-content: center; align-items: center;
-height: 100%;
-}
-</style>
-
-
 ## Min/Max size
 <small><a target=_blank href="https://svelte.dev/repl/af1a9b29d8774bba8dee7987f0f24bb1?version=latest">REPL</a></small>
 <small><a target=_blank  href={`${openSource}/min_max.svx`}>SOURCE</a></small>
 
 Control how much can user resize the item.
 
-<Grid bind:items={items} rowHeight={100} let:item {cols} let:index>
-  <div class="content">
-    {index + 1} {item.max.w}
-  </div>
-</Grid>
+<div class=demo-container>
+  <Grid bind:items={items} rowHeight={100} let:item {cols} let:index>
+    <div class=demo-widget>
+      {index + 1} {item.max.w}
+    </div>
+  </Grid>
+</div>
 
 <script>
 import Grid from "../../components/svelte-grid/index.svelte";
@@ -34,7 +27,6 @@ import { openSource } from "./github.js";
 const id = () => "_" + Math.random().toString(36).substr(2, 9);
 
 const COL = 10;
-
 
 let items = [
   {

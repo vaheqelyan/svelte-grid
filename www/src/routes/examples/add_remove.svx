@@ -6,9 +6,6 @@
 </svelte:head>
 
 <style>
-.content {
-height: 100%;
-}
 .remove { cursor: pointer; position: absolute; right: 5px; top: 3px; }
 </style>
 
@@ -31,13 +28,14 @@ But this will actually be used to prevent a situation where your box will overla
   Adjust elements after removing an item
 </label>
 
-<Grid bind:items={items} rowHeight={100} let:item let:dataItem {cols}>
-<div class=content>
-<span on:pointerup={e=>e.stopPropagation()} on:click={() => remove(item)} on:pointerdown={e=>e.preventDefault()} class=remove>✕</span>
-<p>{dataItem.id}</p>
+<div class=demo-container>
+  <Grid bind:items={items} rowHeight={100} let:item let:dataItem {cols}>
+    <div class=demo-widget>
+      <span on:pointerup={e=>e.stopPropagation()} on:click={() => remove(item)} on:pointerdown={e=>e.preventDefault()} class=remove>✕</span>
+      <p>{dataItem.id}</p>
+    </div>
+  </Grid>
 </div>
-
-</Grid>
 
 <script>
 import Grid from "../../components/svelte-grid/index.svelte";

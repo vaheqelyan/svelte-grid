@@ -16,9 +16,11 @@
 'Fill space' is {fillFree ? 'enabled' : 'disabled'}
 </label>
 
+<div class=demo-container>
 <Grid bind:items={items} rowHeight={100} let:item let:dataItem {cols} fillSpace={fillFree}>
-  <div class="content">{dataItem.id}</div>
+  <div class=demo-widget>{dataItem.id}</div>
 </Grid>
+</div>
 
 <script>
 import Grid from "../../components/svelte-grid/index.svelte";

@@ -1,3 +1,10 @@
+<style>
+.size {
+  max-width: 1100px;
+  width: 100%;
+}
+</style>
+
 ## Responsive - Serialize/Restore
 <small><a target=_blank  href={`${openSource}/responsive-local-storage.svx`}>SOURCE</a></small>
 
@@ -9,11 +16,13 @@ This is a simple demo of responsiveness and localStorage.
 
 <button on:click={reset}>Reset</button>
 
-<Grid bind:items={items} rowHeight={100} let:item let:index {cols} on:mount={setCols} on:resize={setCols} on:pointerup={handleSync}>
-  <div>
-   {index}
-  </div>
-</Grid>
+<div class="demo-container size">
+  <Grid bind:items={items} rowHeight={100} let:item let:index {cols} on:mount={setCols} on:resize={setCols} on:pointerup={handleSync}>
+    <div class=demo-widget>
+     {index}
+    </div>
+  </Grid>
+</div>
 
 <script>
 import Grid from "../../components/svelte-grid/index.svelte";

@@ -38,8 +38,8 @@
   <h4>A draggable and resizable grid layout with responsive breakpoints, for Svelte.</h4>
 </div>
 
-<Grid bind:items {cols} rowHeight={100} let:dataItem dynamic debounceUpdate={10} debounceResize={0} fillSpace={true}>
-  <div class="content" style="background: {dataItem.data};" />
+<Grid bind:items {cols} rowHeight={100} let:dataItem fillSpace={false}>
+  <div class="content" style="background-image: linear-gradient({dataItem.data.start}, {dataItem.data.end});" />
 </Grid>
 
 <script>
@@ -54,12 +54,12 @@
   };
 
   function generateLayout(col) {
-    return new Array(20).fill(null).map(function (item, i) {
+    return new Array(10).fill(null).map(function (item, i) {
       const y = Math.ceil(Math.random() * 4) + 1;
       return {
         16: gridHelp.item({ x: (i * 2) % col, y: Math.floor(i / 6) * y, w: 2, h: y }),
         id: id(),
-        data: randomHexColorCode(),
+        data: { start: randomHexColorCode(), end: randomHexColorCode() },
       };
     });
   }
