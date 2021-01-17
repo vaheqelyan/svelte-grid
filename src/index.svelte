@@ -54,7 +54,6 @@
   export let rowHeight;
   export let cols;
   export let gap = [10, 10];
-  export let dynamicCols = true;
   export let fastStart = false;
   export let throttleUpdate = 100;
   export let throttleResize = 100;
@@ -76,15 +75,6 @@
   let containerWidth;
 
   $: containerHeight = getContainerHeight(items, yPerPx, getComputedCols);
-
-  let prevCols;
-
-  $: {
-    if (prevCols !== cols && dynamicCols) {
-      xPerPx = containerWidth / cols;
-    }
-    prevCols = cols;
-  }
 
   const pointerup = (ev) => {
     dispatch("pointerup", {
