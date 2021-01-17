@@ -1,5 +1,6 @@
 import svelte from "rollup-plugin-svelte";
 import resolve from "rollup-plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
 import pkg from "./package.json";
 
 const name = pkg.name
@@ -14,7 +15,7 @@ export default [
       { file: pkg.module, format: "es" },
       { file: pkg.main, format: "umd", name },
     ],
-    plugins: [svelte(), resolve()],
+    plugins: [svelte(), resolve(), commonjs()],
   },
   {
     input: "./src/utils/helper.js",
