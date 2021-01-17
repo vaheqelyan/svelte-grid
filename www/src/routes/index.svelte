@@ -38,7 +38,7 @@
   <h4>A draggable and resizable grid layout with responsive breakpoints, for Svelte.</h4>
 </div>
 
-<Grid bind:items {cols} rowHeight={100} let:dataItem fillSpace={false}>
+<Grid bind:items {cols} rowHeight={100} let:dataItem fillSpace={true}>
   <div class="content" style="background-image: linear-gradient({dataItem.data.start}, {dataItem.data.end});" />
 </Grid>
 
