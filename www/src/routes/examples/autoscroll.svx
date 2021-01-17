@@ -16,15 +16,15 @@ margin-top: 20px;
 </svelte:head>
 
 ## Autoscroll
-<small><a target=_blank href="https://svelte.dev/repl/35a506b9456d463ab441841859e1bb9f?version=latest">REPL</a></small>
-<small><a target=_blank  href={`${openSource}/basic.svx`}>SOURCE</a></small>
+<small><a target=_blank href="https://svelte.dev/repl/db448b1bbbf147bb8d63d0272a81b93b?version=latest">REPL</a></small>
+<small><a target=_blank  href={`${openSource}/autoscroll.svx`}>SOURCE</a></small>
 
 Simple auto-scrolling that only requires a reference to your container
 
 > Autoscrolling occurs when the cursor is close to the edges of your container. This does not happen when the bottom or top of your widget is close to the edges
 
 <label>
-  <input type="checkbox"  bind:checked={useWindow} />
+  <input type="checkbox" bind:checked={useWindow} />
   Use document
 </label>
 

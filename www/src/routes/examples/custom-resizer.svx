@@ -15,8 +15,8 @@
 </style>
 
 ## Custom resizer
-<small><a target=_blank href="https://svelte.dev/repl/65021e7906e544d694fa4aa25240cbec?version=latest">REPL</a></small>
-<small><a target=_blank  href={`${openSource}/custom-dragger.svx`}>SOURCE</a></small>
+<small><a target=_blank href="https://svelte.dev/repl/8c2d03bcc8434a158f01a80fc624c636?version=latest">REPL</a></small>
+<small><a target=_blank  href={`${openSource}/custom-resizer.svx`}>SOURCE</a></small>
 
 By setting the `customResizer` property to `true`, you can specify the element to which the resize event will be assigned
 
