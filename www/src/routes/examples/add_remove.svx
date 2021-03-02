@@ -83,17 +83,15 @@ function add() {
     id: id(),
   };
 
-  let findOutPosition = gridHelp.findSpace(newItem, items, COLS);
-
-  let newItem = {
-    ...item,
+  newItem = {
+    ...newItem,
     ...cols.reduce(
       (acc, obj) => {
         let col = obj[1]; // for each col config, get number of cols
-        let findOutPosition = gridHelp.findSpace(item, $items, col);
+        let findOutPosition = gridHelp.findSpace(newItem, items, col);
         if (!acc[col]) {
           acc[col] = {
-            ...item[col],
+            ...newItem[col],
             ...findOutPosition,
           };
         }
