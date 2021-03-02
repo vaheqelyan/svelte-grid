@@ -16,7 +16,7 @@
 
 This demo shows what happens when items are dynamically added and removed.
 You can remove an item by clicking its "x", and add a new one with the button.
-After adding an element, you can use the `normalize` or `adjust` functions. 
+After adding an element, you can use the `normalize` or `adjust` functions.
 But this will actually be used to prevent a situation where your box will overlap with another.
 
 ---
@@ -85,13 +85,21 @@ function add() {
 
   let findOutPosition = gridHelp.findSpace(newItem, items, COLS);
 
-  newItem = {
-    ...newItem,
-    [COLS]: {
-      ...newItem[COLS],
-      ...findOutPosition,
-    },
-  };
+  let newItem = {
+    ...item,
+    ...cols.reduce(
+      (acc, obj) => {
+        let col = obj[1]; // for each col config, get number of cols
+        let findOutPosition = gridHelp.findSpace(item, $items, col);
+        if (!acc[col]) {
+          acc[col] = {
+            ...item[col],
+            ...findOutPosition,
+          };
+        }
+        return acc
+      }, {})
+  }
 
   items = [...items, ...[newItem]];
 }
