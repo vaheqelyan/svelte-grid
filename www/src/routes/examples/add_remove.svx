@@ -31,7 +31,12 @@ But this will actually be used to prevent a situation where your box will overla
 <div class=demo-container>
   <Grid bind:items={items} rowHeight={100} let:item let:dataItem {cols}>
     <div class=demo-widget>
-      <span on:pointerup={e=>e.stopPropagation()} on:click={() => remove(item)} on:pointerdown={e=>e.preventDefault()} class=remove>✕</span>
+      <span on:pointerdown={e => e.stopPropagation()}
+        on:click={() => remove(dataItem)}
+        class=remove
+        >
+        ✕
+      </span>
       <p>{dataItem.id}</p>
     </div>
   </Grid>
