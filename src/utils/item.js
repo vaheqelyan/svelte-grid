@@ -5,12 +5,13 @@ export function getItemById(id, items) {
   return items.find((value) => value.id === id);
 }
 
-export function findFreeSpaceForItem(matrix, item, items = []) {
+export function findFreeSpaceForItem(matrix, item) {
   const cols = matrix[0].length;
   const w = Math.min(cols, item.w);
   let xNtime = cols - w;
+  let getMatrixRows = matrix.length;
 
-  for (var i = 0; i < matrix.length; i++) {
+  for (var i = 0; i < getMatrixRows; i++) {
     const row = matrix[i];
     for (var j = 0; j < xNtime + 1; j++) {
       const sliceA = row.slice(j, j + w);
@@ -26,7 +27,7 @@ export function findFreeSpaceForItem(matrix, item, items = []) {
   }
 
   return {
-    y: getRowsCount(items, cols),
+    y: getMatrixRows,
     x: 0,
   };
 }
@@ -62,7 +63,7 @@ export function moveItemsAroundItem(active, items, cols, original) {
 
   els.forEach((item) => {
     // Find position for element
-    let position = findFreeSpaceForItem(matrix, item[cols], tempItems);
+    let position = findFreeSpaceForItem(matrix, item[cols]);
     // Exclude item
     exclude.push(item.id);
 
@@ -111,7 +112,7 @@ export function moveItem(active, items, cols, original) {
   // Iterate over close elements under active item
   closeObj.forEach((item) => {
     // Find position for element
-    let position = findFreeSpaceForItem(matrix, item[cols], tempItems);
+    let position = findFreeSpaceForItem(matrix, item[cols]);
     // Exclude item
     exclude.push(item.id);
 
@@ -150,7 +151,7 @@ export function adjust(items, col) {
   let res = [];
 
   items.forEach((item) => {
-    let position = findFreeSpaceForItem(matrix, item[col], items);
+    let position = findFreeSpaceForItem(matrix, item[col]);
 
     res.push({
       ...item,
