@@ -32,6 +32,7 @@
 - Provide helper functions
 - Custom dragging
 - Grid gap
+- Soft autoscroll
 
 ## Installation
 
