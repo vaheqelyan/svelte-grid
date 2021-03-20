@@ -58,7 +58,7 @@
   export let throttleUpdate = 100;
   export let throttleResize = 100;
 
-  export let scroller;
+  export let scroller = undefined;
   export let sensor = 20;
 
   let getComputedCols;
