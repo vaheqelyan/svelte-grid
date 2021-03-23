@@ -43,7 +43,7 @@
   import { moveItemsAroundItem, moveItem, getItemById } from "./utils/item.js";
   import { onMount, createEventDispatcher } from "svelte";
   import { getColumn } from "./utils/other.js";
-  import throttle from "lodash.throttle";
+  import { throttle } from "lodash";
 
   import MoveResize from "./MoveResize/index.svelte";
 
