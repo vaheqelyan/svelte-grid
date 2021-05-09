@@ -75,7 +75,7 @@
 {/if}
 
 <script>
-  import { onMount, createEventDispatcher } from "svelte";
+  import { createEventDispatcher } from "svelte";
 
   const dispatch = createEventDispatcher();
 

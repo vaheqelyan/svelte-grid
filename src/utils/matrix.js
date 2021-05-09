@@ -7,14 +7,16 @@ export function makeMatrixFromItems(items, _row, _col) {
 
   for (var i = 0; i < items.length; i++) {
     const value = items[i][_col];
-    const { x, y, h } = value;
-    const id = items[i].id;
-    const w = Math.min(_col, value.w);
+    if (value) {
+      const { x, y, h } = value;
+      const id = items[i].id;
+      const w = Math.min(_col, value.w);
 
-    for (var j = y; j < y + h; j++) {
-      const row = matrix[j];
-      for (var k = x; k < x + w; k++) {
-        row[k] = { ...value, id };
+      for (var j = y; j < y + h; j++) {
+        const row = matrix[j];
+        for (var k = x; k < x + w; k++) {
+          row[k] = { ...value, id };
+        }
       }
     }
   }

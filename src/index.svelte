@@ -40,9 +40,10 @@
 
 <script>
   import { getContainerHeight } from "./utils/container.js";
-  import { moveItemsAroundItem, moveItem, getItemById } from "./utils/item.js";
+  import { moveItemsAroundItem, moveItem, getItemById, specifyUndefinedColumns, findFreeSpaceForItem } from "./utils/item.js";
   import { onMount, createEventDispatcher } from "svelte";
-  import { getColumn } from "./utils/other.js";
+  import { getColumn, getRowsCount } from "./utils/other.js";
+  import { makeMatrixFromItems } from "./utils/matrix.js";
   import throttle from "lodash.throttle";
 
   import MoveResize from "./MoveResize/index.svelte";
@@ -84,6 +85,7 @@
   };
 
   const onResize = throttle(() => {
+    items = specifyUndefinedColumns(items, getComputedCols, cols);
     dispatch("resize", {
       cols: getComputedCols,
       xPerPx,
@@ -103,6 +105,8 @@
       xPerPx = width / getComputedCols;
 
       if (!containerWidth) {
+        items = specifyUndefinedColumns(items, getComputedCols, cols);
+
         dispatch("mount", {
           cols: getComputedCols,
           xPerPx,

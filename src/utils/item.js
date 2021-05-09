@@ -166,3 +166,53 @@ export function adjust(items, col) {
 
   return res;
 }
+
+export function getUndefinedItems(items, col, breakpoints) {
+  return items
+    .map((value) => {
+      if (!value[col]) {
+        return value.id;
+      }
+    })
+    .filter(Boolean);
+}
+
+export function getClosestColumn(items, item, col, breakpoints) {
+  return breakpoints
+    .map(([_, column]) => item[column] && column)
+    .filter(Boolean)
+    .reduce(function (acc, value) {
+      const isLower = Math.abs(value - col) < Math.abs(acc - col);
+
+      return isLower ? value : acc;
+    });
+}
+
+export function specifyUndefinedColumns(items, col, breakpoints) {
+  let matrix = makeMatrixFromItems(items, getRowsCount(items, col), col);
+
+  const getUndefinedElements = getUndefinedItems(items, col, breakpoints);
+
+  let newItems = [...items];
+
+  getUndefinedElements.forEach((elementId) => {
+    const getElement = items.find((item) => item.id === elementId);
+
+    const closestColumn = getClosestColumn(items, getElement, col, breakpoints);
+
+    const position = findFreeSpaceForItem(matrix, getElement[closestColumn]);
+
+    const newItem = {
+      ...getElement,
+      [col]: {
+        ...getElement[closestColumn],
+        ...position,
+      },
+    };
+
+    newItems = newItems.map((value) => (value.id === elementId ? newItem : value));
+
+    matrix = makeMatrixFromItems(newItems, getRowsCount(newItems, col), col);
+  });
+  return newItems;
+}
