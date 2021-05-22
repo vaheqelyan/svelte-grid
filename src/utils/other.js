@@ -1,10 +1,13 @@
-export const debounce = (fn, ms = 0) => {
-  let timeoutId;
+export function throttle(func, timeFrame) {
+  let lastTime = 0;
   return function (...args) {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => fn.apply(this, args), ms);
+    let now = new Date();
+    if (now - lastTime >= timeFrame) {
+      func(...args);
+      lastTime = now;
+    }
   };
-};
+}
 
 export function getRowsCount(items, cols) {
   const getItemsMaxHeight = items.map((val) => {

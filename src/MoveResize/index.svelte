@@ -146,10 +146,11 @@
     });
   };
 
-  let repaint = (cb) => {
+  let repaint = (cb, eventType) => {
     dispatch("repaint", {
       id,
       shadow,
+      eventType,
       onUpdate: cb,
     });
   };
@@ -268,7 +269,7 @@
     window.removeEventListener("pointerdown", pointerdown);
     window.removeEventListener("pointermove", pointermove);
     window.removeEventListener("pointerup", pointerup);
-    repaint(inActivate);
+    repaint(inActivate, "pointerup");
   };
 
   // Resize

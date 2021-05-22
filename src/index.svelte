@@ -42,10 +42,8 @@
   import { getContainerHeight } from "./utils/container.js";
   import { moveItemsAroundItem, moveItem, getItemById, specifyUndefinedColumns, findFreeSpaceForItem } from "./utils/item.js";
   import { onMount, createEventDispatcher } from "svelte";
-  import { getColumn, getRowsCount } from "./utils/other.js";
+  import { getColumn, getRowsCount, throttle } from "./utils/other.js";
   import { makeMatrixFromItems } from "./utils/matrix.js";
-  import throttle from "lodash.throttle";
-
   import MoveResize from "./MoveResize/index.svelte";
 
   const dispatch = createEventDispatcher();
@@ -92,7 +90,7 @@
       yPerPx,
       width: containerWidth,
     });
-  }, throttleResize);
+  }, throttleUpdate);
 
   onMount(() => {
     const sizeObserver = new ResizeObserver((entries) => {
@@ -152,5 +150,13 @@
     }
   };
 
-  const handleRepaint = throttle(updateMatrix, throttleUpdate);
+  const throttleMatrix = throttle(updateMatrix, throttleResize);
+
+  const handleRepaint = ({ detail }) => {
+    if (!detail.eventType) {
+      throttleMatrix({ detail });
+    } else {
+      updateMatrix({ detail });
+    }
+  };
 </script>
