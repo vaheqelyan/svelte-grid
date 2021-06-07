@@ -146,11 +146,11 @@
     });
   };
 
-  let repaint = (cb, eventType) => {
+  let repaint = (cb, isPointerUp) => {
     dispatch("repaint", {
       id,
       shadow,
-      eventType,
+      isPointerUp,
       onUpdate: cb,
     });
   };
@@ -269,7 +269,7 @@
     window.removeEventListener("pointerdown", pointerdown);
     window.removeEventListener("pointermove", pointermove);
     window.removeEventListener("pointerup", pointerup);
-    repaint(inActivate, "pointerup");
+    repaint(inActivate, true);
   };
 
   // Resize
@@ -325,7 +325,7 @@
   const resizePointerUp = (e) => {
     e.stopPropagation();
 
-    repaint(inActivate);
+    repaint(inActivate, true);
 
     window.removeEventListener("pointermove", resizePointerMove);
     window.removeEventListener("pointerup", resizePointerUp);

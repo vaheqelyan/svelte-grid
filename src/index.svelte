@@ -153,7 +153,7 @@
   const throttleMatrix = throttle(updateMatrix, throttleResize);
 
   const handleRepaint = ({ detail }) => {
-    if (!detail.eventType) {
+    if (!detail.isPointerUp) {
       throttleMatrix({ detail });
     } else {
       updateMatrix({ detail });
