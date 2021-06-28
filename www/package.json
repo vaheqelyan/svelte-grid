@@ -23,7 +23,7 @@
     "polka": "^0.5.2",
     "prism": "^4.1.2",
     "prism-svelte": "^0.4.7",
-    "prismjs": "^1.23.0",
+    "prismjs": "^1.24.0",
     "rehype-autolink-headings": "^5.0.1",
     "rehype-slug": "^4.0.1",
     "rollup": "^2.36.2",
