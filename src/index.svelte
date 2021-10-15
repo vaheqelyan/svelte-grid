@@ -1,6 +1,7 @@
 <style>
   .svlt-grid-container {
     position: relative;
+    width: 100%;
   }
 </style>
 
