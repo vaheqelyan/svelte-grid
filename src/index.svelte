@@ -95,27 +95,29 @@
 
   onMount(() => {
     const sizeObserver = new ResizeObserver((entries) => {
-      let width = entries[0].contentRect.width;
+      requestAnimationFrame(() => {
+        let width = entries[0].contentRect.width;
 
-      if (width === containerWidth) return;
+        if (width === containerWidth) return;
 
-      getComputedCols = getColumn(width, cols);
+        getComputedCols = getColumn(width, cols);
 
-      xPerPx = width / getComputedCols;
+        xPerPx = width / getComputedCols;
 
-      if (!containerWidth) {
-        items = specifyUndefinedColumns(items, getComputedCols, cols);
+        if (!containerWidth) {
+          items = specifyUndefinedColumns(items, getComputedCols, cols);
 
-        dispatch("mount", {
-          cols: getComputedCols,
-          xPerPx,
-          yPerPx, // same as rowHeight
-        });
-      } else {
-        onResize();
-      }
+          dispatch("mount", {
+            cols: getComputedCols,
+            xPerPx,
+            yPerPx, // same as rowHeight
+          });
+        } else {
+          onResize();
+        }
 
-      containerWidth = width;
+        containerWidth = width;
+      })
     });
 
     sizeObserver.observe(container);
