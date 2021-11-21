@@ -20,16 +20,16 @@ export function getRowsCount(items, cols) {
 }
 
 export const getColumn = (containerWidth, columns) => {
-  try {
-    let [_, cols] = columns
-      .slice()
-      .reverse()
-      .find((value) => {
-        const [width, cols] = value;
-        return containerWidth <= width;
-      });
-    return cols;
-  } catch {
-    return columns[columns.length - 1];
+  const sortColumns = columns.slice().sort((a, b) => a[0] - b[0]);
+
+  const breakpoint = sortColumns.find((value) => {
+    const [width] = value;
+    return containerWidth <= width;
+  });
+
+  if (breakpoint) {
+    return breakpoint[1];
+  } else {
+    return sortColumns[sortColumns.length - 1][1];
   }
 };
