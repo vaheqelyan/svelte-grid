@@ -63,7 +63,9 @@
   class="svlt-grid-item"
   class:svlt-grid-active={active || (trans && rect)}
   style="width: {active ? newSize.width : width}px; height:{active ? newSize.height : height}px; 
-  {active ? `transform: translate(${cordDiff.x}px, ${cordDiff.y}px);top:${rect.top}px;left:${rect.left}px;` : trans ? `transform: translate(${cordDiff.x}px, ${cordDiff.y}px); position:absolute; transition: width 0.2s, height 0.2s;` : `transition: transform 0.2s, opacity 0.2s; transform: translate(${left}px, ${top}px); `} ">
+  {active ? `transform: translate(${cordDiff.x}px, ${cordDiff.y}px);top:${rect.top}px;left:${rect.left}px;` 
+  : trans ? `transform: translate(${cordDiff.x}px, ${cordDiff.y}px); position:absolute; transition: width 0.2s, height 0.2s;` 
+  : `transition: transform ${moveAnimation ? 0.2 : 0}s, opacity 0.2s; transform: translate(${left}px, ${top}px); `} ">
   <slot movePointerDown={pointerdown} {resizePointerDown} />
   {#if resizable && !item.customResizer}
     <div class="svlt-grid-resizer" on:pointerdown={resizePointerDown} />
@@ -87,6 +89,7 @@
 
   export let resizable;
   export let draggable;
+  export let moveAnimation;
 
   export let id;
   export let container;
