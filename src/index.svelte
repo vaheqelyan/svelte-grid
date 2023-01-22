@@ -23,6 +23,7 @@
         item={item[getComputedCols]}
         min={item[getComputedCols] && item[getComputedCols].min}
         max={item[getComputedCols] && item[getComputedCols].max}
+				maxY={maxRows ? rowHeight * (maxRows - 1) : null}
         cols={getComputedCols}
         {gapX}
         {gapY}
@@ -57,6 +58,7 @@
   export let fastStart = false;
   export let throttleUpdate = 100;
   export let throttleResize = 100;
+	export let maxRows;
 
   export let scroller = undefined;
   export let sensor = 20;
