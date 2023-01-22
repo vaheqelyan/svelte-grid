@@ -23,11 +23,12 @@
         item={item[getComputedCols]}
         min={item[getComputedCols] && item[getComputedCols].min}
         max={item[getComputedCols] && item[getComputedCols].max}
-				maxY={maxRows ? rowHeight * (maxRows - 1) : null}
         cols={getComputedCols}
         {gapX}
         {gapY}
         {sensor}
+        {maxRows}
+        {rowHeight}
         container={scroller}
         nativeContainer={container}
         let:resizePointerDown
