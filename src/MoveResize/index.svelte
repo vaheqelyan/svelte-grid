@@ -48,7 +48,7 @@
 
   .svlt-grid-active {
     z-index: 3;
-    cursor: grabbing;
+    cursor: grabbing!important;
     position: fixed;
     opacity: 0.5;
 
@@ -80,6 +80,7 @@
   draggable={false}
   on:pointerdown={item && item.customDragger ? null : draggable && pointerdown}
   class="svlt-grid-item"
+  class:draggable={draggable}
   class:svlt-grid-active={active || (trans && rect)}
   style="width: {active ? newSize.width : width}px; height:{active ? newSize.height : height}px;
   {active ? `transform: translate(${cordDiff.x}px, ${cordDiff.y}px);top:${rect.top}px;left:${rect.left}px;` : trans ? `transform: translate(${cordDiff.x}px, ${cordDiff.y}px); position:absolute; transition: width 0.2s, height 0.2s;` : `transition: transform 0.2s, opacity 0.2s; transform: translate(${left}px, ${top}px); `} ">
