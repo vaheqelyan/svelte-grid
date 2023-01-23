@@ -8,16 +8,16 @@
   }
 
   .svlt-grid-resizer,
-  .svlt-grid-resizer-x,
-  .svlt-grid-resizer-y {
+  .svlt-grid-resizer.only-x,
+  .svlt-grid-resizer.only-y {
     position: absolute;
     user-select: none;
     right: 0;
     bottom: 0;
   }
   .svlt-grid-resizer::after,
-  .svlt-grid-resizer-x::after,
-  .svlt-grid-resizer-y::after {
+  .svlt-grid-resizer.only-x::after,
+  .svlt-grid-resizer.only-y::after {
     position: absolute;
     right: 3px;
     bottom: 3px;
@@ -34,13 +34,13 @@
     cursor: se-resize;
   }
 
-  .svlt-grid-resizer-x {
+  .svlt-grid-resizer.only-x {
     width: 10px;
     height: 100%;
     cursor: col-resize;
   }
 
-  .svlt-grid-resizer-y {
+  .svlt-grid-resizer.only-y {
     width: 100%;
     height: 10px;
     cursor: row-resize;
@@ -81,12 +81,12 @@
   on:pointerdown={item && item.customDragger ? null : draggable && pointerdown}
   class="svlt-grid-item"
   class:svlt-grid-active={active || (trans && rect)}
-  style="width: {active ? newSize.width : width}px; height:{active ? newSize.height : height}px; 
+  style="width: {active ? newSize.width : width}px; height:{active ? newSize.height : height}px;
   {active ? `transform: translate(${cordDiff.x}px, ${cordDiff.y}px);top:${rect.top}px;left:${rect.left}px;` : trans ? `transform: translate(${cordDiff.x}px, ${cordDiff.y}px); position:absolute; transition: width 0.2s, height 0.2s;` : `transition: transform 0.2s, opacity 0.2s; transform: translate(${left}px, ${top}px); `} ">
   <slot movePointerDown={pointerdown} {resizePointerDown} />
   {#if resizable && !item.customResizer}
-    <div 
-			class={'svlt-grid-resizer' + (typeof resizable === 'boolean' ? '' : '-' + resizable)}
+    <div
+			class="svlt-grid-resizer {(typeof resizable === 'boolean' ? '' : 'only-' + resizable)}"
       on:pointerdown={resizePointerDown} />
   {/if}
 </div>
