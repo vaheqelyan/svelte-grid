@@ -8,8 +8,6 @@ function makeItem(item) {
     fixed: false,
     resizable: !item.fixed,
     draggable: !item.fixed,
-    customDragger: false,
-    customResizer: false,
     min: {
       w: Math.max(1, min.w),
       h: Math.max(1, min.h),

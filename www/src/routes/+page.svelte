@@ -12,11 +12,23 @@
   max-width: 800px;
   width: 100%;
 }
+.resizer {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  cursor: move;
+}
 </style>
 
 <div class=demo-container>
-  <Grid bind:items={items} rowHeight={100} let:item let:dataItem {cols}>
-    <div class=demo-widget>{dataItem.id}</div>
+  <Grid bind:items={items} rowHeight={100} let:item let:dataItem {cols} let:resizePointerDown let:movePointerDown>
+    <div class=demo-widget on:pointerdown={movePointerDown}>
+      {dataItem.id}
+
+      <div class=resizer on:pointerdown={resizePointerDown}>
+        ☞ Resize me
+      </div>
+    </div>
   </Grid>
 </div>
 
