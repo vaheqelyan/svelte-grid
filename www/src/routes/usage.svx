@@ -25,11 +25,34 @@ import gridHelp from "svelte-grid/build/helper/index.mjs";
 const id = () => "_" + Math.random().toString(36).substr(2, 9);
 
 let items = [
-  gridHelp.item({ x: 0, y: 0, w: 2, h: 2, id: id() }),
-  gridHelp.item({ x: 2, y: 0, w: 2, h: 2, id: id() }),
-];
+  {
+    6: gridHelp.item({
+      x: 0,
+      y: 0,
+      w: 2,
+      h: 2,
+    }),
+    id: id(),
+  },
+
+  {
+    6: gridHelp.item({
+      x: 2,
+      y: 0,
+      w: 2,
+      h: 2,
+    }),
+    id: id(),
+  },
+]
+
+const breakpoint = 1200
+const column = 6
+
+const cols = [[breakpoint, column]]
 </script>
-<Grid cols={3} bind:items={items} let:item={item}>
+
+<Grid {cols} bind:items={items} let:item={item}>
   <div>{item.id}</div>
 </Grid>
 ```
@@ -186,7 +209,7 @@ Find out where to place the widget in the grid by calculating from left to right
 Prop | Type | Description | Required
 --- | --- | --- | --- |
 items | `Array<Object>` | items is an array of objects, see the demos for more complete usage | Yes
-cols | `Number` | Number of columns in layout | Yes
+cols | `Array<Array<Number>>` | Specify columns, e.g. [[1400, 300]] | Yes
 gap | `Array<Number>` | Margin between items in px | No
 rowHeight | `Number` | Rows have a static height | No
 throttleUpdate | `Number` | Throttle grid recalculation, default value is `100` | No
