@@ -1,79 +1,3 @@
-<style>
-  .svlt-grid-item {
-    touch-action: none;
-    position: absolute;
-    will-change: auto;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-  }
-
-  .svlt-grid-resizer {
-    user-select: none;
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    cursor: se-resize;
-  }
-  .svlt-grid-resizer::after {
-    content: "";
-    position: absolute;
-    right: 3px;
-    bottom: 3px;
-    width: 5px;
-    height: 5px;
-    border-right: 2px solid rgba(0, 0, 0, 0.4);
-    border-bottom: 2px solid rgba(0, 0, 0, 0.4);
-  }
-
-  .svlt-grid-active {
-    z-index: 3;
-    cursor: grabbing;
-    position: fixed;
-    opacity: 0.5;
-
-    /*No user*/
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    -moz-backface-visibility: hidden;
-    -o-backface-visibility: hidden;
-    -ms-backface-visibility: hidden;
-    user-select: none;
-  }
-
-  .shadow-active {
-    z-index: 2;
-    transition: all 0.2s;
-  }
-
-  .svlt-grid-shadow {
-    position: absolute;
-    background: red;
-    will-change: transform;
-    background: pink;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-  }
-</style>
-
-<div
-  draggable={false}
-  on:pointerdown={item && item.customDragger ? null : draggable && pointerdown}
-  class="svlt-grid-item"
-  class:svlt-grid-active={active || (trans && rect)}
-  style="width: {active ? newSize.width : width}px; height:{active ? newSize.height : height}px; 
-  {active ? `transform: translate(${cordDiff.x}px, ${cordDiff.y}px);top:${rect.top}px;left:${rect.left}px;` : trans ? `transform: translate(${cordDiff.x}px, ${cordDiff.y}px); position:absolute; transition: width 0.2s, height 0.2s;` : `transition: transform 0.2s, opacity 0.2s; transform: translate(${left}px, ${top}px); `} ">
-  <slot movePointerDown={pointerdown} {resizePointerDown} />
-  {#if resizable && !item.customResizer}
-    <div class="svlt-grid-resizer" on:pointerdown={resizePointerDown} />
-  {/if}
-</div>
-
-{#if active || trans}
-  <div class="svlt-grid-shadow shadow-active" style="width: {shadow.w * xPerPx - gapX * 2}px; height: {shadow.h * yPerPx - gapY * 2}px; transform: translate({shadow.x * xPerPx + gapX}px, {shadow.y * yPerPx + gapY}px); " bind:this={shadowElement} />
-{/if}
-
 <script>
   import { createEventDispatcher } from "svelte";
 
@@ -125,7 +49,16 @@
   let anima;
 
   const inActivate = () => {
-    const shadowBound = shadowElement.getBoundingClientRect();
+    let subgrid = shadowElement.closest(".subgrid");
+    let irect = shadowElement.getBoundingClientRect();
+    let shadowBound;
+    if (subgrid) {
+      let prect = subgrid.getBoundingClientRect();
+      shadowBound = { x: irect.x - prect.left, y: irect.y - prect.top };
+    } else {
+      shadowBound = irect;
+    }
+
     const xdragBound = rect.left + cordDiff.x;
     const ydragBound = rect.top + cordDiff.y;
 
@@ -188,7 +121,16 @@
     scrollElement = getScroller(container);
 
     cordDiff = { x: 0, y: 0 };
-    rect = target.closest(".svlt-grid-item").getBoundingClientRect();
+
+    let gridItem = target.closest(".svlt-grid-item");
+    let subgrid = gridItem.closest(".subgrid");
+    let irect = gridItem.getBoundingClientRect();
+    if (subgrid) {
+      let prect = subgrid.getBoundingClientRect();
+      rect = { top: irect.top - prect.top, left: irect.left - prect.left };
+    } else {
+      rect = irect;
+    }
 
     active = true;
     trans = false;
@@ -331,3 +273,84 @@
     window.removeEventListener("pointerup", resizePointerUp);
   };
 </script>
+
+<div
+  draggable={false}
+  on:pointerdown={item && item.customDragger ? null : draggable && pointerdown}
+  class="svlt-grid-item"
+  class:svlt-grid-active={active || (trans && rect)}
+  style="width: {active ? newSize.width : width}px; height:{active ? newSize.height : height}px; 
+  {active
+    ? `transform: translate(${cordDiff.x}px, ${cordDiff.y}px);top:${rect.top}px;left:${rect.left}px;`
+    : trans
+    ? `transform: translate(${cordDiff.x}px, ${cordDiff.y}px); position:absolute; transition: width 0.2s, height 0.2s;`
+    : `transition: transform 0.2s, opacity 0.2s; transform: translate(${left}px, ${top}px); `} "
+>
+  <slot movePointerDown={pointerdown} {resizePointerDown} />
+  {#if resizable && !item.customResizer}
+    <div class="svlt-grid-resizer" on:pointerdown={resizePointerDown} />
+  {/if}
+</div>
+
+{#if active || trans}
+  <div class="svlt-grid-shadow shadow-active" style="width: {shadow.w * xPerPx - gapX * 2}px; height: {shadow.h * yPerPx - gapY * 2}px; transform: translate({shadow.x * xPerPx + gapX}px, {shadow.y * yPerPx + gapY}px); " bind:this={shadowElement} />
+{/if}
+
+<style>
+  .svlt-grid-item {
+    touch-action: none;
+    position: absolute;
+    will-change: auto;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .svlt-grid-resizer {
+    user-select: none;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    cursor: se-resize;
+  }
+  .svlt-grid-resizer::after {
+    content: "";
+    position: absolute;
+    right: 3px;
+    bottom: 3px;
+    width: 5px;
+    height: 5px;
+    border-right: 2px solid rgba(0, 0, 0, 0.4);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .svlt-grid-active {
+    z-index: 3;
+    cursor: grabbing;
+    position: fixed;
+    opacity: 0.5;
+
+    /*No user*/
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    user-select: none;
+  }
+
+  .shadow-active {
+    z-index: 2;
+    transition: all 0.2s;
+  }
+
+  .svlt-grid-shadow {
+    position: absolute;
+    background: red;
+    will-change: transform;
+    background: pink;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+</style>
