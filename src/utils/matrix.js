@@ -1,5 +1,3 @@
-import { getRowsCount } from "./other.js";
-
 export const makeMatrix = (rows, cols) => Array.from(Array(rows), () => new Array(cols)); // make 2d array
 
 export function makeMatrixFromItems(items, _row, _col) {

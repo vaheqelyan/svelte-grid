@@ -117,7 +117,7 @@
         }
 
         containerWidth = width;
-      })
+      });
     });
 
     sizeObserver.observe(container);

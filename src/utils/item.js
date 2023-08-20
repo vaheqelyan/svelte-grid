@@ -148,12 +148,17 @@ export function normalize(items, col) {
 export function adjust(items, col) {
   let matrix = makeMatrix(getRowsCount(items, col), col);
 
-  let res = [];
+  const order = items.toSorted((a, b) => {
+    const aItem = a[col];
+    const bItem = b[col];
 
-  items.forEach((item) => {
+    return aItem.x - bItem.x || aItem.y - bItem.y;
+  });
+
+  return order.reduce((acc, item) => {
     let position = findFreeSpaceForItem(matrix, item[col]);
 
-    res.push({
+    acc.push({
       ...item,
       [col]: {
         ...item[col],
@@ -161,10 +166,10 @@ export function adjust(items, col) {
       },
     });
 
-    matrix = makeMatrixFromItems(res, getRowsCount(res, col), col);
-  });
+    matrix = makeMatrixFromItems(acc, getRowsCount(acc, col), col);
 
-  return res;
+    return acc;
+  }, []);
 }
 
 export function getUndefinedItems(items, col, breakpoints) {
