@@ -7,29 +7,48 @@
     -webkit-backface-visibility: hidden;
   }
 
-  .svlt-grid-resizer {
-    user-select: none;
-    width: 20px;
-    height: 20px;
+  .svlt-grid-resizer,
+  .svlt-grid-resizer.only-x,
+  .svlt-grid-resizer.only-y {
     position: absolute;
+    user-select: none;
     right: 0;
     bottom: 0;
-    cursor: se-resize;
   }
-  .svlt-grid-resizer::after {
-    content: "";
+  .svlt-grid-resizer::after,
+  .svlt-grid-resizer.only-x::after,
+  .svlt-grid-resizer.only-y::after {
     position: absolute;
     right: 3px;
     bottom: 3px;
     width: 5px;
     height: 5px;
+    content: '';
     border-right: 2px solid rgba(0, 0, 0, 0.4);
     border-bottom: 2px solid rgba(0, 0, 0, 0.4);
   }
 
+  .svlt-grid-resizer {
+    width: 20px;
+    height: 20px;
+    cursor: se-resize;
+  }
+
+  .svlt-grid-resizer.only-x {
+    width: 10px;
+    height: 100%;
+    cursor: col-resize;
+  }
+
+  .svlt-grid-resizer.only-y {
+    width: 100%;
+    height: 10px;
+    cursor: row-resize;
+  }
+
   .svlt-grid-active {
     z-index: 3;
-    cursor: grabbing;
+    cursor: grabbing!important;
     position: fixed;
     opacity: 0.5;
 
@@ -61,12 +80,15 @@
   draggable={false}
   on:pointerdown={item && item.customDragger ? null : draggable && pointerdown}
   class="svlt-grid-item"
+  class:draggable={draggable}
   class:svlt-grid-active={active || (trans && rect)}
-  style="width: {active ? newSize.width : width}px; height:{active ? newSize.height : height}px; 
+  style="width: {active ? newSize.width : width}px; height:{active ? newSize.height : height}px;
   {active ? `transform: translate(${cordDiff.x}px, ${cordDiff.y}px);top:${rect.top}px;left:${rect.left}px;` : trans ? `transform: translate(${cordDiff.x}px, ${cordDiff.y}px); position:absolute; transition: width 0.2s, height 0.2s;` : `transition: transform 0.2s, opacity 0.2s; transform: translate(${left}px, ${top}px); `} ">
   <slot movePointerDown={pointerdown} {resizePointerDown} />
   {#if resizable && !item.customResizer}
-    <div class="svlt-grid-resizer" on:pointerdown={resizePointerDown} />
+    <div
+			class="svlt-grid-resizer {(typeof resizable === 'boolean' ? '' : 'only-' + resizable)}"
+      on:pointerdown={resizePointerDown} />
   {/if}
 </div>
 
@@ -300,8 +322,12 @@
   };
 
   const resizePointerMove = ({ pageX, pageY }) => {
-    newSize.width = initSize.width + pageX - resizeInitPos.x;
-    newSize.height = initSize.height + pageY - resizeInitPos.y;
+		if (resizable === 'x' || resizable === true) {
+			newSize.width = initSize.width + pageX - resizeInitPos.x;
+		}
+		if (resizable === 'y' || resizable === true) {
+			newSize.height = initSize.height + pageY - resizeInitPos.y;
+		}
 
     // Get max col number
     let maxWidth = cols - shadow.x;
