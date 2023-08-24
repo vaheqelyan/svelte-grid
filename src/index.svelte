@@ -16,6 +16,7 @@
         draggable={item[getComputedCols] && item[getComputedCols].draggable}
         {xPerPx}
         {yPerPx}
+        {moveAnimation}
         width={Math.min(getComputedCols, item[getComputedCols] && item[getComputedCols].w) * xPerPx - gapX * 2}
         height={(item[getComputedCols] && item[getComputedCols].h) * yPerPx - gapY * 2}
         top={(item[getComputedCols] && item[getComputedCols].y) * yPerPx + gapY}
@@ -57,10 +58,11 @@
   export let fastStart = false;
   export let throttleUpdate = 100;
   export let throttleResize = 100;
-
+  
   export let scroller = undefined;
   export let sensor = 20;
-
+  
+  let moveAnimation = true;
   let getComputedCols;
 
   let container;
@@ -91,6 +93,8 @@
       yPerPx,
       width: containerWidth,
     });
+    moveAnimation = false
+    setTimeout(() => moveAnimation = true, throttleUpdate + 100)
   }, throttleUpdate);
 
   onMount(() => {
