@@ -145,17 +145,18 @@ export function normalize(items, col) {
 }
 
 // Helper function
-export function adjust(items, col) {
+export function adjust(items, col, reorder) {
   let matrix = makeMatrix(getRowsCount(items, col), col);
 
-  const order = items.toSorted((a, b) => {
-    const aItem = a[col];
-    const bItem = b[col];
+  if(reorder) {
+    items = items.toSorted((a, b) => {
+      const aItem = a[col];
+      const bItem = b[col];
+      return aItem.x - bItem.x || aItem.y - bItem.y;
+    });
+  }
 
-    return aItem.x - bItem.x || aItem.y - bItem.y;
-  });
-
-  return order.reduce((acc, item) => {
+  return items.reduce((acc, item) => {
     let position = findFreeSpaceForItem(matrix, item[col]);
 
     acc.push({

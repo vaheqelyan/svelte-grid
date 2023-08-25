@@ -25,8 +25,8 @@ const gridHelp = {
     return normalize(items, col, rows);
   },
 
-  adjust(items, col) {
-    return adjust(items, col);
+  adjust(items, col, reorder = true) {
+    return adjust(items, col, reorder);
   },
 
   item(obj) {
