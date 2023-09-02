@@ -27,6 +27,8 @@
         {gapX}
         {gapY}
         {sensor}
+        {maxRows}
+        {rowHeight}
         container={scroller}
         nativeContainer={container}
         let:resizePointerDown
@@ -57,6 +59,7 @@
   export let fastStart = false;
   export let throttleUpdate = 100;
   export let throttleResize = 100;
+	export let maxRows;
 
   export let scroller = undefined;
   export let sensor = 20;

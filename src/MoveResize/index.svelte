@@ -62,7 +62,7 @@
   on:pointerdown={item && item.customDragger ? null : draggable && pointerdown}
   class="svlt-grid-item"
   class:svlt-grid-active={active || (trans && rect)}
-  style="width: {active ? newSize.width : width}px; height:{active ? newSize.height : height}px; 
+  style="width: {active ? newSize.width : width}px; height:{active ? newSize.height : height}px;
   {active ? `transform: translate(${cordDiff.x}px, ${cordDiff.y}px);top:${rect.top}px;left:${rect.left}px;` : trans ? `transform: translate(${cordDiff.x}px, ${cordDiff.y}px); position:absolute; transition: width 0.2s, height 0.2s;` : `transition: transform 0.2s, opacity 0.2s; transform: translate(${left}px, ${top}px); `} ">
   <slot movePointerDown={pointerdown} {resizePointerDown} />
   {#if resizable && !item.customResizer}
@@ -100,6 +100,8 @@
 
   export let max;
   export let min;
+	export let maxRows;
+	export let rowHeight;
 
   export let cols;
 
@@ -123,6 +125,7 @@
   let trans = false;
 
   let anima;
+  let maxY;
 
   const inActivate = () => {
     const shadowBound = shadowElement.getBoundingClientRect();
@@ -176,9 +179,21 @@
 
   const getScroller = (element) => (!element ? document.documentElement : element);
 
+  function getHeightDifference() {
+    const {y: itemY, h: itemHeight } = item;
+    const itemBottomIndex = itemY + itemHeight;
+
+    return maxRows - itemBottomIndex;
+  }
+
   const pointerdown = ({ clientX, clientY, target }) => {
     initX = clientX;
     initY = clientY;
+
+    if (maxRows) {
+      const diff = getHeightDifference();
+      maxY = initY + rowHeight * diff;
+    }
 
     capturePos = { x: left, y: top };
     shadow = { x: item.x, y: item.y, w: item.w, h: item.h };
@@ -232,8 +247,11 @@
     event.preventDefault();
     event.stopPropagation();
     event.stopImmediatePropagation();
+    let { clientX, clientY } = event;
 
-    const { clientX, clientY } = event;
+		if (maxRows && clientY >= maxY) {
+			clientY = maxY;
+		}
     cordDiff = { x: clientX - initX, y: clientY - initY };
 
     const Y_SENSOR = sensor;
@@ -303,6 +321,9 @@
     newSize.width = initSize.width + pageX - resizeInitPos.x;
     newSize.height = initSize.height + pageY - resizeInitPos.y;
 
+    const diff = getHeightDifference();
+    const maxHeight = diff * rowHeight + item.h * rowHeight;
+
     // Get max col number
     let maxWidth = cols - shadow.x;
     maxWidth = Math.min(max.w, maxWidth) || maxWidth;
@@ -315,6 +336,11 @@
     if (max.h) {
       newSize.height = Math.min(newSize.height, max.h * yPerPx - gapY * 2);
     }
+
+    if (newSize.height > maxHeight) {
+      newSize.height = maxHeight;
+    }
+
     // Limit col & row
     shadow.w = Math.round((newSize.width + gapX * 2) / xPerPx);
     shadow.h = Math.round((newSize.height + gapY * 2) / yPerPx);
